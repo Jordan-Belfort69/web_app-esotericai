@@ -1,183 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Telegram Mini Apps Vanilla JS Sample App</title>
-    <style>
-        body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #0f1115;
-  color: #fff;
-}
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0,
+                 maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Telegram Mini Apps Vanilla JS Sample App</title>
+  <style>
+    /* ===== БАЗОВЫЕ НАСТРОЙКИ ===== */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f1115;
+      color: #fff;
+    }
 
-#app {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 16px 16px 72px;
-  box-sizing: border-box;
-}
+    #app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px 16px 72px;
+      box-sizing: border-box;
+    }
 
-.profile-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
+    /* ===== ШАПКА ПРОФИЛЯ ===== */
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
 
-.profile-main {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+    .profile-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-.avatar-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #262b35;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-}
+    .avatar-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #262b35;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
 
-.profile-name {
-  font-weight: 600;
-  font-size: 16px;
-}
+    .profile-name {
+      font-weight: 600;
+      font-size: 16px;
+    }
 
-.profile-username {
-  font-size: 13px;
-  color: #9ca3af;
-}
+    .profile-username {
+      font-size: 13px;
+      color: #9ca3af;
+    }
 
-.tier-pill {
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  background: #1f2937;
-}
+    .tier-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: #1f2937;
+    }
 
-.card {
-  background: #111827;
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 12px;
-}
+    /* ===== ОБЩИЙ СТИЛЬ КАРТОЧЕК ===== */
+    .card {
+      background: #111827;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
 
-.card-title {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
 
-.card-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  padding: 4px 0;
-  color: #e5e7eb;
-}
+    .card-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 4px 0;
+      color: #e5e7eb;
+    }
 
-.card-row span:last-child {
-  color: #f9fafb;
-  font-weight: 500;
-}
+    .card-row span:last-child {
+      color: #f9fafb;
+      font-weight: 500;
+    }
 
-.bottom-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 8px 12px 12px;
-  display: flex;
-  gap: 8px;
-  background: #020617ee;
-  backdrop-filter: blur(10px);
-}
+    /* ===== НИЖНЕЕ МЕНЮ ===== */
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 8px 12px 12px;
+      display: flex;
+      gap: 8px;
+      background: #020617ee;
+      backdrop-filter: blur(10px);
+    }
 
-.nav-btn {
-  flex: 1;
-  border-radius: 999px;
-  border: none;
-  padding: 10px 0;
-  font-size: 13px;
-  color: #e5e7eb;
-  background: #111827;
-}
+    .nav-btn {
+      flex: 1;
+      border-radius: 999px;
+      border: none;
+      padding: 10px 0;
+      font-size: 13px;
+      color: #e5e7eb;
+      background: #111827;
+    }
 
-.nav-btn-active {
-  background: #1d4ed8;
-  color: #f9fafb;
-  font-weight: 600;
-}
+    .nav-btn-active {
+      background: #1d4ed8;
+      color: #f9fafb;
+      font-weight: 600;
+    }
 
-.tarot-section {
-  margin-top: 12px;
-}
+    /* ===== ТАРО: РАСКЛАД, ПИЛЛЫ, КНОПКА ===== */
+    .tarot-section {
+      margin-top: 12px;
+    }
 
-.tarot-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
+    .tarot-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
 
-.tarot-subtitle {
-  font-size: 13px;
-  color: #9ca3af;
-  margin: 10px 0 4px;
-}
+    .tarot-subtitle {
+      font-size: 13px;
+      color: #9ca3af;
+      margin: 10px 0 4px;
+    }
 
-.pill-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 4px;
-}
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
 
-.pill-btn {
-  border-radius: 999px;
-  border: 1px solid #374151;
-  background: #020617;
-  color: #e5e7eb;
-  font-size: 13px;
-  padding: 6px 10px;
-}
+    .pill-btn {
+      border-radius: 999px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 13px;
+      padding: 6px 10px;
+    }
 
-.pill-btn-active {
-  background: #1d4ed8;
-  border-color: #2563eb;
-  color: #f9fafb;
-}
+    .pill-btn-active {
+      background: #1d4ed8;
+      border-color: #2563eb;
+      color: #f9fafb;
+    }
 
-.primary-btn {
-  width: 100%;
-  margin-top: 12px;
-  border-radius: 999px;
-  border: none;
-  padding: 10px 0;
-  font-size: 14px;
-  font-weight: 500;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  color: #f9fafb;
-}
+    .primary-btn {
+      width: 100%;
+      margin-top: 12px;
+      border-radius: 999px;
+      border: none;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 500;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #f9fafb;
+    }
 
-.hint-text {
-  margin-top: 8px;
-  font-size: 12px;
-  color: #9ca3af;
-  line-height: 1.4;
-}
-    </style>
+    .hint-text {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #9ca3af;
+      line-height: 1.4;
+    }
+
+    /* ===== КАРТОЧКА-ССЫЛКА ДЛЯ РЕФЕРАЛКИ ===== */
+    .card-link {
+      padding: 0;
+    }
+
+    .card-link-inner {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .card-link-emoji {
+      font-size: 16px;
+    }
+
+    .card-link-text {
+      flex: 1;
+    }
+
+    .card-link-arrow {
+      font-size: 16px;
+      color: #9ca3af;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
+
+    <!-- ===== СЕКЦИЯ: ШАПКА ПРОФИЛЯ ===== -->
     <header class="profile-header">
       <div class="profile-main">
         <div class="avatar-circle">J</div>
@@ -189,15 +225,9 @@
       <div class="tier-pill" id="user-tier">—</div>
     </header>
 
-    <!-- Блок профиля -->
+    <!-- ===== СЕКЦИЯ: ПОДПИСКА ===== -->
     <section class="card" id="profile-subscription">
-      <div class="card-header-row">
-        <div class="card-title">Подписка</div>
-        <button class="link-row-btn" id="open-referral-btn">
-          <span>🔗 Реферальная программа</span>
-        </button>
-      </div>
-
+      <div class="card-title">Подписка</div>
       <div class="card-row">
         <span>Статус</span>
         <span id="sub-status">—</span>
@@ -212,7 +242,7 @@
       </div>
     </section>
 
-
+    <!-- ===== СЕКЦИЯ: ЛИМИТЫ НА СЕГОДНЯ ===== -->
     <section class="card" id="profile-limits">
       <div class="card-title">Сегодня доступно</div>
       <div class="card-row">
@@ -233,12 +263,16 @@
       </div>
     </section>
 
-    <!-- CTA: переход в реферальный раздел -->
-    <button class="primary-btn" id="open-referral-btn">
-      Реферальная система
-    </button>
+    <!-- ===== СЕКЦИЯ: КАРТОЧКА-ССЫЛКА "РЕФЕРАЛКА" ===== -->
+    <section class="card card-link" id="profile-ref-link">
+      <div class="card-link-inner">
+        <span class="card-link-emoji">🔗</span>
+        <span class="card-link-text">Реферальная программа</span>
+        <span class="card-link-arrow">›</span>
+      </div>
+    </section>
 
-    <!-- Реферальный экран, по умолчанию скрыт -->
+    <!-- ===== СЕКЦИЯ: ЭКРАН РЕФЕРАЛЬНОЙ ПРОГРАММЫ ===== -->
     <section class="card" id="profile-ref" style="display:none;">
       <div class="card-title">Реферальная программа</div>
       <div class="card-row">
@@ -251,7 +285,7 @@
       </div>
     </section>
 
-    <!-- Секция Таро (вкладка) -->
+    <!-- ===== СЕКЦИЯ: ВКЛАДКА "ТАРО" ===== -->
     <section class="card tarot-section" id="tarot-section" style="display:none;">
       <div class="tarot-title">Выбор расклада</div>
 
@@ -276,7 +310,7 @@
       </p>
     </section>
 
-
+    <!-- ===== СЕКЦИЯ: НИЖНЯЯ НАВИГАЦИЯ ===== -->
     <nav class="bottom-nav">
       <button class="nav-btn nav-btn-active" data-tab="profile">Профиль</button>
       <button class="nav-btn" data-tab="tarot">Таро</button>

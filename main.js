@@ -128,19 +128,18 @@ function initTarotControls() {
 } // ← этой скобки не хватало
 
 function initReferralSection() {
-  const btn = document.getElementById('open-referral-btn');
+  const refLink = document.getElementById('profile-ref-link');
   const refCard = document.getElementById('profile-ref');
   const profileCards = document.querySelectorAll(
-    '#profile-subscription, #profile-limits'
+    '#profile-subscription, #profile-limits, #profile-ref-link'
   );
 
-  if (!btn || !refCard) return;
+  if (!refLink || !refCard) return;
 
-  btn.addEventListener('click', () => {
-    // скрываем обычные профильные карточки
+  refLink.addEventListener('click', () => {
     profileCards.forEach(c => (c.style.display = 'none'));
-    // показываем реферальный экран
     refCard.style.display = 'block';
   });
 }
+
 
