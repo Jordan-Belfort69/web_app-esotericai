@@ -1,4 +1,15 @@
-const API_URL = "http://127.0.0.1:8000/api/me?user_id=1040828537"; // ← сюда твой ID
+const API_URL = "http://127.0.0.1:8000/api/me"; // без user_id
+const tg = window.Telegram ? window.Telegram.WebApp : null;
+
+let tarotState = {
+  cards: 1,
+  deck: "rider",
+};
+
+function getInitData() {
+  if (!tg || !tg.initData) return null;
+  return tg.initData;
+}
 
 function formatDate(iso) {
   if (!iso) return "—";
@@ -24,7 +35,15 @@ function subStatus(tier) {
 
 async function loadProfile() {
   try {
-    const res = await fetch(API_URL);
+    const initData = getInitData();
+
+    // Если запущено внутри Telegram Mini App — шлём initData
+    // Если просто в браузере — используем тестовый user_id
+    const url = initData
+      ? `${API_URL}?initData=${encodeURIComponent(initData)}`
+      : `${API_URL}?user_id=1040828537`; // твой тестовый ID
+
+    const res = await fetch(url);
     const data = await res.json();
 
     document.getElementById("user-name").textContent =
@@ -59,5 +78,80 @@ async function loadProfile() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadProfile();
+  if (tg) {
+    tg.ready();
+  }
+  initTabs();
+  initTarotControls();
+  // loadProfile();  // временно отключаем, чтобы не было ошибки fetch
 });
+
+
+function switchTab(tab) {
+  const tarotSection = document.getElementById("tarot-section");
+  const profileCards = document.querySelectorAll(
+    "#profile-subscription, #profile-limits, #profile-ref"
+  );
+
+  const navButtons = document.querySelectorAll(".bottom-nav .nav-btn");
+  navButtons.forEach(btn => {
+    const t = btn.getAttribute("data-tab");
+    if (!t) return;
+    btn.classList.toggle("nav-btn-active", t === tab);
+  });
+
+  if (tab === "tarot") {
+    tarotSection.style.display = "block";
+    profileCards.forEach(c => (c.style.display = "none"));
+  } else {
+    tarotSection.style.display = "none";
+    profileCards.forEach(c => (c.style.display = "block"));
+  }
+}
+
+function initTabs() {
+  const navButtons = document.querySelectorAll(".bottom-nav .nav-btn");
+  navButtons.forEach(btn => {
+    const tab = btn.getAttribute("data-tab");
+    if (!tab) return;
+    btn.addEventListener("click", () => switchTab(tab));
+  });
+}
+
+function initTarotControls() {
+  const cardsButtons = document.querySelectorAll("[data-cards]");
+  cardsButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tarotState.cards = parseInt(btn.getAttribute("data-cards"), 10);
+      cardsButtons.forEach(b => b.classList.remove("pill-btn-active"));
+      btn.classList.add("pill-btn-active");
+    });
+  });
+
+  const deckButtons = document.querySelectorAll("[data-deck]");
+  deckButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tarotState.deck = btn.getAttribute("data-deck");
+      deckButtons.forEach(b => b.classList.remove("pill-btn-active"));
+      btn.classList.add("pill-btn-active");
+    });
+  });
+
+  const askBtn = document.getElementById("tarot-ask-btn");
+  askBtn.addEventListener("click", () => {
+    if (!tg) {
+      alert("Эта кнопка работает только внутри Telegram Mini App");
+      return;
+    }
+
+    const payload = {
+      type: "tarot_setup",
+      cards: tarotState.cards,
+      deck: tarotState.deck,
+    };
+
+    tg.sendData(JSON.stringify(payload));
+    tg.close(); // закрываем мини‑апп, пользователь вернётся в чат с ботом
+  });
+}
+
