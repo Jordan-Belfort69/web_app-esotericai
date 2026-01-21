@@ -115,15 +115,14 @@ function initTarotControls() {
     }
 
     const payload = {
-      type: "tarot_setup",
-      cards: tarotState.cards,
-      deck: tarotState.deck,
+      type: "debug_click",
+      ts: Date.now(),
+      note: "кнопка Задать вопрос в боте нажата",
     };
 
-    console.log("SEND DATA:", payload); // один лог
-    tg.sendData(JSON.stringify(payload)); // один sendData
+    console.log("SEND DATA:", payload);
+    tg.sendData(JSON.stringify(payload));
     tg.close();
   });
-}
-
+} // ← этой скобки не хватало
 
