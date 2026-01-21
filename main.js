@@ -145,40 +145,21 @@ function initReferralSection() {
     '#profile-subscription, #profile-limits, #profile-ref-link'
   );
   const tarotSection = document.getElementById('tarot-section');
-  const bottomNav = document.querySelector('.bottom-nav');
+  const inviteBtn = document.getElementById('ref-invite-btn'); // если кнопка в HTML
 
-  if (!refLinkCard || !refScreen || !bottomNav) return;
-
-  // создаём кнопку "Пригласить друзей"
-  const inviteBtn = document.createElement('button');
-  inviteBtn.className = 'primary-btn';
-  inviteBtn.id = 'ref-invite-btn';
-  inviteBtn.textContent = 'Пригласить друзей';
-  inviteBtn.style.position = 'fixed';
-  inviteBtn.style.left = '50%';
-  inviteBtn.style.transform = 'translateX(-50%)';
-  inviteBtn.style.bottom = '16px';
-  inviteBtn.style.width = 'calc(100% - 32px)';
-  inviteBtn.style.maxWidth = '480px';
-
-
-  inviteBtn.addEventListener('click', () => {
-    // TODO: сюда подвяжешь бекенд, который откроет sendMessage / deeplink
-    console.log('Invite friends clicked');
-  });
+  if (!refLinkCard || !refScreen) return;
 
   refLinkCard.addEventListener('click', () => {
-    // скрываем профильные карточки и Таро
     profileCards.forEach(c => (c.style.display = 'none'));
     if (tarotSection) tarotSection.style.display = 'none';
-
-    // показываем реферальный экран
     refScreen.style.display = 'block';
-
-    // прячем нижнее меню, показываем кнопку
-    bottomNav.style.display = 'none';
-    document.body.appendChild(inviteBtn);
   });
+
+  if (inviteBtn) {
+    inviteBtn.addEventListener('click', () => {
+      console.log('Invite friends clicked');
+    });
+  }
 }
 
 function initSubsControls() {
