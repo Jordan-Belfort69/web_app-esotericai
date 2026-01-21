@@ -144,9 +144,12 @@ function initReferralSection() {
   inviteBtn.id = 'ref-invite-btn';
   inviteBtn.textContent = 'Пригласить друзей';
   inviteBtn.style.position = 'fixed';
-  inviteBtn.style.left = '16px';
-  inviteBtn.style.right = '16px';
+  inviteBtn.style.left = '50%';
+  inviteBtn.style.transform = 'translateX(-50%)';
   inviteBtn.style.bottom = '16px';
+  inviteBtn.style.width = 'calc(100% - 32px)';
+  inviteBtn.style.maxWidth = '480px';
+
 
   inviteBtn.addEventListener('click', () => {
     // TODO: сюда подвяжешь бекенд, который откроет sendMessage / deeplink
