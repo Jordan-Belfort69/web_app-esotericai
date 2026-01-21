@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initTarotControls();
   initReferralSection();
   initSubsControls();
-  createSubsFloatingButtons();
 });
 
 let tarotState = {
@@ -67,8 +66,6 @@ function switchTab(tab) {
     '#profile-subscription, #profile-limits, #profile-ref-link, #profile-ref'
   );
   const navButtons = document.querySelectorAll('.bottom-nav .nav-btn');
-  const bottomNav = document.querySelector('.bottom-nav');
-  const subsButtons = document.getElementById('subs-floating-buttons');
 
   navButtons.forEach(btn => {
     const t = btn.getAttribute('data-tab');
@@ -80,22 +77,15 @@ function switchTab(tab) {
     if (tarotSection) tarotSection.style.display = 'block';
     if (subsSection) subsSection.style.display = 'none';
     profileBlocks.forEach(c => (c.style.display = 'none'));
-    if (bottomNav) bottomNav.style.display = 'flex';
-    if (subsButtons) subsButtons.style.display = 'none';
   } else if (tab === 'subs') {
     if (subsSection) subsSection.style.display = 'block';
     if (tarotSection) tarotSection.style.display = 'none';
     profileBlocks.forEach(c => (c.style.display = 'none'));
-    if (bottomNav) bottomNav.style.display = 'none';
-    if (subsButtons) subsButtons.style.display = 'flex';
   } else {
     // профиль
     if (tarotSection) tarotSection.style.display = 'none';
     if (subsSection) subsSection.style.display = 'none';
     profileBlocks.forEach(c => (c.style.display = 'block'));
-    if (bottomNav) bottomNav.style.display = 'flex';
-    if (subsButtons) subsButtons.style.display = 'none';
-    // реф-экран можно дополнительно скрыть, если нужно
     const refScreen = document.getElementById('profile-ref');
     if (refScreen) refScreen.style.display = 'none';
   }
@@ -208,31 +198,3 @@ function initSubsControls() {
     });
   }
 }
-
-function createSubsFloatingButtons() {
-  const container = document.createElement('div');
-  container.className = 'subs-floating-buttons';
-  container.id = 'subs-floating-buttons';
-
-  const proBtn = document.createElement('button');
-  proBtn.className = 'subs-btn subs-btn-pro';
-  proBtn.textContent = '🌙 PRO';
-
-  const mysticBtn = document.createElement('button');
-  mysticBtn.className = 'subs-btn subs-btn-mystic';
-  mysticBtn.textContent = '🔮 Mystic';
-
-  proBtn.addEventListener('click', () => {
-    console.log('PRO clicked');
-  });
-
-  mysticBtn.addEventListener('click', () => {
-    console.log('Mystic clicked');
-  });
-
-  container.appendChild(proBtn);
-  container.appendChild(mysticBtn);
-
-  document.body.appendChild(container);
-}
-
