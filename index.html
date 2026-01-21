@@ -288,29 +288,26 @@
 }
 
 /* ===== ЭКРАН ПОДПИСКИ ===== */
-.subs-hero {
-  margin-bottom: 16px;
+.subs-header-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
-.subs-title {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.subs-title span {
-  font-weight: 700;
+.subs-card {
+  background: #111827;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 8px; /* маленький пробел между блоками */
 }
 
 .subs-current {
   font-size: 13px;
-  color: #d1d5db;
+  color: #e5e7eb;
 }
 
-.subs-plan {
-  margin-top: 12px;
-  padding-top: 8px;
-  border-top: 1px solid #1f2937;
+.subs-current-name {
+  font-weight: 700;
 }
 
 .subs-plan-title {
@@ -331,11 +328,12 @@
   margin-bottom: 2px;
 }
 
-/* Кнопки выбора тарифа */
+/* Кнопки PRO / Mystic в два ряда, выровнены по контенту */
 .subs-buttons {
   display: flex;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 12px;
+  margin-bottom: 72px; /* чтобы не закрывало нижнее меню */
 }
 
 .subs-btn {
@@ -455,17 +453,22 @@
     </section>
 
     <!-- ===== СЕКЦИЯ: ЭКРАН ПОДПИСКИ (ВКЛАДКА "ПОДПИСКА") ===== -->
-    <section class="card" id="subs-section" style="display:none;">
-      <div class="subs-hero">
-        <div class="subs-title">
-          💎 <span>EsotericAI подписки</span>
-        </div>
+    <section id="subs-section" style="display:none;">
+
+      <!-- Заголовок вне блока -->
+      <div class="subs-header-title">
+        💎 EsotericAI подписки
+      </div>
+
+      <!-- Блок: текущая подписка -->
+      <div class="subs-card">
         <div class="subs-current">
-          🟢 Сейчас у тебя подписка: <strong>🆓 Free</strong>
+          🟢 Сейчас у тебя подписка: <span class="subs-current-name">🆓 Free</span>
         </div>
       </div>
 
-      <div class="subs-plan">
+      <!-- Блок: Free -->
+      <div class="subs-card">
         <div class="subs-plan-title">🆓 Free</div>
         <ul class="subs-list">
           <li>1 ритуал в день</li>
@@ -474,7 +477,8 @@
         </ul>
       </div>
 
-      <div class="subs-plan">
+      <!-- Блок: PRO -->
+      <div class="subs-card">
         <div class="subs-plan-title">🌙 PRO — 299 ₽ / 30 дней</div>
         <ul class="subs-list">
           <li>До 10 ритуалов в день</li>
@@ -484,7 +488,8 @@
         </ul>
       </div>
 
-      <div class="subs-plan">
+      <!-- Блок: Mystic -->
+      <div class="subs-card">
         <div class="subs-plan-title">🔮 Mystic — 599 ₽ / 30 дней</div>
         <ul class="subs-list">
           <li>До 50 ритуалов в день</li>
@@ -495,6 +500,7 @@
         </ul>
       </div>
 
+      <!-- Кнопки выбора тарифа -->
       <div class="subs-buttons">
         <button class="subs-btn subs-btn-pro" id="subs-btn-pro">🌙 PRO</button>
         <button class="subs-btn subs-btn-mystic" id="subs-btn-mystic">🔮 Mystic</button>
