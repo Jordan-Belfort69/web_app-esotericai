@@ -1,6 +1,20 @@
 const API_URL = "http://127.0.0.1:8000/api/me"; // без user_id
 const tg = window.Telegram ? window.Telegram.WebApp : null;
 
+document.addEventListener("DOMContentLoaded", () => {
+  if (tg) tg.ready();
+  const btn = document.getElementById("tarot-ask-btn");
+  btn.addEventListener("click", () => {
+    if (!tg) {
+      alert("NO TG");
+      return;
+    }
+    const payload = { type: "tarot_test", ts: Date.now() };
+    console.log("SEND DATA:", payload);
+    tg.sendData(JSON.stringify(payload));
+  });
+});
+
 let tarotState = {
   cards: 1,
   deck: "rider",
@@ -76,16 +90,6 @@ async function loadProfile() {
     alert("Не удалось загрузить данные профиля");
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (tg) {
-    tg.ready();
-  }
-  initTabs();
-  initTarotControls();
-  // loadProfile();  // временно отключаем, чтобы не было ошибки fetch
-});
-
 
 function switchTab(tab) {
   const tarotSection = document.getElementById("tarot-section");
