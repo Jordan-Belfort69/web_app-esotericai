@@ -65,7 +65,7 @@ function switchTab(tab) {
   const tarotSection = document.getElementById('tarot-section');
   const subsSection = document.getElementById('subs-section');
   const profileBlocks = document.querySelectorAll(
-    '#profile-subscription, #profile-limits, #profile-buy-sub, #profile-ref-link, #profile-ref, #profile-history'
+    '#profile-subscription, #profile-limits, #profile-buy-sub, #profile-history-link, #profile-ref-link, #profile-ref, #profile-history'
   );
   const navButtons = document.querySelectorAll('.bottom-nav .nav-btn');
 
@@ -84,12 +84,18 @@ function switchTab(tab) {
     if (tarotSection) tarotSection.style.display = 'none';
     profileBlocks.forEach(c => (c.style.display = 'none'));
   } else {
-    // профиль
+    // профиль: показываем только обычные карточки, скрываем экраны
     if (tarotSection) tarotSection.style.display = 'none';
     if (subsSection) subsSection.style.display = 'none';
-    profileBlocks.forEach(c => (c.style.display = 'block'));
+
+    document.querySelectorAll(
+      '#profile-subscription, #profile-limits, #profile-buy-sub, #profile-history-link, #profile-ref-link'
+    ).forEach(c => (c.style.display = 'block'));
+
     const refScreen = document.getElementById('profile-ref');
+    const historyScreen = document.getElementById('profile-history');
     if (refScreen) refScreen.style.display = 'none';
+    if (historyScreen) historyScreen.style.display = 'none';
   }
 }
 
