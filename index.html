@@ -448,18 +448,19 @@
 }
 
 .tasks-intro {
-  font-size: 13px;        /* чуть больше текста-пояснения */
+  font-size: 13px;
   color: #e5e7eb;
   margin: 0;
   line-height: 1.4;
 }
 
-.tasks-item .history-question {
-  margin-bottom: 6px;
+/* одинаковый отступ сверху для блока 2 и 3 */
+.tasks-item {
+  margin-top: 10px;
 }
 
-.tasks-item {
-  margin-top: 10px;       /* расстояние между заданиями и шапкой/друг другом */
+.tasks-item .history-question {
+  margin-bottom: 6px;
 }
 
 .tasks-note {
@@ -467,10 +468,6 @@
   font-size: 11px;
   font-style: italic;
   color: #9ca3af;
-}
-
-.tasks-list {
-  margin-top: 10px;          /* расстояние между шапкой и заданиями */
 }
   </style>
 </head>
@@ -695,6 +692,7 @@
 
     <!-- ===== СЕКЦИЯ: СПИСОК ЗАДАНИЙ ===== -->
     <section class="card" id="profile-tasks" style="display:none;">
+      <!-- Блок 1: текст -->
       <div class="tasks-header">
         <div class="tasks-header-title">📁 Задания</div>
         <div class="tasks-intro">
@@ -702,30 +700,30 @@
         </div>
       </div>
 
-      <div class="tasks-list">
-        <div class="history-item tasks-item" id="task1-card">
-          <div class="history-meta">
-            <span class="history-type">🟢 Задание 1</span>
-          </div>
-          <div class="history-question">
-            Пригласить 1 друга и выполнить простые действия.
-          </div>
-          <button class="history-read-btn tasks-open-btn" data-task="1">
-            Открыть задание 1
-          </button>
+      <!-- Блок 2: Задание 1 -->
+      <div class="history-item tasks-item" id="task1-card">
+        <div class="history-meta">
+          <span class="history-type">🟢 Задание 1</span>
         </div>
+        <div class="history-question">
+          Пригласить 1 друга и выполнить простые действия.
+        </div>
+        <button class="history-read-btn tasks-open-btn" data-task="1">
+          Открыть задание 1
+        </button>
+      </div>
 
-        <div class="history-item tasks-item" id="task2-card">
-          <div class="history-meta">
-            <span class="history-type">🟢 Задание 2</span>
-          </div>
-          <div class="history-question">
-            Пригласить 3 друзей и закрепить результат.
-          </div>
-          <button class="history-read-btn tasks-open-btn" data-task="2">
-            Открыть задание 2
-          </button>
+      <!-- Блок 3: Задание 2 -->
+      <div class="history-item tasks-item" id="task2-card">
+        <div class="history-meta">
+          <span class="history-type">🟢 Задание 2</span>
         </div>
+        <div class="history-question">
+          Пригласить 3 друзей и закрепить результат.
+        </div>
+        <button class="history-read-btn tasks-open-btn" data-task="2">
+          Открыть задание 2
+        </button>
       </div>
     </section>
 
