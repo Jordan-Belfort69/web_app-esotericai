@@ -192,6 +192,7 @@ function initReferralSection() {
       '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
       '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
       '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
+      '#profile-support-link, ' +
       '#profile-history, #profile-tasks, #profile-task1-card, #profile-task2-card, ' +
       '#task1-details, #task2-details, #profile-help, #profile-help-contact'
     ).forEach(c => (c.style.display = 'none'));
@@ -256,6 +257,7 @@ function initHistorySection() {
       '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
       '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
       '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
+      '#profile-support-link, ' +
       '#profile-ref, #profile-tasks, #profile-task1-card, #profile-task2-card, ' +
       '#task1-details, #task2-details, #profile-help, #profile-help-contact'
     ).forEach(c => (c.style.display = 'none'));
@@ -302,6 +304,7 @@ function initTasksSection() {
       '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
       '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
       '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
+      '#profile-support-link, ' +
       '#profile-ref, #profile-history, ' +
       '#task1-details, #task2-details, #profile-help, #profile-help-contact'
     ).forEach(c => (c.style.display = 'none'));
@@ -393,6 +396,7 @@ function initHelpSection() {
       '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
       '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
       '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
+      '#profile-support-link, ' +
       '#profile-ref, #profile-history, #profile-tasks, ' +
       '#profile-task1-card, #profile-task2-card, #task1-details, #task2-details, ' +
       '#profile-help-contact'
