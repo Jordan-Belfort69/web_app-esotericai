@@ -177,10 +177,14 @@ function initReferralSection() {
   const subsSection = document.getElementById('subs-section');
   const helpContactCard = document.getElementById('profile-help-contact');
   const inviteBtn = document.getElementById('ref-invite-btn');
+  const profileHeader = document.querySelector('.profile-header'); // ← шапка
 
   if (!refLinkCard || !refScreen) return;
 
   refLinkCard.addEventListener('click', () => {
+    // прячем шапку
+    if (profileHeader) profileHeader.style.display = 'none';
+
     // прячем ВСЕ карточки профиля и внутренние экраны
     document.querySelectorAll(
       '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
