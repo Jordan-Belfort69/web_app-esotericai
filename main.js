@@ -282,16 +282,32 @@ function initTasksSection() {
   const task1Details = document.getElementById('task1-details');
   const task2Details = document.getElementById('task2-details');
 
+  const tarotSection = document.getElementById('tarot-section');
+  const subsSection = document.getElementById('subs-section');
+  const profileHeader = document.querySelector('.profile-header');
+
   if (!tasksLink || !tasksHeader) return;
 
   // Переход в раздел заданий (3 блока)
   tasksLink.addEventListener('click', () => {
     console.log('Tasks clicked');
 
+    // прячем шапку
+    if (profileHeader) profileHeader.style.display = 'none';
+
+    // прячем все карточки профиля и другие экраны
     document.querySelectorAll(
-      '#profile-subscription, #profile-limits, #profile-buy-sub, #profile-history-link, #profile-tasks-link, #profile-ref-link, #profile-ref, #profile-history, #task1-details, #task2-details'
+      '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
+      '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
+      '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
+      '#profile-ref, #profile-history, ' +
+      '#task1-details, #task2-details, #profile-help, #profile-help-contact'
     ).forEach(c => (c.style.display = 'none'));
 
+    if (tarotSection) tarotSection.style.display = 'none';
+    if (subsSection) subsSection.style.display = 'none';
+
+    // показываем заголовок раздела и карточки заданий
     tasksHeader.style.display = 'block';
     if (task1CardSection) task1CardSection.style.display = 'block';
     if (task2CardSection) task2CardSection.style.display = 'block';
