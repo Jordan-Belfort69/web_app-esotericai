@@ -495,6 +495,19 @@ function initRitualTip() {
   const timeScreen = document.getElementById('ritual-tip-time-screen');
   const timeOptions = document.querySelectorAll('.ritual-time-option');
 
+  // пробуем восстановить сохранённые настройки
+  try {
+    const saved = localStorage.getItem('ritualTipState');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      ritualTipState.enabled = !!parsed.enabled;
+      ritualTipState.time = parsed.time || null;
+      ritualTipState.timezone = parsed.timezone || 'Europe/Moscow';
+    }
+  } catch (e) {
+    console.warn('cannot load ritualTipState', e);
+  }
+
   if (!tipLink || !tipSettings) return;
 
   function updateMainTimeLabel() {
@@ -590,7 +603,13 @@ function initRitualTip() {
 
       console.log('SAVE DAILY TIP:', payload);
 
-      // здесь позже можно включить отправку в бота:
+      // сохраняем настройки локально
+      try {
+        localStorage.setItem('ritualTipState', JSON.stringify(ritualTipState));
+      } catch (e) {
+        console.warn('cannot save ritualTipState', e);
+      }
+
       // if (tg) tg.sendData(JSON.stringify(payload));
 
       switchTab('rituals');
