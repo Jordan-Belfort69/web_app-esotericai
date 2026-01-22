@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initHistorySection();
   initTasksSection();
   initFeedbackLink();
+  initNewsLink();
 });
 
 let tarotState = {
@@ -296,3 +297,19 @@ function initFeedbackLink() {
   });
 }
 
+function initNewsLink() {
+  const newsCard = document.getElementById('profile-news-link');
+  if (!newsCard) return;
+
+  newsCard.addEventListener('click', () => {
+    const url = 'https://t.me/news_esotericai'; // замени на ссылку канала
+
+    console.log('News clicked, open:', url);
+
+    if (tg && typeof tg.openTelegramLink === 'function') {
+      tg.openTelegramLink(url);
+    } else {
+      window.open(url, '_blank');
+    }
+  });
+}
