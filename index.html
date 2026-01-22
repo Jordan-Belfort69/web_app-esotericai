@@ -389,6 +389,33 @@
   margin-bottom: 8px;
 }
 
+.help-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.help-item .history-question {
+  margin-bottom: 0;
+}
+
+.help-read-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #1d4ed8;
+  color: #f9fafb;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.help-read-btn:active {
+  transform: translateY(1px);
+}
+
 .history-meta {
   display: flex;
   justify-content: space-between;
@@ -766,37 +793,44 @@
         Здесь собраны полезные материалы по работе с ботом:
       </p>
 
-      <div class="history-item">
-        <div class="history-question">📖 Как пользоваться ботом</div>
-        <button class="history-read-btn help-link-btn"
-                data-url="https://telegra.ph/Kak-polzovatsya-botom-EsotericAI-Ritual-01-06">
-          Открыть статью
-        </button>
+      <div class="history-item help-item">
+        <div class="help-row">
+          <div class="history-question">📖 Как пользоваться ботом</div>
+          <button class="help-read-btn help-link-btn"
+                  data-url="https://telegra.ph/Kak-polzovatsya-botom-EsotericAI-Ritual-01-06">
+            читать
+          </button>
+        </div>
       </div>
 
-      <div class="history-item">
-        <div class="history-question">❓ FAQ / Частые вопросы</div>
-        <button class="history-read-btn help-link-btn"
-                data-url="https://telegra.ph/FAQ--CHastye-voprosy-EsotericAI-Ritual-01-06">
-          Открыть статью
-        </button>
+      <div class="history-item help-item">
+        <div class="help-row">
+          <div class="history-question">❓ FAQ / Частые вопросы</div>
+          <button class="help-read-btn help-link-btn"
+                  data-url="https://telegra.ph/FAQ--CHastye-voprosy-EsotericAI-Ritual-01-06">
+            читать
+          </button>
+        </div>
       </div>
 
-      <div class="history-item">
-        <div class="history-question">📄 Пользовательское соглашение</div>
-        <button class="history-read-btn help-link-btn"
-                data-url="https://telegra.ph/Polzovatelskoe-soglashenie-EsotericAI-Ritual-01-06">
-          Открыть статью
-        </button>
+      <div class="history-item help-item">
+        <div class="help-row">
+          <div class="history-question">📄 Пользовательское соглашение</div>
+          <button class="help-read-btn help-link-btn"
+                  data-url="https://telegra.ph/Polzovatelskoe-soglashenie-EsotericAI-Ritual-01-06">
+            читать
+          </button>
+        </div>
       </div>
 
-      <div class="history-item">
-        <div class="history-question">🔐 Политика конфиденциальности</div>
-        <button class="history-read-btn help-link-btn"
-                data-url="https://telegra.ph/Politika-konfidencialnosti-EsotericAI-Ritual-01-06">
-          Открыть статью
-        </button>
-      </div>
+      <div class="history-item help-item">
+        <div class="help-row">
+          <div class="history-question">🔐 Политика конфиденциальности</div>
+          <button class="help-read-btn help-link-btn"
+                  data-url="https://telegra.ph/Politika-konfidencialnosti-EsotericAI-Ritual-01-06">
+            читать
+          </button>
+        </div>
 
       <div class="tasks-claim-wrapper">
         <button class="history-read-btn" id="help-contact-btn">
