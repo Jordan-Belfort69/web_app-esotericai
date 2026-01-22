@@ -437,15 +437,29 @@
 }
 
 /* ===== ЗАДАНИЯ ===== */
+.tasks-header {
+  margin-bottom: 10px;
+}
+
+.tasks-header-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
 .tasks-intro {
-  font-size: 12px;
-  color: #9ca3af;
-  margin: 0 0 10px;
+  font-size: 13px;        /* чуть больше текста-пояснения */
+  color: #e5e7eb;
+  margin: 0;
   line-height: 1.4;
 }
 
 .tasks-item .history-question {
   margin-bottom: 6px;
+}
+
+.tasks-item {
+  margin-top: 10px;       /* расстояние между заданиями и шапкой/друг другом */
 }
 
 .tasks-note {
@@ -675,12 +689,14 @@
       </div>
     </section>
 
-        <!-- ===== СЕКЦИЯ: СПИСОК ЗАДАНИЙ ===== -->
+    <!-- ===== СЕКЦИЯ: СПИСОК ЗАДАНИЙ ===== -->
     <section class="card" id="profile-tasks" style="display:none;">
-      <div class="history-title">📁 Задания</div>
-      <p class="tasks-intro">
-        Выполняй задания и получай скидки, бонусы, а также бесплатные подписки.
-      </p>
+      <div class="tasks-header">
+        <div class="tasks-header-title">📁 Задания</div>
+        <div class="tasks-intro">
+          Выполняй задания и получай скидки, бонусы, а также бесплатные подписки.
+        </div>
+      </div>
 
       <div class="history-item tasks-item" id="task1-card">
         <div class="history-meta">

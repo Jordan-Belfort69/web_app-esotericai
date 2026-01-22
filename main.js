@@ -240,6 +240,8 @@ function initTasksSection() {
 
   // Переход в список заданий
   tasksLink.addEventListener('click', () => {
+    console.log('Tasks clicked');
+
     document.querySelectorAll(
       '#profile-subscription, #profile-limits, #profile-buy-sub, #profile-history-link, #profile-tasks-link, #profile-ref-link, #profile-ref, #profile-history, #task1-details, #task2-details'
     ).forEach(c => (c.style.display = 'none'));
@@ -263,8 +265,8 @@ function initTasksSection() {
   claimButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const taskId = btn.getAttribute('data-task');
-      // Пока просто показываем пример "не выполнено"
       alert('❌ Условие: Оставить отзыв о работе с проектом не выполнено! (task ' + taskId + ')');
     });
   });
 }
+
