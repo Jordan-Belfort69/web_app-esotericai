@@ -284,14 +284,15 @@ function initFeedbackLink() {
   if (!feedbackCard) return;
 
   feedbackCard.addEventListener('click', () => {
-    const url = 'https://t.me/reviews_esotericai'; // твоя ссылка на группу
+    const url = 'https://t.me/reviews_esotericai'; // @reviews_esotericai
 
     console.log('Feedback clicked, open:', url);
 
     if (tg && typeof tg.openTelegramLink === 'function') {
-      tg.openTelegramLink(url);
+      tg.openTelegramLink(url);          // для Telegram-клиента
     } else {
-      window.open(url, '_blank');
+      window.open(url, '_blank');        // для веб-браузера
     }
   });
 }
+
