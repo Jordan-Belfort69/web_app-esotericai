@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initTarotControls();
   initReferralSection();
   initSubsControls();
+  initBuySubButton();
 });
 
 let tarotState = {
@@ -63,7 +64,7 @@ function switchTab(tab) {
   const tarotSection = document.getElementById('tarot-section');
   const subsSection = document.getElementById('subs-section');
   const profileBlocks = document.querySelectorAll(
-    '#profile-subscription, #profile-limits, #profile-ref-link, #profile-ref'
+    '#profile-subscription, #profile-limits, #profile-buy-sub, #profile-ref-link, #profile-ref'
   );
   const navButtons = document.querySelectorAll('.bottom-nav .nav-btn');
 
@@ -179,3 +180,14 @@ function initSubsControls() {
     });
   }
 }
+
+function initBuySubButton() {
+  const buySubCard = document.getElementById('profile-buy-sub');
+  if (!buySubCard) return;
+
+  buySubCard.addEventListener('click', () => {
+    // Переключаем нижнее меню на вкладку "Подписка"
+    switchTab('subs');
+  });
+}
+
