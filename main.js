@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initBuySubButton();
   initHistorySection();
   initTasksSection();
+  initFeedbackLink();
 });
 
 let tarotState = {
@@ -278,3 +279,17 @@ function initTasksSection() {
   });
 }
 
+function initFeedbackLink() {
+  const feedbackCard = document.getElementById('profile-feedback-link');
+  if (!feedbackCard) return;
+
+  feedbackCard.addEventListener('click', () => {
+    const url = 'https://t.me/reviews_esotericai'; // TODO: замени на свою группу
+
+    if (tg && tg.openTelegramLink) {
+      tg.openTelegramLink(url);
+    } else {
+      window.open(url, '_blank');
+    }
+  });
+}
