@@ -287,13 +287,17 @@ body {
 }
 
 /* Кнопка "Купить подписку" — зелёный акцент */
+.card-link-buy {
+  background: transparent;        /* обнуляем фон у самой карточки */
+}
+
 .card-link-buy .card-link-inner {
-  background: #065f46;        /* тёмно‑зелёный фон */
+  background: #065f46;            /* тёмно‑зелёный фон */
   border-radius: 12px;
 }
 
 .card-link-buy .card-link-text {
-  color: #ecfdf5;             /* светлый текст */
+  color: #ecfdf5;
 }
 
 .card-link-buy .card-link-emoji {
