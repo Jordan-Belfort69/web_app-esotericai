@@ -95,6 +95,10 @@ window.AppRitualTip = (() => {
       if (!ritualTipState.enabled) {
         if (tipSettings) tipSettings.style.display = 'none';
         if (timeScreen) timeScreen.style.display = 'none';
+
+        // вот это добавь:
+        const ritualsSection = document.getElementById('rituals-section');
+        if (ritualsSection) ritualsSection.style.display = 'block';
       }
     });
 
