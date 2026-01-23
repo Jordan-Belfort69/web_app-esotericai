@@ -44,28 +44,6 @@ function getInitData() {
   return tg.initData;
 }
 
-function formatDate(iso) {
-  if (!iso) return "—";
-  try {
-    const d = new Date(iso);
-    return d.toLocaleDateString("ru-RU");
-  } catch {
-    return iso.slice(0, 10);
-  }
-}
-
-function tierLabel(tier) {
-  if (tier === "pro") return "🌙 PRO";
-  if (tier === "mystic") return "🔮 Mystic";
-  return "🆓 Free";
-}
-
-function subStatus(tier) {
-  if (tier === "pro") return "Активна 🌙 PRO";
-  if (tier === "mystic") return "Активна 🔮 Mystic";
-  return "Бесплатный доступ";
-}
-
 async function loadProfile() {
   try {
     const initData = getInitData();
@@ -621,7 +599,7 @@ function initRitualTip() {
 
       // if (tg) tg.sendData(JSON.stringify(payload));
 
-      switchTab('rituals');
+      AppNavigation.switchTab('rituals');  // ← вместо switchTab('rituals')
     });
   }
 }
