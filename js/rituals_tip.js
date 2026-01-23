@@ -83,6 +83,19 @@ window.AppRitualTip = (() => {
       ritualTipState.enabled = tipEnabledCheckbox.checked;
       tipExtra.style.display = ritualTipState.enabled ? 'block' : 'none';
       updateMainTimeLabel();
+
+      // сохраняем новое состояние (вкл/выкл)
+      try {
+        localStorage.setItem('ritualTipState', JSON.stringify(ritualTipState));
+      } catch (e) {
+        console.warn('cannot save ritualTipState', e);
+      }
+
+      // если выключили — сразу спрятать настройки/экран времени
+      if (!ritualTipState.enabled) {
+        if (tipSettings) tipSettings.style.display = 'none';
+        if (timeScreen) timeScreen.style.display = 'none';
+      }
     });
 
     // открыть экран выбора времени
@@ -107,6 +120,13 @@ window.AppRitualTip = (() => {
 
         timeOptions.forEach(o => o.classList.remove('ritual-time-option-selected'));
         opt.classList.add('ritual-time-option-selected');
+
+        // сохраняем новое время
+        try {
+          localStorage.setItem('ritualTipState', JSON.stringify(ritualTipState));
+        } catch (e) {
+          console.warn('cannot save ritualTipState', e);
+        }
 
         if (timeScreen) timeScreen.style.display = 'none';
         openTipSettings();
@@ -145,3 +165,4 @@ window.AppRitualTip = (() => {
     initRitualTip,
   };
 })();
+
