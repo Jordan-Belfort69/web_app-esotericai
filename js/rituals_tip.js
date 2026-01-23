@@ -90,16 +90,6 @@ window.AppRitualTip = (() => {
       } catch (e) {
         console.warn('cannot save ritualTipState', e);
       }
-
-      // если выключили — сразу спрятать настройки/экран времени
-      if (!ritualTipState.enabled) {
-        if (tipSettings) tipSettings.style.display = 'none';
-        if (timeScreen) timeScreen.style.display = 'none';
-
-        // вот это добавь:
-        const ritualsSection = document.getElementById('rituals-section');
-        if (ritualsSection) ritualsSection.style.display = 'block';
-      }
     });
 
     // открыть экран выбора времени
