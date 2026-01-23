@@ -629,11 +629,15 @@ function initRitualTip() {
 function initHoroscope() {
   const link = document.getElementById('ritual-horoscope-link');
   const screen = document.getElementById('ritual-horoscope-settings');
-  const zodiacGrid = document.getElementById('horoscope-zodiac-grid');
-  const scopeGrid = document.getElementById('horoscope-scope-grid');
   const readBtn = document.getElementById('horoscope-read-btn');
 
-  if (!link || !screen || !zodiacGrid || !scopeGrid || !readBtn) return;
+  // все кнопки выбора знака/сферы — по классам
+  const zodiacButtons = document.querySelectorAll('.horoscope-zodiac-btn');
+  const scopeButtons = document.querySelectorAll('.horoscope-scope-btn');
+
+  if (!link || !screen || !readBtn || !zodiacButtons.length || !scopeButtons.length) {
+    return;
+  }
 
   function openHoroscopeScreen() {
     const profileHeader = document.querySelector('.profile-header');
@@ -661,13 +665,13 @@ function initHoroscope() {
     if (timeScreen) timeScreen.style.display = 'none';
 
     // подсветка сохранённого выбора
-    zodiacGrid.querySelectorAll('.horoscope-btn').forEach(btn => {
+    zodiacButtons.forEach(btn => {
       const val = btn.getAttribute('data-zodiac');
-      btn.classList.toggle('horoscope-btn-active', val === horoscopeState.zodiac);
+      btn.classList.toggle('pill-btn-active', val === horoscopeState.zodiac);
     });
-    scopeGrid.querySelectorAll('.horoscope-btn').forEach(btn => {
+    scopeButtons.forEach(btn => {
       const val = btn.getAttribute('data-scope');
-      btn.classList.toggle('horoscope-btn-active', val === horoscopeState.scope);
+      btn.classList.toggle('pill-btn-active', val === horoscopeState.scope);
     });
 
     screen.style.display = 'block';
@@ -677,26 +681,24 @@ function initHoroscope() {
   link.addEventListener('click', openHoroscopeScreen);
 
   // выбор знака
-  zodiacGrid.querySelectorAll('.horoscope-btn').forEach(btn => {
+  zodiacButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const val = btn.getAttribute('data-zodiac');
       horoscopeState.zodiac = val;
 
-      zodiacGrid.querySelectorAll('.horoscope-btn')
-        .forEach(b => b.classList.remove('horoscope-btn-active'));
-      btn.classList.add('horoscope-btn-active');
+      zodiacButtons.forEach(b => b.classList.remove('pill-btn-active'));
+      btn.classList.add('pill-btn-active');
     });
   });
 
   // выбор сферы
-  scopeGrid.querySelectorAll('.horoscope-btn').forEach(btn => {
+  scopeButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const val = btn.getAttribute('data-scope') || 'none';
       horoscopeState.scope = val;
 
-      scopeGrid.querySelectorAll('.horoscope-btn')
-        .forEach(b => b.classList.remove('horoscope-btn-active'));
-      btn.classList.add('horoscope-btn-active');
+      scopeButtons.forEach(b => b.classList.remove('pill-btn-active'));
+      btn.classList.add('pill-btn-active');
     });
   });
 
@@ -717,7 +719,8 @@ function initHoroscope() {
 
     if (tg) {
       tg.sendData(JSON.stringify(payload));
-      tg.close(); // можно убрать, если хочешь остаться в мини‑аппе
+      tg.close();
     }
   });
 }
+
