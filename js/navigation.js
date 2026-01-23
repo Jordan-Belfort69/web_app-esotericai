@@ -74,7 +74,9 @@ window.AppNavigation = (() => {
         'profile-task1-card', 'profile-task2-card',
         'task1-details', 'task2-details',
         'profile-help', 'profile-help-contact',
-        'ritual-horoscope-settings'
+        'ritual-horoscope-settings',
+        'ritual-tip-settings',       // ← добавить
+        'ritual-tip-time-screen'     // ← добавить
       ].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
