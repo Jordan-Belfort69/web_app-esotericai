@@ -1,222 +1,277 @@
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #0f1115;
-  color: #fff;
-}
+    /* ===== БАЗОВЫЕ НАСТРОЙКИ ===== */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f1115;
+      color: #fff;
+    }
 
-#app {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 16px 16px 72px;
-  box-sizing: border-box;
-}
 
-.profile-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
+    #app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px 16px 72px;
+      box-sizing: border-box;
+    }
 
-.profile-main {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
 
-.avatar-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #262b35;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-}
+    /* ===== ШАПКА ПРОФИЛЯ ===== */
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
 
-.profile-name {
-  font-weight: 600;
-  font-size: 16px;
-}
 
-.profile-username {
-  font-size: 13px;
-  color: #9ca3af;
-}
+    .profile-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-.tier-pill {
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  background: #1f2937;
-}
 
-.card {
-  background: #111827;
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 12px;
-}
+    .avatar-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #262b35;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
 
-.card-title {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
 
-.card-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  padding: 4px 0;
-  color: #e5e7eb;
-}
+    .profile-name {
+      font-weight: 600;
+      font-size: 16px;
+    }
 
-.card-row span:last-child {
-  color: #f9fafb;
-  font-weight: 500;
-}
 
-.bottom-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 8px 12px 12px;
-  display: flex;
-  gap: 8px;
-  background: #020617ee;
-  backdrop-filter: blur(10px);
-}
+    .profile-username {
+      font-size: 13px;
+      color: #9ca3af;
+    }
 
-.nav-btn {
-  flex: 1;
-  border-radius: 999px;
-  border: none;
-  padding: 10px 0;
-  font-size: 13px;
-  color: #e5e7eb;
-  background: #111827;
-}
 
-.nav-btn-active {
-  background: #1d4ed8;
-  color: #f9fafb;
-  font-weight: 600;
-}
+    .tier-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: #1f2937;
+    }
 
-.card-subtitle {
-  font-size: 13px;
-  font-weight: 500;
-  margin: 8px 0 6px;
-  color: #9ca3af;
-}
 
-.pill-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-}
+    /* ===== ОБЩИЙ СТИЛЬ КАРТОЧЕК ===== */
+    .card {
+      background: #111827;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
 
-.pill-btn {
-  flex: 1;
-  border-radius: 999px;
-  border: none;
-  padding: 8px 0;
-  font-size: 13px;
-  background: #020617;
-  color: #e5e7eb;
-}
 
-.pill-btn-active {
-  background: #1d4ed8;
-  color: #f9fafb;
-  font-weight: 600;
-}
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
 
-.primary-btn {
-  width: 100%;
-  margin-top: 10px;
-  border: none;
-  border-radius: 999px;
-  padding: 10px 0;
-  font-size: 14px;
-  font-weight: 600;
-  background: #16a34a;
-  color: #f9fafb;
-}
 
-.hint-text {
-  margin-top: 6px;
-  font-size: 12px;
-  color: #9ca3af;
-}
+    .card-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 4px 0;
+      color: #e5e7eb;
+    }
 
-.card-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
 
-.link-row-btn {
-  border: none;
-  background: #0b1120;
-  color: #e5e7eb;
-  font-size: 12px;
-  border-radius: 999px;
-  padding: 4px 10px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-}
+    .card-row span:last-child {
+      color: #f9fafb;
+      font-weight: 500;
+    }
 
-.link-row-btn:hover {
-  background: #1f2937;
-}
 
-.card-link {
-  padding: 0;
-}
+    /* ===== НИЖНЕЕ МЕНЮ ===== */
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 8px 12px 12px;
+      display: flex;
+      gap: 8px;
+      background: #020617ee;
+      backdrop-filter: blur(10px);
+    }
 
-.card-link-inner {
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  cursor: pointer;
-}
 
-.card-link-emoji {
-  font-size: 16px;
-}
+    .nav-btn {
+      flex: 1;
+      border-radius: 999px;
+      border: none;
+      padding: 10px 0;
+      font-size: 13px;
+      color: #e5e7eb;
+      background: #111827;
+    }
 
-.card-link-text {
-  flex: 1;
-  font-weight: 600; /* сделает "Реферальная программа" жирнее */
-}
 
-.card-link-arrow {
-  font-size: 16px;
-  color: #9ca3af;
-}
+    .nav-btn-active {
+      background: #1d4ed8;
+      color: #f9fafb;
+      font-weight: 600;
+    }
 
-/* ===== РЕФЕРАЛЬНЫЙ ЭКРАН ===== */
+
+    /* ===== ТАРО: РАСКЛАД, ПИЛЛЫ, КНОПКА ===== */
+    .tarot-section {
+      margin-top: 12px;
+    }
+
+
+    .tarot-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+
+    .tarot-subtitle {
+      font-size: 13px;
+      color: #9ca3af;
+      margin: 10px 0 4px;
+    }
+
+
+        .horoscope-intro {
+      text-align: center;
+      line-height: 1.4;
+    }
+
+
+    .horoscope-section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 8px 0 6px;
+    }
+
+
+    .horoscope-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px 8px;
+    }
+
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+
+    .pill-btn {
+      border-radius: 999px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 13px;
+      padding: 6px 10px;
+    }
+
+
+    .pill-btn-active {
+      background: #1d4ed8;
+      border-color: #2563eb;
+      color: #f9fafb;
+    }
+
+
+        /* Более компактные пиллы для гороскопа */
+    .horoscope-grid .pill-btn {
+      padding: 5px 8px;    /* было 6px 10px */
+      font-size: 12px;     /* было 13px */
+    }
+
+
+    .primary-btn {
+      width: 100%;
+      margin-top: 12px;
+      border-radius: 999px;
+      border: none;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 500;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #f9fafb;
+    }
+
+
+    .hint-text {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #9ca3af;
+      line-height: 1.4;
+    }
+
+
+    /* ===== КАРТОЧКА-ССЫЛКА ДЛЯ РЕФЕРАЛКИ ===== */
+    .card-link {
+      padding: 0;
+    }
+
+
+    .card-link-inner {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+
+        /* Более компактные ссылки только в разделе Ритуалы */
+    .ritual-card-link .card-link-inner {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+
+    .card-link-emoji {
+      font-size: 16px;
+    }
+
+
+    .card-link-text {
+      flex: 1;
+    }
+
+
+    .card-link-arrow {
+      font-size: 16px;
+      color: #9ca3af;
+    }
+
+
+    /* ===== РЕФЕРАЛЬНЫЙ ЭКРАН ===== */
 .ref-hero {
   text-align: center;
   margin-bottom: 16px;
 }
 
+
 .ref-emoji {
   font-size: 36px;
   margin-bottom: 8px;
 }
+
 
 .ref-title {
   font-size: 16px;
@@ -224,14 +279,17 @@ body {
   margin-bottom: 6px;
 }
 
+
 .ref-subtitle {
   font-size: 13px;
   color: #d1d5db;
 }
 
+
 .ref-block {
   margin-top: 16px;
 }
+
 
 .ref-label {
   font-size: 11px;
@@ -242,10 +300,12 @@ body {
   margin-bottom: 6px;
 }
 
+
 .ref-link-row {
   display: flex;
   gap: 8px;
 }
+
 
 .ref-link-input {
   flex: 1;
@@ -257,10 +317,12 @@ body {
   padding: 8px 10px;
 }
 
+
 .ref-link-input:focus {
   outline: none;
   border-color: #4f46e5;
 }
+
 
 .ref-copy-btn {
   border-radius: 8px;
@@ -272,9 +334,11 @@ body {
   cursor: pointer;
 }
 
+
 .ref-copy-btn:active {
   transform: translateY(1px);
 }
+
 
 .ref-friends-box {
   border-radius: 8px;
@@ -286,24 +350,321 @@ body {
   min-height: 40px;
 }
 
+
+/* ===== ЭКРАН ПОДПИСКИ ===== */
+.subs-header-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+
+.subs-card {
+  background: #111827;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 8px; /* маленький пробел между блоками */
+}
+
+
+.subs-current {
+  font-size: 13px;
+  color: #e5e7eb;
+}
+
+
+.subs-current-name {
+  font-weight: 700;
+}
+
+
+.subs-plan-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+
+.subs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  color: #e5e7eb;
+}
+
+
+.subs-list li {
+  margin-bottom: 2px;
+}
+
+
+/* Кнопки PRO / Mystic в два ряда, выровнены по контенту */
+.subs-buttons {
+  margin-top: 8px;
+}
+
+
+.subs-btn {
+  width: 100%;
+  border-radius: 999px;
+  border: none;
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+
+.subs-btn-pro {
+  background: #4f46e5;
+  color: #f9fafb;
+}
+
+
+.subs-btn-mystic {
+  background: linear-gradient(135deg, #7c3aed, #db2777);
+  color: #f9fafb;
+}
+
+
 /* Кнопка "Купить подписку" — зелёный акцент */
 .card-link-buy {
   background: transparent;        /* обнуляем фон у самой карточки */
 }
+
 
 .card-link-buy .card-link-inner {
   background: #065f46;            /* тёмно‑зелёный фон */
   border-radius: 12px;
 }
 
+
 .card-link-buy .card-link-text {
   color: #ecfdf5;
 }
+
 
 .card-link-buy .card-link-emoji {
   color: #bbf7d0;
 }
 
+
 .card-link-buy .card-link-arrow {
   color: #a7f3d0;
+}
+
+
+/* ===== ИСТОРИЯ ЗАПРОСОВ ===== */
+.history-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+
+.history-item {
+  background: #020617;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+
+.help-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+
+.help-item .history-question {
+  margin-bottom: 0;
+}
+
+
+.help-read-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #1d4ed8;
+  color: #f9fafb;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+
+.help-read-btn:active {
+  transform: translateY(1px);
+}
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #374151;
+  transition: .2s;
+  border-radius: 999px;
+}
+
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+  background-color: #f9fafb;
+  transition: .2s;
+  border-radius: 50%;
+}
+
+
+.switch input:checked + .slider {
+  background-color: #4ade80;
+}
+
+
+.switch input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+
+.history-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+
+.history-type {
+  font-weight: 600;
+}
+
+
+.history-date {
+  font-variant-numeric: tabular-nums;
+}
+
+
+.history-question {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #e5e7eb;
+}
+
+
+.history-answer-preview {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+
+.history-read-btn {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 7px 0;
+  font-size: 12px;
+  font-weight: 500;
+  background: #1d4ed8;
+  color: #f9fafb;
+  cursor: pointer;
+}
+
+
+.history-read-btn:active {
+  transform: translateY(1px);
+}
+
+
+/* ===== ЗАДАНИЯ ===== */
+.tasks-header {
+  margin-bottom: 10px;
+}
+
+
+.tasks-header-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+
+.tasks-intro {
+  font-size: 13px;
+  color: #e5e7eb;
+  margin: 0;
+  line-height: 1.4;
+}
+
+
+/* одинаковый отступ сверху для блока 2 и 3 */
+.tasks-item {
+  margin-top: 10px;
+}
+
+
+.tasks-item .history-question {
+  margin-bottom: 6px;
+}
+
+
+.tasks-note {
+  margin-top: 6px;
+  font-size: 11px;
+  font-style: italic;
+  color: #9ca3af;
+}
+
+
+.tasks-claim-wrapper {
+  margin-top: 8px;
+}
+
+
+.help-intro {
+  margin-bottom: 12px; /* или 16px, как нравится */
+}
+
+
+.ritual-time-option {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.ritual-time-option-selected .history-question::after {
+  content: "✓";
+  margin-left: 8px;
+  color: #4ade80;
+  font-weight: 600;
 }
