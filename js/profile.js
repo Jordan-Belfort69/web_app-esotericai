@@ -8,15 +8,19 @@ window.AppProfile = (() => {
       const initData = AppCore.getInitData();
       const data = await AppApi.fetchMe(initData, FALLBACK_USER_ID);
 
-      // здесь можешь вставить свою старую логику заполнения DOM
-      // примерно:
-      // document.getElementById("user-name").textContent = data.name || "—";
-      // document.getElementById("user-username").textContent = data.username || "@username";
-      // document.getElementById("user-tier").textContent = AppCore.tierLabel(data.tier);
-      // document.getElementById("sub-status").textContent = AppCore.subStatus(data.tier);
-      // document.getElementById("sub-end").textContent = AppCore.formatDate(data.sub_end);
-      // document.getElementById("sub-days-left").textContent = data.sub_days_left ?? "—";
-      // и т.д.
+      document.getElementById("user-name").textContent = data.name || "—";
+      document.getElementById("user-username").textContent = data.username || "@username";
+      document.getElementById("user-tier").textContent = AppCore.tierLabel(data.tier);
+
+      document.getElementById("sub-status").textContent = AppCore.subStatus(data.tier);
+      document.getElementById("sub-end").textContent = AppCore.formatDate(data.sub_end);
+      document.getElementById("sub-days-left").textContent =
+        data.sub_days_left ?? "—";
+
+      document.getElementById("limit-ritual").textContent = data.limits?.ritual ?? "—";
+      document.getElementById("limit-tarot").textContent = data.limits?.tarot ?? "—";
+      document.getElementById("limit-horoscope").textContent = data.limits?.horoscope ?? "—";
+      document.getElementById("limit-week").textContent = data.limits?.week ?? "—";
     } catch (e) {
       console.error("loadProfile error:", e);
     }
