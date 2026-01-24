@@ -395,6 +395,14 @@
   line-height: 1.4;
 }
 
+.section-intro {
+  font-size: 13px;
+  color: #d1d5db;
+  text-align: center;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
 .subs-header-title {
   font-size: 15px;
   font-weight: 700;
