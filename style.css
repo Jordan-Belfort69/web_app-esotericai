@@ -655,6 +655,31 @@
   transform: translateY(1px);
 }
 
+/* Шапка раздела Таро */
+.tarot-hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.tarot-emoji {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.tarot-title-main {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.tarot-subtitle-main {
+  font-size: 13px;
+  color: #e5e7eb;
+  line-height: 1.4;
+}
 
 /* ===== ЗАДАНИЯ ===== */
 .tasks-hero {
