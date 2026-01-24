@@ -489,6 +489,24 @@
 
 
 /* ===== ИСТОРИЯ ЗАПРОСОВ ===== */
+.history-emoji {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.history-title-main {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.history-subtitle {
+  font-size: 13px;
+  color: #e5e7eb;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
 .history-title {
   font-size: 15px;
   font-weight: 700;
@@ -500,7 +518,8 @@
   background: #020617;
   border-radius: 10px;
   padding: 10px 12px;
-  margin-bottom: 8px;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
 
 
