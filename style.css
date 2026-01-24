@@ -199,6 +199,16 @@
       font-size: 12px;     /* было 13px */
     }
 
+        /* Все сферы гороскопа: фиксированная высота, ровный текст */
+    .horoscope-scope-btn {
+      height: 32px;              /* подгони при необходимости */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;           /* чтобы текст не лип */
+      white-space: nowrap;
+    }
+
     .pill-empty {
       visibility: hidden;      /* ячейка занимает место, но невидима */
       pointer-events: none;    /* по ней нельзя кликнуть */
