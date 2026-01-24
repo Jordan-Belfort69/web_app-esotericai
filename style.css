@@ -356,12 +356,36 @@
 
 
 /* ===== ЭКРАН ПОДПИСКИ ===== */
+.subs-hero {
+  background: #111827;
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.subs-emoji {
+  font-size: 36px;
+  margin-bottom: 6px;
+}
+
+.subs-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.subs-subtitle {
+  font-size: 13px;
+  color: #d1d5db;
+  line-height: 1.4;
+}
+
 .subs-header-title {
   font-size: 15px;
   font-weight: 700;
   margin-bottom: 8px;
 }
-
 
 .subs-card {
   background: #111827;
