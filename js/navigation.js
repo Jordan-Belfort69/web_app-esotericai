@@ -12,12 +12,11 @@ window.AppNavigation = (() => {
     const subsSection = document.getElementById('subs-section');
     const ritualsSection = document.getElementById('rituals-section');
     const horoscopeSettings = document.getElementById('ritual-horoscope-settings');
+    const moreSection = document.getElementById('more-section');
 
     const profileBlocks = document.querySelectorAll(
       '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
       '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
-      '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
-      '#profile-support-link, ' +
       '#profile-ref, #profile-history, #profile-tasks, #profile-task1-card, ' +
       '#profile-task2-card, #task1-details, #task2-details, ' +
       '#profile-help, #profile-help-contact'
@@ -36,18 +35,14 @@ window.AppNavigation = (() => {
       profileBlocks.forEach(c => (c.style.display = 'none'));
       if (subsSection) subsSection.style.display = 'none';
       if (ritualsSection) ritualsSection.style.display = 'none';
+      if (moreSection) moreSection.style.display = 'none';
       if (tarotSection) tarotSection.style.display = 'block';
-    } else if (tab === 'subs') {
-      if (profileHeader) profileHeader.style.display = 'none';
-      profileBlocks.forEach(c => (c.style.display = 'none'));
-      if (tarotSection) tarotSection.style.display = 'none';
-      if (ritualsSection) ritualsSection.style.display = 'none';
-      if (subsSection) subsSection.style.display = 'block';
     } else if (tab === 'rituals') {
       if (profileHeader) profileHeader.style.display = 'none';
       profileBlocks.forEach(c => (c.style.display = 'none'));
       if (tarotSection) tarotSection.style.display = 'none';
       if (subsSection) subsSection.style.display = 'none';
+      if (moreSection) moreSection.style.display = 'none';
       if (ritualsSection) ritualsSection.style.display = 'block';
 
       const tipSettings = document.getElementById('ritual-tip-settings');
@@ -55,18 +50,32 @@ window.AppNavigation = (() => {
       if (tipSettings) tipSettings.style.display = 'none';
       if (timeScreen) timeScreen.style.display = 'none';
       if (horoscopeSettings) horoscopeSettings.style.display = 'none';
+    } else if (tab === 'more') {
+      if (profileHeader) profileHeader.style.display = 'none';
+      profileBlocks.forEach(c => (c.style.display = 'none'));
+
+      if (tarotSection) tarotSection.style.display = 'none';
+      if (subsSection) subsSection.style.display = 'none';
+      if (ritualsSection) ritualsSection.style.display = 'none';
+
+      const tipSettings = document.getElementById('ritual-tip-settings');
+      const timeScreen = document.getElementById('ritual-tip-time-screen');
+      if (tipSettings) tipSettings.style.display = 'none';
+      if (timeScreen) timeScreen.style.display = 'none';
+      if (horoscopeSettings) horoscopeSettings.style.display = 'none';
+
+      if (moreSection) moreSection.style.display = 'block';
     } else {
       // вкладка "Профиль"
       if (profileHeader) profileHeader.style.display = 'flex';
       if (tarotSection) tarotSection.style.display = 'none';
       if (subsSection) subsSection.style.display = 'none';
       if (ritualsSection) ritualsSection.style.display = 'none';
+      if (moreSection) moreSection.style.display = 'none';
 
       document.querySelectorAll(
         '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
-        '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
-        '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
-        '#profile-support-link'
+        '#profile-history-link, #profile-tasks-link, #profile-ref-link'
       ).forEach(c => (c.style.display = 'block'));
 
       [
@@ -75,8 +84,8 @@ window.AppNavigation = (() => {
         'task1-details', 'task2-details',
         'profile-help', 'profile-help-contact',
         'ritual-horoscope-settings',
-        'ritual-tip-settings',       // ← добавить
-        'ritual-tip-time-screen'     // ← добавить
+        'ritual-tip-settings',
+        'ritual-tip-time-screen'
       ].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
@@ -98,3 +107,4 @@ window.AppNavigation = (() => {
     initTabs,
   };
 })();
+

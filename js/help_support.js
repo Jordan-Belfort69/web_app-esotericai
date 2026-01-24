@@ -4,7 +4,7 @@ window.AppHelpSupport = (() => {
   const tg = AppCore.tg;
 
   function initFeedbackLink() {
-    const feedbackCard = document.getElementById('profile-feedback-link');
+    const feedbackCard = document.getElementById('more-feedback-link');
     if (!feedbackCard) return;
 
     feedbackCard.addEventListener('click', () => {
@@ -20,7 +20,7 @@ window.AppHelpSupport = (() => {
   }
 
   function initNewsLink() {
-    const newsCard = document.getElementById('profile-news-link');
+    const newsCard = document.getElementById('more-news-link');
     if (!newsCard) return;
 
     newsCard.addEventListener('click', () => {
@@ -36,11 +36,12 @@ window.AppHelpSupport = (() => {
   }
 
   function initHelpSection() {
-    const helpLinkCard = document.getElementById('profile-help-link');
+    const helpLinkCard = document.getElementById('more-help-link');
     const helpScreen = document.getElementById('profile-help');
     const helpContactCard = document.getElementById('profile-help-contact');
     const tarotSection = document.getElementById('tarot-section');
     const subsSection = document.getElementById('subs-section');
+    const moreSection = document.getElementById('more-section');
     const profileHeader = document.querySelector('.profile-header');
 
     if (!helpLinkCard || !helpScreen) return;
@@ -51,8 +52,6 @@ window.AppHelpSupport = (() => {
       document.querySelectorAll(
         '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
         '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
-        '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
-        '#profile-support-link, ' +
         '#profile-ref, #profile-history, #profile-tasks, ' +
         '#profile-task1-card, #profile-task2-card, #task1-details, #task2-details, ' +
         '#profile-help-contact'
@@ -60,6 +59,7 @@ window.AppHelpSupport = (() => {
 
       if (tarotSection) tarotSection.style.display = 'none';
       if (subsSection) subsSection.style.display = 'none';
+      if (moreSection) moreSection.style.display = 'none';
 
       helpScreen.style.display = 'block';
       if (helpContactCard) helpContactCard.style.display = 'block';
@@ -94,7 +94,7 @@ window.AppHelpSupport = (() => {
   }
 
   function initSupportLink() {
-    const supportCard = document.getElementById('profile-support-link');
+    const supportCard = document.getElementById('more-support-link');
     if (!supportCard) return;
 
     supportCard.addEventListener('click', () => {
