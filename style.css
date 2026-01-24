@@ -741,3 +741,19 @@
   color: #4ade80;
   font-weight: 600;
 }
+
+/* Шапка истории: центрируем иконку и текст */
+.history-hero {
+  text-align: center;        /* если заголовок и текст должны быть как сейчас */
+  display: flex;
+  flex-direction: column;
+}
+
+.history-hero .history-emoji {
+  margin: 0 auto 6px;      /* эмоджи по центру */
+}
+
+.history-hero .history-title-main,
+.history-hero .history-subtitle {
+  text-align: center;        /* текст остаётся прижат к левому краю */
+}
