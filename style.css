@@ -212,6 +212,10 @@
       color: #f9fafb;
     }
 
+        /* сюда добавить */
+    .primary-btn:active {
+      transform: translateY(1px);
+    }
 
     .hint-text {
       margin-top: 8px;
@@ -427,6 +431,11 @@
   color: #f9fafb;
 }
 
+/* Эффект нажатия для кнопок PRO / Mystic */
+.subs-btn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
 
 /* Кнопка "Купить подписку" — зелёный акцент */
 .card-link-buy {

@@ -36,6 +36,13 @@ window.AppNavigation = (() => {
       if (subsSection) subsSection.style.display = 'none';
       if (ritualsSection) ritualsSection.style.display = 'none';
       if (moreSection) moreSection.style.display = 'none';
+
+      const tipSettings = document.getElementById('ritual-tip-settings');
+      const timeScreen = document.getElementById('ritual-tip-time-screen');
+      if (tipSettings) tipSettings.style.display = 'none';
+      if (timeScreen) timeScreen.style.display = 'none';
+      if (horoscopeSettings) horoscopeSettings.style.display = 'none';
+
       if (tarotSection) tarotSection.style.display = 'block';
     } else if (tab === 'rituals') {
       if (profileHeader) profileHeader.style.display = 'none';
