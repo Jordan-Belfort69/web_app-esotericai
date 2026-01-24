@@ -820,8 +820,8 @@
 }
 
 .section-icon {
-  width: 40px;         /* фактический размер в интерфейсе */
-  height: 40px;
+  width: 64px;         /* фактический размер в интерфейсе */
+  height: 64px;
   object-fit: contain; /* чтобы не искажались */
   display: block;
   margin: 0 auto;      /* по центру */
