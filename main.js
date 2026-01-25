@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   AppSubs.initBuySubButton();
   AppProfile.initHistorySection();
   AppProfile.initTasksSection();
+  AppProfile.initRefLinkSection();
   AppProfile.initRefBonusBlock();
   AppHelpSupport.initFeedbackLink();
   AppHelpSupport.initNewsLink();

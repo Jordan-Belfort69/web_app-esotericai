@@ -134,17 +134,35 @@ async function loadProfile() {
     });
   }
 
-  function initRefBonusBlock() {
-  const bonusCard = document.getElementById('profile-ref-bonus');
-  const refLinkCard = document.getElementById('profile-ref-link');
+  function initRefLinkSection() {
+  const refLink = document.getElementById('profile-ref-link');
+  const refScreen = document.getElementById('profile-ref');
+  const profileHeader = document.querySelector('.profile-header');
 
-  if (!bonusCard) return;
+  if (!refLink || !refScreen) return;
 
-  bonusCard.addEventListener('click', () => {
-    if (refLinkCard) {
-      refLinkCard.click();  // триггерим тот же сценарий
-    }
+  refLink.addEventListener('click', () => {
+    if (profileHeader) profileHeader.style.display = 'none';
+
+    document.querySelectorAll(
+      '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
+      '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
+      '#profile-history, #profile-tasks, #profile-task1-card, #profile-task2-card, ' +
+      '#task1-details, #task2-details, #profile-help, #profile-help-contact'
+    ).forEach(c => (c.style.display = 'none'));
+
+    refScreen.style.display = 'block';
   });
+}
+
+  function initRefBonusBlock() {
+    const bonusCard = document.getElementById('profile-ref-bonus');
+    const refLinkCard = document.getElementById('profile-ref-link');
+    if (!bonusCard || !refLinkCard) return;
+
+    bonusCard.addEventListener('click', () => {
+      refLinkCard.click();
+    });
 }
 
   return {
@@ -152,6 +170,7 @@ async function loadProfile() {
     initHistorySection,
     initTasksSection,
     initRefBonusBlock,
+    initRefLinkSection,
   };
 })();
 
