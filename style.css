@@ -832,6 +832,17 @@
   cursor: pointer;
 }
 
+.ref-bonus-wrap {
+  margin: 12px 0;
+  cursor: pointer;
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+.ref-bonus-wrap:active {
+  transform: translateY(1px) scale(0.99);
+  opacity: 0.95;
+}
+
 .ref-bonus-img {
   width: 100%;
   display: block;

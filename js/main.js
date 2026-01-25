@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
   AppSubs.initBuySubButton();         // вместо initBuySubButton()
   AppProfile.initHistorySection();
   AppProfile.initTasksSection();
+  AppProfile.initRefLinkSection();   // ← добавить
+  AppProfile.initRefBonusBlock();    // ← добавить
   AppMore.initMore();              // ← новый модуль вкладки "Еще"
   AppRitualTip.initRitualTip();
   AppHoroscope.initHoroscope();
