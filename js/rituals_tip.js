@@ -44,25 +44,8 @@ window.AppRitualTip = (() => {
     }
 
     function openTipSettings() {
-      const profileHeader = document.querySelector('.profile-header');
-      const ritualsSection = document.getElementById('rituals-section');
-      const tarotSection = document.getElementById('tarot-section');
-      const subsSection = document.getElementById('subs-section');
-
-      if (profileHeader) profileHeader.style.display = 'none';
-
-      document.querySelectorAll(
-        '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
-        '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
-        '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
-        '#profile-support-link, #profile-ref, #profile-history, #profile-tasks, ' +
-        '#profile-task1-card, #profile-task2-card, #task1-details, #task2-details, ' +
-        '#profile-help, #profile-help-contact'
-      ).forEach(c => (c.style.display = 'none'));
-
-      if (tarotSection) tarotSection.style.display = 'none';
-      if (subsSection) subsSection.style.display = 'none';
-      if (ritualsSection) ritualsSection.style.display = 'none';
+      // никаких манипуляций с profile / tarot / subs / rituals здесь
+      // только управление собственными экранами «Совета дня»
       if (timeScreen) timeScreen.style.display = 'none';
 
       tipEnabledCheckbox.checked = ritualTipState.enabled;
@@ -77,7 +60,7 @@ window.AppRitualTip = (() => {
 
     // открыть настройки из «Ритуалов»
     tipLink.addEventListener('click', () => {
-      AppRouter.go('ritual_tip');  // чтобы Back вел назад в «Ритуалы»
+      AppRouter.go('tip'); // экран "Совет дня"
       openTipSettings();
     });
 
@@ -150,11 +133,10 @@ window.AppRitualTip = (() => {
           console.warn('cannot save ritualTipState', e);
         }
 
-        // if (AppCore.tg) AppCore.tg.sendData(JSON.stringify(payload));
-
         updateMainTimeLabel();
 
-        AppRouter.stack = ['rituals'];  // возвращаемся на главный экран "Ритуалы"
+        // назад в экран "Ритуалы" (нижняя вкладка)
+        AppRouter.stack = ['rituals'];
         AppRouter.apply();
       });
     }
@@ -164,4 +146,3 @@ window.AppRitualTip = (() => {
     initRitualTip,
   };
 })();
-

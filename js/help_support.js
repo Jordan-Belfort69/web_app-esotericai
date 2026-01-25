@@ -39,32 +39,12 @@ window.AppHelpSupport = (() => {
     const helpLinkCard = document.getElementById('more-help-link');
     const helpScreen = document.getElementById('profile-help');
     const helpContactCard = document.getElementById('profile-help-contact');
-    const tarotSection = document.getElementById('tarot-section');
-    const subsSection = document.getElementById('subs-section');
-    const moreSection = document.getElementById('more-section');
-    const profileHeader = document.querySelector('.profile-header');
 
     if (!helpLinkCard || !helpScreen) return;
 
     helpLinkCard.addEventListener('click', () => {
-      AppRouter.go('help');   // ← добавили
-
-      if (profileHeader) profileHeader.style.display = 'none';
-
-      document.querySelectorAll(
-        '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
-        '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
-        '#profile-ref, #profile-history, #profile-tasks, ' +
-        '#profile-task1-card, #profile-task2-card, #task1-details, #task2-details, ' +
-        '#profile-help-contact'
-      ).forEach(c => (c.style.display = 'none'));
-
-      if (tarotSection) tarotSection.style.display = 'none';
-      if (subsSection) subsSection.style.display = 'none';
-      if (moreSection) moreSection.style.display = 'none';
-
-      helpScreen.style.display = 'block';
-      if (helpContactCard) helpContactCard.style.display = 'block';
+      // переход в экран "Помощь"
+      AppRouter.go('help');
     });
 
     const articleButtons = helpScreen.querySelectorAll('.help-link-btn');

@@ -21,27 +21,10 @@ window.AppHoroscope = (() => {
     }
 
     function openHoroscopeScreen() {
-      const profileHeader = document.querySelector('.profile-header');
-      const ritualsSection = document.getElementById('rituals-section');
-      const tarotSection = document.getElementById('tarot-section');
-      const subsSection = document.getElementById('subs-section');
+      // не трогаем profile / tarot / subs / rituals, этим управляет AppRouter/AppNavigation
       const tipSettings = document.getElementById('ritual-tip-settings');
       const timeScreen = document.getElementById('ritual-tip-time-screen');
 
-      if (profileHeader) profileHeader.style.display = 'none';
-
-      document.querySelectorAll(
-        '#profile-subscription, #profile-limits, #profile-buy-sub, ' +
-        '#profile-history-link, #profile-tasks-link, #profile-ref-link, ' +
-        '#profile-feedback-link, #profile-news-link, #profile-help-link, ' +
-        '#profile-support-link, #profile-ref, #profile-history, #profile-tasks, ' +
-        '#profile-task1-card, #profile-task2-card, #task1-details, #task2-details, ' +
-        '#profile-help, #profile-help-contact'
-      ).forEach(c => (c.style.display = 'none'));
-
-      if (tarotSection) tarotSection.style.display = 'none';
-      if (subsSection) subsSection.style.display = 'none';
-      if (ritualsSection) ritualsSection.style.display = 'none';
       if (tipSettings) tipSettings.style.display = 'none';
       if (timeScreen) timeScreen.style.display = 'none';
 
@@ -58,7 +41,7 @@ window.AppHoroscope = (() => {
     }
 
     link.addEventListener('click', () => {
-      AppRouter.go('horoscope');   // чтобы Back вел назад в «Ритуалы»
+      AppRouter.go('horoscope');   // экран "Гороскоп"
       openHoroscopeScreen();
     });
 
