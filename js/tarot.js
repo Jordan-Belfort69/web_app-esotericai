@@ -6,7 +6,7 @@ window.AppTarot = (() => {
     deck: 'rider',
   };
 
-  function openTarotSettings() {
+  function showTarotSettings() {
     const tarotSection = document.getElementById('tarot-section');
     const tarotSettings = document.getElementById('tarot-settings');
     const tarotVoiceSettings = document.getElementById('tarot-voice-settings');
@@ -14,12 +14,9 @@ window.AppTarot = (() => {
     if (tarotSection) tarotSection.style.display = 'none';
     if (tarotSettings) tarotSettings.style.display = 'block';
     if (tarotVoiceSettings) tarotVoiceSettings.style.display = 'none';
-
-    // внутренний экран Таро (текстовый вопрос)
-    AppRouter.go('tarot-inner');
   }
 
-  function openTarotVoiceSettings() {
+  function showTarotVoiceSettings() {
     const tarotSection = document.getElementById('tarot-section');
     const tarotSettings = document.getElementById('tarot-settings');
     const tarotVoiceSettings = document.getElementById('tarot-voice-settings');
@@ -27,9 +24,6 @@ window.AppTarot = (() => {
     if (tarotSection) tarotSection.style.display = 'none';
     if (tarotSettings) tarotSettings.style.display = 'none';
     if (tarotVoiceSettings) tarotVoiceSettings.style.display = 'block';
-
-    // внутренний экран Таро (голосовой вопрос)
-    AppRouter.go('tarot-inner');
   }
 
   function initTarotControls() {
@@ -39,15 +33,17 @@ window.AppTarot = (() => {
     const tarotOpenLink = document.getElementById('tarot-open-link');
     if (tarotOpenLink) {
       tarotOpenLink.addEventListener('click', () => {
-        openTarotSettings();
+        AppRouter.go('tarot-inner');   // роутер переведёт в внутренний экран
+        showTarotSettings();           // показываем нужный подэкран
       });
     }
 
-    // кнопка "🎙 Таро по голосу" на корневом экране
+    // кнопка "🎙 Таро по голосу"
     const tarotVoiceLink = document.getElementById('tarot-voice-link');
     if (tarotVoiceLink) {
       tarotVoiceLink.addEventListener('click', () => {
-        openTarotVoiceSettings();
+        AppRouter.go('tarot-inner');
+        showTarotVoiceSettings();
       });
     }
 
