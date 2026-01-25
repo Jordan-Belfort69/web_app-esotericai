@@ -826,3 +826,29 @@
   display: block;
   margin: 0 auto;      /* по центру */
 }
+
+.ref-bonus-card {
+  cursor: pointer;
+  padding: 12px 14px;
+  border-left: 3px solid #4f46e5;
+  background: radial-gradient(circle at top left,
+    rgba(79, 70, 229, 0.18),
+    rgba(15, 23, 42, 0.96)
+  );
+}
+
+.ref-bonus-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ref-bonus-icon {
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.ref-bonus-text {
+  font-size: 13px;
+  line-height: 1.4;
+}

@@ -134,9 +134,24 @@ async function loadProfile() {
     });
   }
 
+  function initRefBonusBlock() {
+  const bonusCard = document.getElementById('profile-ref-bonus');
+  const refLinkCard = document.getElementById('profile-ref-link');
+
+  if (!bonusCard) return;
+
+  bonusCard.addEventListener('click', () => {
+    if (refLinkCard) {
+      refLinkCard.click();  // триггерим тот же сценарий
+    }
+  });
+}
+
   return {
     loadProfile,
     initHistorySection,
     initTasksSection,
+    initRefBonusBlock,
   };
 })();
+
