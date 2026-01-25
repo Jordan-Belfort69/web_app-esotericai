@@ -3,28 +3,40 @@
 window.AppProfile = (() => {
   const FALLBACK_USER_ID = 1040828537;
 
-  async function loadProfile() {
-    try {
-      const initData = AppCore.getInitData();
-      const data = await AppApi.fetchMe(initData, FALLBACK_USER_ID);
+async function loadProfile() {
+  try {
+    const initData = AppCore.getInitData();
+    const data = await AppApi.fetchMe(initData, FALLBACK_USER_ID);
 
-      document.getElementById("user-name").textContent = data.name || "—";
-      document.getElementById("user-username").textContent = data.username || "@username";
-      document.getElementById("user-tier").textContent = AppCore.tierLabel(data.tier);
+    document.getElementById("user-name").textContent = data.name || "—";
+    document.getElementById("user-username").textContent = data.username || "@username";
 
-      document.getElementById("sub-status").textContent = AppCore.subStatus(data.tier);
-      document.getElementById("sub-end").textContent = AppCore.formatDate(data.sub_end);
-      document.getElementById("sub-days-left").textContent =
-        data.sub_days_left ?? "—";
+    // ===== Сводка =====
+    document.getElementById("summary-status").textContent =
+      data.status_title || "Новичок";
 
-      document.getElementById("limit-ritual").textContent = data.limits?.ritual ?? "—";
-      document.getElementById("limit-tarot").textContent = data.limits?.tarot ?? "—";
-      document.getElementById("limit-horoscope").textContent = data.limits?.horoscope ?? "—";
-      document.getElementById("limit-week").textContent = data.limits?.week ?? "—";
-    } catch (e) {
-      console.error("loadProfile error:", e);
-    }
+    document.getElementById("summary-balance").textContent =
+      (data.credits_balance ?? "—") + "";
+
+    document.getElementById("summary-registered").textContent =
+      (AppCore.formatDate && data.registered_at)
+        ? AppCore.formatDate(data.registered_at)
+        : "—";
+
+    // ===== Активность =====
+    document.getElementById("activity-friends").textContent =
+      data.friends_invited ?? "0";
+
+    document.getElementById("activity-tasks").textContent =
+      data.tasks_completed ?? "0";
+
+    document.getElementById("activity-requests").textContent =
+      data.requests_total ?? "0";
+
+  } catch (e) {
+    console.error("loadProfile error:", e);
   }
+}
 
   function initHistorySection() {
     const historyLink = document.getElementById('profile-history-link');
