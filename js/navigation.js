@@ -135,19 +135,9 @@ window.AppNavigation = (() => {
       if (!tab) return;
       // при клике по нижней навигации всегда открываем главный экран вкладки
       btn.addEventListener('click', () => {
-        // при клике по нижней навигации идём через роутер
-        if (tab === 'profile') {
-          AppRouter.stack = ['profile'];
-        } else if (tab === 'rituals') {
-          AppRouter.stack = ['rituals'];
-        } else if (tab === 'more') {
-          AppRouter.stack = ['more'];
-        } else if (tab === 'tarot') {
-          AppRouter.stack = ['tarot'];
-        }
-        AppRouter.apply();
+        switchTab(tab, 'main');   // ← возвращаем старое поведение
       });
-    });     // ← НОВАЯ строка, закрывает forEach
+    });
   }
   
   return {
