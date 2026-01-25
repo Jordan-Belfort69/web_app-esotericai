@@ -48,6 +48,8 @@ async function loadProfile() {
     if (!historyLink || !historyScreen) return;
 
     historyLink.addEventListener('click', () => {
+      AppNavigation.switchTab('profile', 'subscreen'); // ← добавить сюда
+      
       if (profileHeader) profileHeader.style.display = 'none';
 
       document.querySelectorAll(
@@ -93,6 +95,8 @@ async function loadProfile() {
 
     tasksLink.addEventListener('click', () => {
       console.log('Tasks clicked');
+
+      AppNavigation.switchTab('profile', 'subscreen'); // <— Новая строка
 
       if (profileHeader) profileHeader.style.display = 'none';
 
@@ -142,6 +146,8 @@ async function loadProfile() {
   if (!refLink || !refScreen) return;
 
   refLink.addEventListener('click', () => {
+    AppNavigation.switchTab('profile', 'subscreen'); // <— Новая строка
+    
     if (profileHeader) profileHeader.style.display = 'none';
 
     document.querySelectorAll(

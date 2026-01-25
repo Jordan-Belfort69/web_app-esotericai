@@ -6,7 +6,8 @@
 // - Подписка (subs-section)
 
 window.AppNavigation = (() => {
-  function switchTab(tab) {
+  // добавили второй параметр profileMode
+  function switchTab(tab, profileMode = 'main') {
     const profileHeader = document.querySelector('.profile-header');
     const tarotSection = document.getElementById('tarot-section');
     const subsSection = document.getElementById('subs-section');
@@ -88,23 +89,32 @@ window.AppNavigation = (() => {
       if (ritualsSection) ritualsSection.style.display = 'none';
       if (moreSection) moreSection.style.display = 'none';
 
-      document.querySelectorAll(
-        '#profile-summary, #profile-activity, #profile-ref-bonus, ' +
-        '#profile-buy-sub, #profile-history-link, #profile-tasks-link, #profile-ref-link'
-      ).forEach(c => (c.style.display = 'block'));
+      if (profileMode === 'main') {
+        // главный экран профиля
+        document.querySelectorAll(
+          '#profile-summary, #profile-activity, #profile-ref-bonus, ' +
+          '#profile-buy-sub, #profile-history-link, #profile-tasks-link, #profile-ref-link'
+        ).forEach(c => (c.style.display = 'block'));
 
-      [
-        'profile-ref', 'profile-history', 'profile-tasks',
-        'profile-task1-card', 'profile-task2-card',
-        'task1-details', 'task2-details',
-        'profile-help', 'profile-help-contact',
-        'ritual-horoscope-settings',
-        'ritual-tip-settings',
-        'ritual-tip-time-screen'
-      ].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
+        [
+          'profile-ref', 'profile-history', 'profile-tasks',
+          'profile-task1-card', 'profile-task2-card',
+          'task1-details', 'task2-details',
+          'profile-help', 'profile-help-contact',
+          'ritual-horoscope-settings',
+          'ritual-tip-settings',
+          'ritual-tip-time-screen'
+        ].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        });
+      } else if (profileMode === 'subscreen') {
+        // при подэкранах профиля верхние блоки скрыты
+        document.querySelectorAll(
+          '#profile-summary, #profile-activity, #profile-ref-bonus, ' +
+          '#profile-buy-sub, #profile-history-link, #profile-tasks-link, #profile-ref-link'
+        ).forEach(c => (c.style.display = 'none'));
+      }
     }
   }
 
@@ -113,7 +123,8 @@ window.AppNavigation = (() => {
     navButtons.forEach(btn => {
       const tab = btn.getAttribute('data-tab');
       if (!tab) return;
-      btn.addEventListener('click', () => switchTab(tab));
+      // при клике по нижней навигации всегда открываем главный экран вкладки
+      btn.addEventListener('click', () => switchTab(tab, 'main'));
     });
   }
 
