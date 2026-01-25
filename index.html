@@ -685,6 +685,15 @@
           <span class="card-link-arrow">›</span>
         </div>
       </section>
+
+      <!-- Кнопка Таро по голосу -->
+      <section class="card card-link" id="tarot-voice-link">
+        <div class="card-link-inner">
+          <span class="card-link-emoji">🎙</span>
+          <span class="card-link-text">Таро по голосу</span>
+          <span class="card-link-arrow">›</span>
+        </div>
+      </section>
     </section>
 
     <!-- ===== ВНУТРЕННИЙ ЭКРАН: НАСТРОЙКИ РАСКЛАДА ТАРО ===== -->
@@ -713,6 +722,33 @@
       </div>
 
       <button class="primary-btn" id="tarot-ask-btn">
+        Задать вопрос
+      </button>
+    </section>
+
+    <!-- ===== ВНУТРЕННИЙ ЭКРАН: ТАРО ПО ГОЛОСУ ===== -->
+    <section class="card tarot-section" id="tarot-voice-settings" style="display:none;">
+      <div class="tarot-hero">
+        <div class="tarot-emoji">
+          <img src="img/tarot.png" alt="Таро" class="section-icon">
+        </div>
+        <div class="tarot-title-main">Таро по голосу</div>
+        <div class="section-intro">
+          Запиши голосовой вопрос до 60 секунд — бот расшифрует его и сделает расклад,
+          как если бы ты написал(а) текст вручную.
+        </div>
+      </div>
+
+      <div class="history-item">
+        <div class="history-question">Как это работает</div>
+        <div class="history-answer-preview">
+          1. Нажми «Задать вопрос» внизу.<br>
+          2. Отправь боту голосовое сообщение с вопросом (до 60 секунд).<br>
+          3. Бот расшифрует голос и сделает расклад по твоему вопросу.
+        </div>
+      </div>
+
+      <button class="primary-btn" id="tarot-voice-ask-btn">
         Задать вопрос
       </button>
     </section>

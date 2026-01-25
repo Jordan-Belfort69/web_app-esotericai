@@ -9,11 +9,26 @@ window.AppTarot = (() => {
   function openTarotSettings() {
     const tarotSection = document.getElementById('tarot-section');
     const tarotSettings = document.getElementById('tarot-settings');
+    const tarotVoiceSettings = document.getElementById('tarot-voice-settings');
 
     if (tarotSection) tarotSection.style.display = 'none';
     if (tarotSettings) tarotSettings.style.display = 'block';
+    if (tarotVoiceSettings) tarotVoiceSettings.style.display = 'none';
 
-    // внутренний экран Таро
+    // внутренний экран Таро (текстовый вопрос)
+    AppRouter.go('tarot-inner');
+  }
+
+  function openTarotVoiceSettings() {
+    const tarotSection = document.getElementById('tarot-section');
+    const tarotSettings = document.getElementById('tarot-settings');
+    const tarotVoiceSettings = document.getElementById('tarot-voice-settings');
+
+    if (tarotSection) tarotSection.style.display = 'none';
+    if (tarotSettings) tarotSettings.style.display = 'none';
+    if (tarotVoiceSettings) tarotVoiceSettings.style.display = 'block';
+
+    // внутренний экран Таро (голосовой вопрос)
     AppRouter.go('tarot-inner');
   }
 
@@ -28,7 +43,15 @@ window.AppTarot = (() => {
       });
     }
 
-    // дальше – твоя текущая логика выбора карт и колоды
+    // кнопка "🎙 Таро по голосу" на корневом экране
+    const tarotVoiceLink = document.getElementById('tarot-voice-link');
+    if (tarotVoiceLink) {
+      tarotVoiceLink.addEventListener('click', () => {
+        openTarotVoiceSettings();
+      });
+    }
+
+    // выбор количества карт
     const cardsButtons = document.querySelectorAll('[data-cards]');
     cardsButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -38,6 +61,7 @@ window.AppTarot = (() => {
       });
     });
 
+    // выбор колоды
     const deckButtons = document.querySelectorAll('[data-deck]');
     deckButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -47,27 +71,47 @@ window.AppTarot = (() => {
       });
     });
 
+    // текстовый вопрос
     const askBtn = document.getElementById('tarot-ask-btn');
-    if (!askBtn) return;
+    if (askBtn) {
+      askBtn.addEventListener('click', () => {
+        if (!tg) {
+          alert('Эта кнопка работает только внутри Telegram Mini App');
+          return;
+        }
 
-    askBtn.addEventListener('click', () => {
-      if (!tg) {
-        alert('Эта кнопка работает только внутри Telegram Mini App');
-        return;
-      }
+        const payload = {
+          type: 'tarot_text',
+          ts: Date.now(),
+          cards: tarotState.cards,
+          deck: tarotState.deck,
+        };
 
-      const payload = {
-        type: 'debug_click',
-        ts: Date.now(),
-        note: 'кнопка Задать вопрос в боте нажата',
-        cards: tarotState.cards,
-        deck: tarotState.deck,
-      };
+        console.log('SEND DATA:', payload);
+        tg.sendData(JSON.stringify(payload));
+        tg.close();
+      });
+    }
 
-      console.log('SEND DATA:', payload);
-      tg.sendData(JSON.stringify(payload));
-      tg.close();
-    });
+    // голосовой вопрос
+    const voiceAskBtn = document.getElementById('tarot-voice-ask-btn');
+    if (voiceAskBtn) {
+      voiceAskBtn.addEventListener('click', () => {
+        if (!tg) {
+          alert('Эта кнопка работает только внутри Telegram Mini App');
+          return;
+        }
+
+        const payload = {
+          type: 'tarot_voice',
+          ts: Date.now(),
+        };
+
+        console.log('SEND DATA:', payload);
+        tg.sendData(JSON.stringify(payload));
+        tg.close();
+      });
+    }
   }
 
   return {
