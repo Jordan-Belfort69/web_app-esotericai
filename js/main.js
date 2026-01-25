@@ -40,20 +40,6 @@ const AppRouter = {
       AppNavigation.switchTab("more");
     }
 
-    // 2) показываем/прячем внутренние секции
-    /*
-    AppProfile.showMain(screen === "profile");
-    AppSubs.showBuyMessages(screen === "buy_messages");
-    AppProfile.showHistory(screen === "history");
-    AppProfile.showTasks(screen === "tasks");
-    AppProfile.showTaskDetails(screen === "task_details");
-    AppProfile.showReferral(screen === "referral");
-
-    AppRitualTip.showTip(screen === "ritual_tip");
-    AppHoroscope.showHoroscope(screen === "horoscope");
-
-    AppHelpSupport.showHelp(screen === "help");
-    */
     // 3) нижнее меню
     const needBottomNav = ["profile","rituals","more"].includes(screen);
     if (needBottomNav) {
@@ -68,8 +54,17 @@ document.addEventListener("DOMContentLoaded", () => {
   AppCore.initTelegram();
 
   const tg = AppCore.tg;
-  tg.BackButton.show();
-  tg.BackButton.onClick(() => {
+  const backBtn = tg.BackButton;
+  const mainBtn = tg.MainButton;
+
+  // на стартовом экране: нет "Назад", есть "Закрыть"
+  backBtn.hide();
+  mainBtn.setText("Закрыть");
+  mainBtn.show();
+  mainBtn.onClick(() => tg.close());
+
+  // обработчик BackButton оставляем для внутренних экранов
+  backBtn.onClick(() => {
     AppRouter.back();
   });
 
