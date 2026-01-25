@@ -455,22 +455,15 @@
 .subs-option-main {
   display: flex;
   flex-direction: column;
-  gap: 0;             /* было 2px */
+  gap: 2px;        /* вместо 0 */
   text-align: left;
-}
-
-/* Первая строка первого пакета: название + цена в одну линию */
-.subs-option-main-first .subs-option-line {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .subs-option-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-content: flex-start;  /* было center */
+  justify-content: center;  /* вместо flex-start */
 }
 
 .subs-option-title {
