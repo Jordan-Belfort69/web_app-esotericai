@@ -459,6 +459,13 @@
   text-align: left;
 }
 
+/* Первая строка первого пакета: название + цена в одну линию */
+.subs-option-main-first .subs-option-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .subs-option-right {
   display: flex;
   flex-direction: column;
