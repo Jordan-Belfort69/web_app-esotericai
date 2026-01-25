@@ -46,10 +46,12 @@ window.AppSubs = (() => {
     // опционально: обработка клика по "Условиям"
     const termsLink = document.getElementById('subs-terms-link');
     if (termsLink) {
-      termsLink.addEventListener('click', () => {
-        // например, открыть ссылку в браузере
-        // window.open('https://telegra.ph/Polzovatelskoe-soglashenie-EsotericAI-Ritual-01-06', '_blank');
-        console.log('Terms clicked');
+      termsLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open(
+          'https://telegra.ph/Polzovatelskoe-soglashenie-EsotericAI-Ritual-01-06',
+          '_blank'
+        );
       });
     }
   }
