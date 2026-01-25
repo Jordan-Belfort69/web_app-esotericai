@@ -1,5 +1,3 @@
-// ===== ВРЕМЕННЫЙ MONOLITH main.js (будем разрезать на модули) =====
-
 // ===== РОУТЕР ЭКРАНОВ =====
 // profile / buy / history / tasks / task1 / task2 / referral /
 // tarot / rituals / tip / horoscope / more / help
@@ -42,6 +40,16 @@ const AppRouter = {
 
   apply() {
     const screen = this.current();
+
+    // 0) шапка профиля: видна только на главном профиле
+    const profileHeader = document.querySelector('.profile-header');
+    if (profileHeader) {
+      if (screen === "profile") {
+        profileHeader.style.display = 'flex';
+      } else {
+        profileHeader.style.display = 'none';
+      }
+    }
 
     // 1) переключаем основной таб
     if (["profile","buy","history","tasks","task1","task2","referral"].includes(screen)) {
@@ -103,6 +111,10 @@ const AppRouter = {
       const c = document.getElementById("profile-help-contact");
       if (h) h.style.display = "block";
       if (c) c.style.display = "block";
+
+      // прячем список "Еще", чтобы не торчал под экраном помощи
+      const moreSection = document.getElementById("more-section");
+      if (moreSection) moreSection.style.display = "none";
     }
 
     // 2) нижнее меню
