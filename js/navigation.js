@@ -17,7 +17,7 @@ window.AppNavigation = (() => {
 
     const profileBlocks = document.querySelectorAll(
       '#profile-summary, #profile-activity, #profile-ref-bonus, ' +
-      '#profile-buy-sub, #profile-history-link, #profile-tasks-link, ' +
+      '#profile-buy-sub, #profile-status-link, #profile-history-link, #profile-tasks-link, ' +
       '#profile-ref-link, #profile-ref, #profile-history, #profile-tasks, ' +
       '#profile-task1-card, #profile-task2-card, #task1-details, #task2-details, ' +
       '#profile-help, #profile-help-contact'
@@ -93,7 +93,7 @@ window.AppNavigation = (() => {
         // главный экран профиля
         document.querySelectorAll(
           '#profile-summary, #profile-activity, #profile-ref-bonus, ' +
-          '#profile-buy-sub, #profile-history-link, #profile-tasks-link, #profile-ref-link'
+          '#profile-buy-sub, #profile-status-link, #profile-history-link, #profile-tasks-link, #profile-ref-link'
         ).forEach(c => (c.style.display = 'block'));
 
         [

@@ -118,10 +118,14 @@ window.StatusUI = (() => {
     let xpInLevel = profileStatus.xp - cur.min_xp;
     if (xpInLevel < 0) xpInLevel = 0;
 
-    let xpRange = (cur.max_xp !== null ? cur.max_xp : profileStatus.xp) - cur.min_xp + 1;
+    // без +1, чистый диапазон
+    let xpRange = (cur.max_xp !== null ? cur.max_xp : profileStatus.xp) - cur.min_xp;
     if (xpRange <= 0) xpRange = 1;
 
-    const percent = Math.max(0, Math.min(100, Math.round((xpInLevel / xpRange) * 100)));
+    const percent = Math.max(
+      0,
+      Math.min(100, Math.round((xpInLevel / xpRange) * 100))
+    );
 
     if (currentLine) {
       currentLine.textContent = `Сейчас: ${cur.name} · ${profileStatus.xp} очков`;

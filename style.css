@@ -599,30 +599,31 @@
   opacity: 0.9;
 }
 
-/* Кнопка "Купить подписку" — зелёный акцент */
+/* Кнопка "Купить сообщения" — зелёный градиент */
 .card-link-buy {
-  background: transparent;        /* обнуляем фон у самой карточки */
+  background: transparent;
 }
-
 
 .card-link-buy .card-link-inner {
-  background: #065f46;            /* тёмно‑зелёный фон */
+  background: linear-gradient(135deg, #059669, #22c55e); /* зелёный градиент */
   border-radius: 12px;
 }
-
 
 .card-link-buy .card-link-text {
   color: #ecfdf5;
 }
 
-
 .card-link-buy .card-link-emoji {
   color: #bbf7d0;
 }
 
-
 .card-link-buy .card-link-arrow {
-  color: #a7f3d0;
+  color: #e0f2fe;
+}
+
+.card-link-buy .card-link-inner:active {
+  transform: translateY(1px);
+  opacity: 0.97;
 }
 
 /* Кнопка "Прогресс статуса" — фиолетовый градиент */
@@ -1019,9 +1020,9 @@
     repeating-linear-gradient(
       to right,
       #020617 0,
-      #020617 calc(20% - 3px),   /* ширина «ступени» */
-      #6366f1 calc(20% - 3px),   /* цвет деления — светлый фиолетовый */
-      #6366f1 20%
+      #020617 calc(20% - 2px),  /* ширина «ступени» */
+      #f9fafb calc(20% - 2px),  /* белое деление */
+      #f9fafb 20%
     );
   border: 1px solid #4f46e5;
   overflow: hidden;
@@ -1031,7 +1032,6 @@
 .status-progress-fill {
   height: 100%;
   width: 0%;
-  border-radius: 999px;
   background: linear-gradient(135deg, #4f46e5, #7c3aed);
   transition: width 0.25s ease-out;
 }
