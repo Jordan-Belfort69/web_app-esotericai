@@ -876,15 +876,6 @@
   margin-bottom: 4px;
 }
 
-/* подсветка иконки и названия Таро */
-#tarot-hero-icon {
-  filter: drop-shadow(0 0 8px rgba(250, 250, 255, 0.35));
-}
-
-#tarot-hero-title {
-  text-shadow: 0 0 10px rgba(250, 250, 255, 0.4);
-}
-
 .tarot-subtitle-main {
   font-size: 13px;
   color: #e5e7eb;
@@ -1037,6 +1028,15 @@
 #status-hero-title {
   font-size: 18px;
   font-weight: 700;
+  text-shadow: 0 0 10px rgba(250, 250, 255, 0.4);
+}
+
+/* Универсальная подсветка для шапок разделов */
+.section-hero-icon-glow {
+  filter: drop-shadow(0 0 8px rgba(250, 250, 255, 0.35));
+}
+
+.section-hero-title-glow {
   text-shadow: 0 0 10px rgba(250, 250, 255, 0.4);
 }
 
