@@ -154,19 +154,20 @@ window.StatusUI = (() => {
       currentLine.textContent = `Сейчас: ${cur.name} · ${profileStatus.xp} очков`;
     }
 
-        const summaryStatus = document.getElementById('summary-status');
+    const summaryStatus = document.getElementById('summary-status');
     if (summaryStatus) {
       const iconEl = summaryStatus.querySelector('.summary-status-icon');
       const nameEl = summaryStatus.querySelector('.summary-status-name');
 
-      if (dot) {
-        dot.style.background = `linear-gradient(135deg, ${cur.color_from}, ${cur.color_to})`;
-      }
       if (iconEl) {
         iconEl.src = cur.icon;
       }
       if (nameEl) {
         nameEl.textContent = cur.name;
+        nameEl.style.background = `linear-gradient(135deg, ${cur.color_from}, ${cur.color_to})`;
+        nameEl.style.webkitBackgroundClip = 'text';
+        nameEl.style.backgroundClip = 'text';
+        nameEl.style.color = 'transparent';
       }
     }
 
