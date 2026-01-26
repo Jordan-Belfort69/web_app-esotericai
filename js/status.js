@@ -153,6 +153,24 @@ window.StatusUI = (() => {
     if (currentLine) {
       currentLine.textContent = `Сейчас: ${cur.name} · ${profileStatus.xp} очков`;
     }
+
+        const summaryStatus = document.getElementById('summary-status');
+    if (summaryStatus) {
+      const dot = summaryStatus.querySelector('.summary-status-dot');
+      const iconEl = summaryStatus.querySelector('.summary-status-icon');
+      const nameEl = summaryStatus.querySelector('.summary-status-name');
+
+      if (dot) {
+        dot.style.background = `linear-gradient(135deg, ${cur.color_from}, ${cur.color_to})`;
+      }
+      if (iconEl) {
+        iconEl.src = cur.icon;
+      }
+      if (nameEl) {
+        nameEl.textContent = cur.name;
+      }
+    }
+
     if (progressFill) {
       progressFill.style.width = `${percent}%`;
       progressFill.style.background = `linear-gradient(135deg, ${cur.color_from}, ${cur.color_to})`;

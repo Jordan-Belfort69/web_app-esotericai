@@ -102,6 +102,36 @@
       font-weight: 500;
     }
 
+        #summary-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+    }
+
+    /* маленький цветной кружочек уровня */
+    .summary-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4b5563; /* дефолт, потом перекрашиваем из JS */
+    }
+
+    /* иконка уровня очень компактная */
+    .summary-status-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* текст уровня */
+    .summary-status-name {
+      max-width: 120px;          /* чтобы не ломать строку */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     /* ===== НИЖНЕЕ МЕНЮ ===== */
     .bottom-nav {
