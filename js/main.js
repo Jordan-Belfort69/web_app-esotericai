@@ -32,7 +32,7 @@ const AppRouter = {
     }
 
     // Остальные внутренние → на корневой экран
-    if (["buy","history","tasks","referral"].includes(cur)) {
+    if (["buy","buy-confirm","history","tasks","referral"].includes(cur)) {
       this.stack = ["profile"];
     } else if (["tip","horoscope"].includes(cur)) {
       this.stack = ["rituals"];
@@ -88,10 +88,14 @@ const AppRouter = {
     });
 
     const subsSection = document.getElementById("subs-section");
+    const subsConfirmSection = document.getElementById("subs-confirm-section");
     if (subsSection) subsSection.style.display = "none";
+    if (subsConfirmSection) subsConfirmSection.style.display = "none";
 
     if (screen === "buy") {
       if (subsSection) subsSection.style.display = "block";
+    } else if (screen === "buy-confirm") {
+      if (subsConfirmSection) subsConfirmSection.style.display = "block";
     } else if (screen === "history") {
       const h = document.getElementById("profile-history");
       if (h) h.style.display = "block";

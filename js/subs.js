@@ -66,6 +66,7 @@ window.AppSubs = (() => {
       });
     }
 
+    // обработка кнопки "Купить" → переход на экран подтверждения
     if (buyBtn) {
       buyBtn.addEventListener('click', () => {
         const activeOption = document.querySelector('.subs-option-row-active');
@@ -76,9 +77,55 @@ window.AppSubs = (() => {
         const email = emailInput ? emailInput.value.trim() : '';
         const promoCode = promoInput ? promoInput.value.trim().toUpperCase() : '';
 
-        console.log('BUY CLICK', { messages, method, email, promoCode });
-        // сюда позже добавишь вызов бекенда / оплаты
-        // и будешь учитывать promoCode на сервере
+        // цены пакетов (как в интерфейсе)
+        const PRICE_MAP = {
+          '100': 290,
+          '200': 570,
+          '300': 810,
+          '500': 1275,
+          '1000': 2400,
+        };
+
+        let amount = messages && PRICE_MAP[messages] ? PRICE_MAP[messages] : 0;
+
+        // простое применение скидки по тестовым промокодам
+        const promo = promoCode ? PROMO_CODES[promoCode] : null;
+        if (promo && promo.discount === '10%') {
+          amount = Math.round(amount * 0.9);
+        } else if (promo && promo.discount === '20%') {
+          amount = Math.round(amount * 0.8);
+        }
+
+        // заполняем экран подтверждения
+        const msgEl   = document.getElementById('subs-confirm-messages');
+        const mthEl   = document.getElementById('subs-confirm-method');
+        const amtEl   = document.getElementById('subs-confirm-amount');
+        const emailEl = document.getElementById('subs-confirm-email');
+        const promoEl = document.getElementById('subs-confirm-promo');
+
+        if (msgEl)   msgEl.textContent = messages ? `${messages} сообщений` : '—';
+        if (mthEl) {
+          mthEl.textContent =
+            method === 'sbp'   ? 'СБП' :
+            method === 'card'  ? 'Банковская карта' :
+            method === 'stars' ? 'Telegram Stars' :
+            '—';
+        }
+        if (amtEl)   amtEl.textContent = amount ? `${amount} ₽` : '—';
+        if (emailEl) emailEl.textContent = email || '—';
+        if (promoEl) promoEl.textContent = promoCode || 'Не применён';
+
+        // переход на экран подтверждения
+        AppRouter.go('buy-confirm');
+      });
+    }
+
+    // кнопка "Оплатить" на экране подтверждения
+    const confirmPayBtn = document.getElementById('subs-confirm-pay-btn');
+    if (confirmPayBtn) {
+      confirmPayBtn.addEventListener('click', () => {
+        console.log('CONFIRM PAY CLICK');
+        // здесь позже добавишь реальный вызов оплаты / tg.sendData(...)
       });
     }
 
