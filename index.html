@@ -80,6 +80,15 @@
       </div>
     </section>
 
+        <!-- КНОПКА: ПРОГРЕСС СТАТУСА -->
+    <section class="card card-link" id="profile-status-link">
+      <div class="card-link-inner">
+        <span class="card-link-emoji">📈</span>
+        <span class="card-link-text">Прогресс статуса</span>
+        <span class="card-link-arrow">›</span>
+      </div>
+    </section>
+
         <!-- КНОПКА: ИСТОРИЯ ЗАПРОСОВ -->
     <section class="card card-link" id="profile-history-link">
       <div class="card-link-inner">
@@ -732,6 +741,36 @@
       </button>
     </section>
 
+        <!-- ===== СЕКЦИЯ: ПРОГРЕСС СТАТУСА ===== -->
+    <section class="card" id="status-section" style="display:none;">
+      <div class="status-hero">
+        <img src="img/status/spark.png" class="section-icon" id="status-hero-icon" alt="Статус">
+        <div class="history-title" id="status-hero-title">Искра</div>
+        <div class="section-intro" id="status-hero-subtitle">
+          Смотри, сколько осталось до следующей ступени.
+        </div>
+      </div>
+
+      <!-- Прогресс внутри текущего уровня -->
+      <div class="history-item" id="status-progress-card">
+        <div class="history-question" id="status-current-line">
+          Сейчас: Искра · 0 очков
+        </div>
+        <div class="status-progress-bar">
+          <div class="status-progress-fill" id="status-progress-fill"></div>
+        </div>
+        <div class="history-answer-preview" id="status-progress-text">
+          Осталось 100 очков до уровня «Ищущая».
+        </div>
+      </div>
+
+      <!-- Все уровни -->
+      <div class="history-title" style="margin-top:10px;">Все уровни</div>
+      <div id="status-levels-list">
+        <!-- сюда JS отрисует плашки уровней -->
+      </div>
+    </section>
+
     <!-- ===== СЕКЦИЯ: ВКЛАДКА "ТАРО" (СПИСОК) ===== -->
     <section id="tarot-section" style="display:none;">
       <div class="history-title" style="margin-bottom:8px;">
@@ -942,6 +981,7 @@
 <script src="js/horoscope.js"></script>
 <script src="js/help_support.js"></script>
 <script src="js/more.js"></script>
+<script src="js/status.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

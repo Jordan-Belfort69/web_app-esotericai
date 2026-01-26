@@ -1,6 +1,6 @@
 // ===== РОУТЕР ЭКРАНОВ =====
-// profile / buy / history / tasks / task1 / task2 / referral /
-// tarot / tarot-inner / rituals / tip / horoscope / more / help
+// profile / buy / buy-confirm / history / tasks / task1 / task2 / referral /
+// tarot / tarot-inner / rituals / tip / horoscope / more / help / status
 const AppRouter = {
   stack: ["profile"],
 
@@ -32,7 +32,7 @@ const AppRouter = {
     }
 
     // Остальные внутренние → на корневой экран
-    if (["buy","buy-confirm","history","tasks","referral"].includes(cur)) {
+    if (["buy","buy-confirm","history","tasks","referral","status"].includes(cur)) {
       this.stack = ["profile"];
     } else if (["tip","horoscope"].includes(cur)) {
       this.stack = ["rituals"];
@@ -59,7 +59,7 @@ const AppRouter = {
     }
 
     // 1) переключаем основной таб
-    if (["profile","buy","history","tasks","task1","task2","referral"].includes(screen)) {
+    if (["profile","buy","buy-confirm","history","tasks","task1","task2","referral","status"].includes(screen)) {
       AppNavigation.switchTab("profile", screen === "profile" ? "main" : "subscreen");
     } else if (screen === "tarot" || screen === "tarot-inner") {
       // для внутренних экранов Таро всё равно держим вкладку "Таро" активной
@@ -89,13 +89,17 @@ const AppRouter = {
 
     const subsSection = document.getElementById("subs-section");
     const subsConfirmSection = document.getElementById("subs-confirm-section");
+    const statusSection = document.getElementById("status-section");
     if (subsSection) subsSection.style.display = "none";
     if (subsConfirmSection) subsConfirmSection.style.display = "none";
+    if (statusSection) statusSection.style.display = "none";
 
     if (screen === "buy") {
       if (subsSection) subsSection.style.display = "block";
     } else if (screen === "buy-confirm") {
       if (subsConfirmSection) subsConfirmSection.style.display = "block";
+    } else if (screen === "status") {
+      if (statusSection) statusSection.style.display = "block";
     } else if (screen === "history") {
       const h = document.getElementById("profile-history");
       if (h) h.style.display = "block";
@@ -173,6 +177,7 @@ const AppRouter = {
   }
 };
 
+
 // ===== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ =====
 document.addEventListener("DOMContentLoaded", () => {
   AppCore.initTelegram();
@@ -202,4 +207,5 @@ document.addEventListener("DOMContentLoaded", () => {
   AppMore.initMore();
   AppRitualTip.initRitualTip();
   AppHoroscope.initHoroscope();
+  StatusUI.initStatusScreen();
 });
