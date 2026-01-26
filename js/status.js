@@ -156,7 +156,6 @@ window.StatusUI = (() => {
 
         const summaryStatus = document.getElementById('summary-status');
     if (summaryStatus) {
-      const dot = summaryStatus.querySelector('.summary-status-dot');
       const iconEl = summaryStatus.querySelector('.summary-status-icon');
       const nameEl = summaryStatus.querySelector('.summary-status-name');
 
