@@ -1019,11 +1019,11 @@
     repeating-linear-gradient(
       to right,
       #020617 0,
-      #020617 calc(20% - 2px),   /* ширина «ступени» */
-      #111827 calc(20% - 2px),
-      #111827 20%                /* сама разделительная полоска */
+      #020617 calc(20% - 3px),   /* ширина «ступени» */
+      #6366f1 calc(20% - 3px),   /* цвет деления — светлый фиолетовый */
+      #6366f1 20%
     );
-  border: 1px solid #4f46e5;     /* явная обводка */
+  border: 1px solid #4f46e5;
   overflow: hidden;
   margin: 6px 0 4px;
 }
@@ -1040,13 +1040,16 @@
 .status-badge {
   display: flex;
   align-items: center;
-  padding: 7px 12px;
+  justify-content: space-between;
+  padding: 6px 12px;
   border-radius: 999px;
   background: linear-gradient(135deg, #4b5563, #6b7280);
   color: #f9fafb;
   font-size: 13px;
   margin-bottom: 6px;
   box-shadow: 0 0 0 1px rgba(0,0,0,0.4);
+  min-height: 44px;           /* фиксированная высота под две строки */
+  box-sizing: border-box;
 }
 
 .status-badge-icon {
@@ -1061,7 +1064,8 @@
 
 .status-badge-meta {
   font-size: 11px;
-  opacity: 0.9;
+  text-align: right;
+  max-width: 40%;             /* чтобы длинное слово «Следующий уровень» не ломало всю строку */
 }
 
 /* текущий и следующий уровни подсвечиваем */
