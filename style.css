@@ -1602,8 +1602,8 @@ body.theme-light .subs-option-price {
 
 /* Светлая тема: карточка прогресса статуса */
 body.theme-light .status-progress-card-inner {
-  background: #0f172a;
-  color: #f9fafb;
+  background: #e5e7eb;  /* как блок награды в заданиях */
+  color: #111827;       /* тёмный текст, чтобы читалось */
 }
 
 /* Светлая тема: текст внутри блока прогресса статуса */
