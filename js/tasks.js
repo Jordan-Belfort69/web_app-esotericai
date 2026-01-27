@@ -40,7 +40,9 @@ window.AppTasks = (() => {
       item.innerHTML = `
         <div class="tasks-header-row">
           <div class="history-question">${task.title}</div>
-          <div class="tasks-reward">+${task.xp} XP${task.sms ? ' · ' + task.sms + ' SMS' : ''}${task.promo ? ' · ' + task.promo : ''}</div>
+          <div class="tasks-reward">
+            +${task.xp} XP${task.sms ? ' · ' + task.sms + ' SMS' : ''}${task.promo ? ' · ' + task.promo : ''}
+          </div>
         </div>
         <div class="tasks-details" style="display:none;">
           <div class="history-answer-preview">
@@ -49,8 +51,28 @@ window.AppTasks = (() => {
           <div class="tasks-note">
             Награда будет начислена автоматически после выполнения условий.
           </div>
+          <div class="tasks-status-row">
+            <button class="tasks-status-btn tasks-status-done">
+              ✅ Награда получена
+            </button>
+            <button class="tasks-status-btn tasks-status-pending">
+              ⏳ Не выполнено
+            </button>
+          </div>
         </div>
       `;
+
+      const doneBtn = item.querySelector('.tasks-status-done');
+      const pendingBtn = item.querySelector('.tasks-status-pending');
+
+      // пока берём мок-статус из task.status: 'done' | 'pending'
+      const status = task.status || 'pending';
+
+      if (status === 'done') {
+        doneBtn.classList.add('tasks-status-active');
+      } else {
+        pendingBtn.classList.add('tasks-status-active');
+      }
 
       const headerRow = item.querySelector('.tasks-header-row');
       const details = item.querySelector('.tasks-details');

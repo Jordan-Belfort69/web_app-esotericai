@@ -942,6 +942,48 @@
   color: #9ca3af;
 }
 
+.tasks-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.tasks-reward {
+  font-size: 13px;
+  color: #ffd68f;
+  white-space: nowrap;
+}
+
+.tasks-status-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tasks-status-btn {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  background: #333846;
+  opacity: 0.35;
+}
+
+.tasks-status-done {
+  background: linear-gradient(135deg, #1dd68f, #4be0c2);
+}
+
+.tasks-status-pending {
+  background: linear-gradient(135deg, #ff5f6d, #ff9966);
+}
+
+.tasks-status-active {
+  opacity: 1;
+}
 
 .tasks-claim-wrapper {
   margin-top: 8px;
