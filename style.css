@@ -19,7 +19,7 @@
     #app {
       max-width: 480px;
       margin: 0 auto;
-      padding: 16px 16px 72px;
+      padding: 16px 16px calc(80px + env(safe-area-inset-bottom, 0px));
       box-sizing: border-box;
     }
 
@@ -133,7 +133,8 @@
       bottom: 0;
       max-width: 480px;
       margin: 0 auto;
-      padding: 8px 12px 12px;
+      /* Чуть больше воздуха + safe-area для iPhone */
+      padding: 8px 12px calc(env(safe-area-inset-bottom, 0px) + 8px);
       display: flex;
       gap: 8px;
       background: #020617ee;
