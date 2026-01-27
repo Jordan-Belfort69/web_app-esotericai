@@ -1080,7 +1080,7 @@ button {
 
 /* Акцент для чисел XP в прогрессе статуса */
 .xp-accent {
-  color: #ffd68f;
+  color: #f97316;  /* вместо #ffd68f, более заметный тёплый оранжевый */
   font-weight: 600;
 }
 
@@ -1617,7 +1617,8 @@ body.theme-light #status-progress-text {
 
 /* Светлая тема: шкала и заливка статуса */
 body.theme-light .status-progress-bar {
-  border-color: #6366f1;
+  background: #e5e7eb;      /* светло‑серый фон незаполненной части */
+  border-color: #cbd5f5;    /* мягкая синяя обводка */
 }
 
 body.theme-light .status-progress-fill {
