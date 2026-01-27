@@ -1638,3 +1638,9 @@ body.theme-light .promocode-expire {
   color: #047857;
   font-weight: 500;
 }
+
+/* Светлая тема: НЕ перекрашивать градиентные кнопки в белый */
+body.theme-light #profile-buy-sub .card-link-inner,
+body.theme-light #profile-status-link .card-link-inner {
+  background: transparent;
+}
