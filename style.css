@@ -1388,3 +1388,71 @@
   opacity: 0.7;
 }
 
+/* ===== Светлая тема: карточки и текст ===== */
+body.theme-light .card {
+  background: #ffffff;
+  color: #020617;
+}
+
+body.theme-light .card-row {
+  color: #4b5563;
+}
+
+body.theme-light .card-row span:last-child {
+  color: #111827;
+}
+
+body.theme-light .history-item {
+  background: #f3f4f6;
+}
+
+body.theme-light .subs-hero,
+body.theme-light .subs-card {
+  background: #ffffff;
+}
+
+body.theme-light .section-intro {
+  color: #6b7280;
+}
+
+/* ===== Светлая тема: нижнее меню ===== */
+body.theme-light .bottom-nav {
+  background: #ffffffee;
+}
+
+body.theme-light .bottom-nav::before {
+  background: #ffffffee;
+}
+
+body.theme-light .nav-btn {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+body.theme-light .nav-btn-active {
+  background: #1d4ed8;
+  color: #f9fafb;
+}
+
+/* ===== Светлая тема: пиллы и поля ===== */
+body.theme-light .pill-btn {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+body.theme-light .pill-btn-active {
+  background: #1d4ed8;
+  border-color: #2563eb;
+  color: #f9fafb;
+}
+
+body.theme-light .subs-option-row,
+body.theme-light .subs-pay-row,
+body.theme-light .ref-link-input,
+body.theme-light .ref-friends-box,
+body.theme-light .subs-email-input {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  color: #111827;
+}
