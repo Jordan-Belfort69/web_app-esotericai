@@ -48,6 +48,14 @@ window.AppTasks = (() => {
           <div class="history-answer-preview">
             ${task.desc}
           </div>
+          <div class="tasks-reward-block">
+            <div class="tasks-reward-title">Награда за выполнение:</div>
+            <ul class="tasks-reward-list">
+              <li>💠 ${task.xp} XP</li>
+              ${task.sms ? `<li>💬 ${task.sms} смс‑сообщений</li>` : ''}
+              ${task.promo ? `<li>🎁 Промокод на скидку ${task.promo}</li>` : ''}
+            </ul>
+          </div>
           <div class="tasks-note">
             Награда будет начислена автоматически после выполнения условий.
           </div>
