@@ -1522,12 +1522,6 @@ body.theme-light .card-link-inner {
   border-radius: 999px;
 }
 
-/* но для градиентных кнопок форма как в тёмной теме */
-body.theme-light #profile-buy-sub .card-link-inner,
-body.theme-light #profile-status-link .card-link-inner {
-  border-radius: 12px;
-}
-
 body.theme-light .card-link {
   background: transparent;
 }
@@ -1646,28 +1640,6 @@ body.theme-light .promocode-expire {
 }
 
 /* ===== СВЕТЛАЯ ТЕМА: ГРАДИЕНТЫ ДЛЯ "Купить сообщения" и "Прогресс статуса" ===== */
-
-/* "Купить сообщения" */
-body.theme-light #profile-buy-sub .card-link-inner {
-  background: linear-gradient(135deg, #059669, #22c55e);
-  color: #ecfdf5;
-}
-
-body.theme-light #profile-buy-sub .card-link-emoji,
-body.theme-light #profile-buy-sub .card-link-arrow {
-  color: #f9fafb;
-}
-
-/* "Прогресс статуса" */
-body.theme-light #profile-status-link .card-link-inner {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  color: #f9fafb;
-}
-
-body.theme-light #profile-status-link .card-link-emoji,
-body.theme-light #profile-status-link .card-link-arrow {
-  color: #f9fafb;
-}
 
 /* "Купить сообщения" */
 body.theme-light #profile-buy-sub .card-link-inner {
