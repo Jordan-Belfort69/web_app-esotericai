@@ -151,7 +151,7 @@ window.StatusUI = (() => {
     const percent = computeBarPercent(profileStatus.xp, cur);
 
     if (currentLine) {
-      currentLine.textContent = `Сейчас: ${cur.name} · ${profileStatus.xp} очков`;
+      currentLine.innerHTML = `Сейчас: ${cur.name} · <span class="xp-accent">${profileStatus.xp} XP</span>`;
     }
 
     const summaryStatus = document.getElementById('summary-status');
@@ -178,7 +178,7 @@ window.StatusUI = (() => {
     if (progressText) {
       if (next) {
         const xpToNext = Math.max(0, next.min_xp - profileStatus.xp);
-        progressText.textContent = `Осталось ${xpToNext} очков до уровня «${next.name}».`;
+        progressText.innerHTML = `Осталось <span class="xp-accent">${xpToNext} XP</span> до уровня «${next.name}».`;
       } else {
         progressText.textContent = `Ты достигла максимального уровня.`;
       }
@@ -223,8 +223,8 @@ window.StatusUI = (() => {
       const meta = document.createElement("div");
       meta.className = "status-badge-meta";
       const rangeText = level.max_xp
-        ? `${level.min_xp}–${level.max_xp} очков`
-        : `${level.min_xp}+ очков`;
+        ? `${level.min_xp}–${level.max_xp} XP`
+        : `${level.min_xp}+ XP`;
       meta.textContent = rangeText;
 
       div.appendChild(icon);

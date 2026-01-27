@@ -955,6 +955,12 @@
   white-space: nowrap;
 }
 
+/* Акцент для чисел XP в прогрессе статуса */
+.xp-accent {
+  color: #ffd68f;       /* тот же цвет, что и в .tasks-reward */
+  font-weight: 600;
+}
+
 .tasks-reward-block {
   margin-top: 8px;
   padding: 8px 10px;
