@@ -130,7 +130,7 @@
       position: fixed;
       left: 0;
       right: 0;
-      bottom: 6px;              /* было 0 → слегка подняли на 6px */
+      bottom: 8px;              /* было 0 → слегка подняли на 6px */
       max-width: 480px;
       margin: 0 auto;
       padding: 8px 12px 12px;   /* как в самом начале */
@@ -145,8 +145,8 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: -6px;             /* ровно столько же, сколько bottom */
-      height: 6px;
+      bottom: -8px;             /* ровно столько же, сколько bottom */
+      height: 8px;
       background: #020617ee;
     }
 
