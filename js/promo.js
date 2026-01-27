@@ -4,13 +4,15 @@ window.PromoUI = (() => {
   // Пока делаем мок-список. Потом будешь подставлять реальные данные из бота.
   let userPromocodes = [
     {
-      code: 'WELCOME10',
-      desc: 'Скидка 10% на покупку сообщений',
-      expires_at: null,          // или строка даты, если нужно
+      code: 'WELCOME5',
+      desc: 'Скидка 5% на покупку сообщений',
+      discount: 5,
+      expires_at: null,
     },
     {
-      code: 'TAROT5',
-      desc: 'Скидка 5% на расклады и ритуалы',
+      code: 'TAROT10',
+      desc: 'Скидка 10% на покупку сообщений',
+      discount: 10,
       expires_at: 'до 31.03.2026',
     },
   ];
@@ -36,6 +38,11 @@ window.PromoUI = (() => {
       item.innerHTML = `
         <div class="history-question">
           🎁 ${promo.desc}
+          ${
+            promo.discount
+              ? `<span class="promocode-badge">-${promo.discount}%</span>`
+              : ''
+          }
         </div>
         <div class="promocode-row">
           <span class="promocode-code">${promo.code}</span>

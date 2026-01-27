@@ -754,6 +754,15 @@
   transform: translateY(1px);
 }
 
+.promocode-copy-btn {
+  min-width: 96px;
+  text-align: center;
+}
+
+.promocode-copy-btn:active {
+  transform: translateY(1px);
+  opacity: 0.95;
+}
 
 .switch {
   position: relative;
@@ -845,6 +854,15 @@
   align-items: center;
   gap: 8px;
   margin-top: 4px;
+}
+
+.promocode-badge {
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  background: rgba(96, 165, 250, 0.2);
+  color: #bfdbfe;
 }
 
 .promocode-code {
