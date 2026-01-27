@@ -1603,13 +1603,16 @@ body.theme-light .subs-option-price {
 /* Светлая тема: карточка прогресса статуса */
 body.theme-light .status-progress-card-inner {
   background: #e5e7eb;  /* как блок награды в заданиях */
-  color: #111827;       /* тёмный текст, чтобы читалось */
+  color: #111827;
 }
 
 /* Светлая тема: текст внутри блока прогресса статуса */
-body.theme-light #status-current-line,
+body.theme-light #status-current-line {
+  color: #111827;
+}
+
 body.theme-light #status-progress-text {
-  color: #f9fafb;
+  color: #4b5563;
 }
 
 /* Светлая тема: шкала и заливка статуса */
