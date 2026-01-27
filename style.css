@@ -1518,7 +1518,8 @@ body.theme-light .ritual-time-option .history-question {
 
 /* Светлая тема: строки‑ссылки ("Отзывы", "Новости" и т.п.) */
 body.theme-light .card-link-inner {
-  background: transparent;   /* вместо #ffffff */
+  background: #ffffff;      /* белая "плашка", как было изначально */
+  border-radius: 12px;      /* форма как у тёмной темы */
 }
 
 body.theme-light .card-link {
