@@ -1639,8 +1639,14 @@ body.theme-light .promocode-expire {
   font-weight: 500;
 }
 
-/* Светлая тема: НЕ перекрашивать градиентные кнопки в белый */
-body.theme-light #profile-buy-sub .card-link-inner,
-body.theme-light #profile-status-link .card-link-inner {
-  background: transparent;
+/* Светлая тема: градиент для двух верхних кнопок */
+body.theme-light #profile-buy-sub .card-link-inner {
+  background: linear-gradient(135deg, #059669, #22c55e);
+  color: #ecfdf5;
 }
+
+body.theme-light #profile-status-link .card-link-inner {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #f9fafb;
+}
+
