@@ -1615,9 +1615,16 @@ body.theme-light #status-progress-text {
   color: #4b5563;
 }
 
-/* Светлая тема: шкала и заливка статуса */
+/* Светлая тема: шкала и деления статуса */
 body.theme-light .status-progress-bar {
-  background: #e5e7eb;
+  background:
+    repeating-linear-gradient(
+      to right,
+      #e5e7eb 0,
+      #e5e7eb calc(20% - 2px),
+      #cbd5f5 calc(20% - 2px),
+      #cbd5f5 20%
+    );
   border-color: #6366f1;      /* более яркая синяя обводка */
   box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.35);  /* лёгкое свечение */
 }
