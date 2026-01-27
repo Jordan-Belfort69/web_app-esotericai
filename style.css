@@ -1617,8 +1617,9 @@ body.theme-light #status-progress-text {
 
 /* Светлая тема: шкала и заливка статуса */
 body.theme-light .status-progress-bar {
-  background: #e5e7eb;      /* светло‑серый фон незаполненной части */
-  border-color: #cbd5f5;    /* мягкая синяя обводка */
+  background: #e5e7eb;
+  border-color: #6366f1;      /* более яркая синяя обводка */
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.35);  /* лёгкое свечение */
 }
 
 body.theme-light .status-progress-fill {
