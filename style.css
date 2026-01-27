@@ -1549,8 +1549,8 @@ body.theme-light .tasks-reward {
 
 /* Светлая тема: блок награды и прогресса в заданиях */
 body.theme-light .tasks-reward-block {
-  background: #0f172a;
-  color: #e5e7eb;
+  background: #e5e7eb;   /* светло‑серый */
+  color: #111827;
 }
 
 body.theme-light .tasks-reward-title {
@@ -1604,18 +1604,6 @@ body.theme-light .subs-option-row-active,
 body.theme-light .subs-pay-row-active {
   background: #eef2ff;
   border-color: #4f46e5;
-}
-
-/* Светлая тема: срок действия промокода */
-body.theme-light .promocode-expire {
-  color: #047857;
-  font-weight: 500;
-}
-
-/* Светлая тема: карточка награды */
-body.theme-light .tasks-reward-block {
-  background: #111827;      /* тёмно‑серый почти чёрный */
-  color: #e5e7eb;
 }
 
 /* Заголовок и текст внутри */
@@ -1672,3 +1660,44 @@ body.theme-light .status-progress-fill {
   background: linear-gradient(135deg, #6366f1, #a855f7);
 }
 
+/* Светлая тема: карточка прогресса статуса */
+body.theme-light .status-progress-card-inner {
+  background: #0f172a;      /* насыщенный тёмный */
+  color: #f9fafb;
+}
+
+/* Текст внутри блока */
+body.theme-light #status-current-line,
+body.theme-light #status-progress-text {
+  color: #f9fafb;
+}
+
+/* Шкала и заливка */
+body.theme-light .status-progress-bar {
+  border-color: #6366f1;
+}
+
+body.theme-light .status-progress-fill {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+}
+
+body.theme-light .tasks-reward-title {
+  color: #bfdbfe;
+}
+
+body.theme-light .tasks-reward-list {
+  color: #e5e7eb;
+}
+
+/* Подписи ПРОГРЕСС и счётчик справа */
+body.theme-light .tasks-progress-line,
+body.theme-light .tasks-progress-label,
+body.theme-light .tasks-progress-value {
+  color: #4b5563;
+}
+
+/* Светлая тема: срок действия промокода */
+body.theme-light .promocode-expire {
+  color: #047857;
+  font-weight: 500;
+}
