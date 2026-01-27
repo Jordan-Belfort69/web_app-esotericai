@@ -58,9 +58,26 @@ window.AppTasks = (() => {
           </div>
           ${
             typeof task.progress_target === 'number' && task.progress_target > 1
-              ? `<div class="tasks-progress-line">
-                   Прогресс: ${task.progress_current || 0} / ${task.progress_target}
-                 </div>`
+              ? `
+                <div class="tasks-progress">
+                  <div class="tasks-progress-header">
+                    <span class="tasks-progress-label">Прогресс</span>
+                    <span class="tasks-progress-value">
+                      ${task.progress_current || 0} / ${task.progress_target}
+                    </span>
+                  </div>
+                  <div class="tasks-progress-bar">
+                    <div class="tasks-progress-bar-fill" 
+                      style="width: ${
+                        Math.min(
+                          100,
+                          Math.round(((task.progress_current || 0) / task.progress_target) * 100)
+                        )
+                      }%;">
+                    </div>
+                  </div>
+                </div>
+              `
               : ''
           }
           <div class="tasks-note">

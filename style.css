@@ -996,6 +996,47 @@
   color: #9ca3af;
 }
 
+/* Новый блок прогресса для заданий */
+.tasks-progress {
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+.tasks-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.tasks-progress-label {
+  color: #9fb4ff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tasks-progress-value {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.tasks-progress-bar {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(159, 180, 255, 0.15);
+  overflow: hidden;
+}
+
+.tasks-progress-bar-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4ad5ff, #9f7bff);
+  box-shadow: 0 0 8px rgba(154, 122, 255, 0.6);
+  transition: width 0.25s ease-out;
+}
+
 .tasks-status-row {
   display: flex;
   gap: 8px;
