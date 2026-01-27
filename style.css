@@ -280,6 +280,7 @@
       padding: 10px 14px;
       display: flex;
       align-items: center;
+      gap: 8px;
       font-size: 13px;
       cursor: pointer;
     }
@@ -297,17 +298,13 @@
 
 
     .card-link-text {
-      margin-left: 8px;   /* расстояние после эмоджи */
-      margin-right: auto; /* выталкивает стрелку в правый край */
+      flex: 1;
     }
-
 
     .card-link-arrow {
       font-size: 16px;
       color: #9ca3af;
-      padding-left: 8px;  /* небольшая зона вокруг стрелки */
     }
-
 
     /* ===== РЕФЕРАЛЬНЫЙ ЭКРАН ===== */
 .ref-hero {
@@ -728,6 +725,21 @@
   display: block;
   width: 100%;
   text-align: left;
+}
+
+/* В "Заданиях" стрелка уезжает в правый край */
+.history-item .tasks-category-btn .card-link-inner {
+  display: flex;
+  align-items: center;
+}
+
+.history-item .tasks-category-btn .card-link-text {
+  margin-left: 8px;
+  margin-right: auto;   /* толкаем стрелку вправо */
+}
+
+.history-item .tasks-category-btn .card-link-arrow {
+  padding-left: 8px;    /* небольшая зона вокруг стрелки */
 }
 
 .help-row {
