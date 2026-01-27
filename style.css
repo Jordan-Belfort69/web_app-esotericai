@@ -280,7 +280,6 @@
       padding: 10px 14px;
       display: flex;
       align-items: center;
-      gap: 8px;
       font-size: 13px;
       cursor: pointer;
     }
@@ -298,13 +297,15 @@
 
 
     .card-link-text {
-      flex: 1;
+      margin-left: 8px;   /* расстояние после эмоджи */
+      margin-right: auto; /* выталкивает стрелку в правый край */
     }
 
 
     .card-link-arrow {
       font-size: 16px;
       color: #9ca3af;
+      padding-left: 8px;  /* небольшая зона вокруг стрелки */
     }
 
 
