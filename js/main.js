@@ -23,6 +23,13 @@ const AppRouter = {
       return;
     }
 
+    // НОВОЕ: из списка задач категории → назад в экран разделов заданий
+    if (cur === "tasks-list") {
+      this.stack = ["tasks"];
+      this.apply();
+      return;
+    }
+
     // Остальные внутренние → на корневой экран
     if (["buy","buy-confirm","history","tasks","referral","status"].includes(cur)) {
       this.stack = ["profile"];
@@ -51,7 +58,7 @@ const AppRouter = {
     }
 
     // 1) переключаем основной таб
-    if (["profile","buy","buy-confirm","history","tasks","referral","status"].includes(screen)) {
+    if (["profile","buy","buy-confirm","history","tasks","tasks-list","referral","status"].includes(screen)) {
       AppNavigation.switchTab("profile", screen === "profile" ? "main" : "subscreen");
     } else if (screen === "tarot" || screen === "tarot-inner") {
       // для внутренних экранов Таро всё равно держим вкладку "Таро" активной
@@ -103,6 +110,13 @@ const AppRouter = {
       if (t) t.style.display = "block";
       if (cats) cats.style.display = "block";
       if (list) list.style.display = "none"; // при входе показываем только список разделов
+    } else if (screen === "tasks-list") {
+      const t = document.getElementById("profile-tasks");
+      const cats = document.getElementById("tasks-categories");
+      const list = document.getElementById("tasks-list");
+      if (t) t.style.display = "block";
+      if (cats) cats.style.display = "none";
+      if (list) list.style.display = "block";
     } else if (screen === "referral") {
       const r = document.getElementById("profile-ref");
       if (r) r.style.display = "block";

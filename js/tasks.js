@@ -3,18 +3,14 @@ window.AppTasks = (() => {
 
   function initTasksUI() {
     const categoriesSection = document.getElementById('tasks-categories');
-    const tasksListSection = document.getElementById('tasks-list');
-    if (!categoriesSection || !tasksListSection) return;
+    if (!categoriesSection) return;
 
-    // Клики по разделам заданий
     const categoryButtons = categoriesSection.querySelectorAll('.tasks-category-btn');
     categoryButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
         const category = btn.getAttribute('data-category');
         renderTasksList(category);
-        // Пока остаёмся в том же экране, просто прячем/показываем блоки
-        categoriesSection.style.display = 'none';
-        tasksListSection.style.display = 'block';
+        AppRouter.go('tasks-list'); // вместо ручного display
       });
     });
   }
