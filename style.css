@@ -1518,7 +1518,7 @@ body.theme-light .ritual-time-option .history-question {
 
 /* Светлая тема: строки‑ссылки ("Отзывы", "Новости" и т.п.) */
 body.theme-light .card-link-inner {
-  background: #ffffff;
+  background: transparent;   /* вместо #ffffff */
 }
 
 body.theme-light .card-link {
@@ -1636,23 +1636,4 @@ body.theme-light .tasks-progress-value {
 body.theme-light .promocode-expire {
   color: #047857;
   font-weight: 500;
-}
-
-/* ===== СВЕТЛАЯ ТЕМА: ГРАДИЕНТЫ ДЛЯ "Купить сообщения" и "Прогресс статуса" ===== */
-
-/* "Купить сообщения" */
-body.theme-light #profile-buy-sub .card-link-inner {
-  background: linear-gradient(135deg, #059669, #22c55e);
-  color: #ecfdf5;
-}
-
-/* "Прогресс статуса" */
-body.theme-light #profile-status-link .card-link-inner {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  color: #f9fafb;
-}
-
-body.theme-light #profile-buy-sub .card-link-inner,
-body.theme-light #profile-status-link .card-link-inner {
-  border-radius: 12px;
 }
