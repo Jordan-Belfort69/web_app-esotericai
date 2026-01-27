@@ -1599,3 +1599,49 @@ body.theme-light .subs-pay-row-active {
   background: #eef2ff;
   border-color: #4f46e5;
 }
+
+/* Светлая тема: срок действия промокода */
+body.theme-light .promocode-expire {
+  color: #059669;
+}
+
+/* Светлая тема: карточка награды */
+body.theme-light .tasks-reward-block {
+  background: #111827;      /* тёмно‑серый почти чёрный */
+  color: #e5e7eb;
+}
+
+/* Заголовок и текст внутри */
+body.theme-light .tasks-reward-title {
+  color: #bfdbfe;
+}
+
+body.theme-light .tasks-reward-list {
+  color: #e5e7eb;
+}
+
+/* Светлая тема: строки вариантов и оплаты */
+body.theme-light .subs-option-row,
+body.theme-light .subs-pay-row {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  color: #111827;
+}
+
+/* Активная строка — лёгкая подсветка */
+body.theme-light .subs-option-row-active,
+body.theme-light .subs-pay-row-active {
+  background: #eef2ff;
+  border-color: #4f46e5;
+}
+
+/* Текст "–3% скидка" и др. — насыщенный красный */
+body.theme-light .subs-option-tag-sale {
+  color: #dc2626;
+}
+
+/* Число сообщений и цена, чтобы были видны */
+body.theme-light .subs-option-title,
+body.theme-light .subs-option-price {
+  color: #111827;
+}
