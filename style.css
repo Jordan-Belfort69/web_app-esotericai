@@ -1519,7 +1519,6 @@ body.theme-light .ritual-time-option .history-question {
 /* Светлая тема: строки‑ссылки ("Отзывы", "Новости" и т.п.) */
 body.theme-light .card-link-inner {
   background: #ffffff;
-  border-radius: 999px;
 }
 
 body.theme-light .card-link {
