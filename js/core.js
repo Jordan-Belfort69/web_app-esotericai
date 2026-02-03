@@ -1,8 +1,8 @@
 // ===== CORE: Telegram WebApp + утилиты =====
 window.AppCore = (() => {
-    const tg = window.Telegram ? window.Telegram.WebApp : null;
-
-    // Инициализация мини‑приложения Telegram
+    const tg = window.Telegram?.WebApp;
+    
+    // Инициализация мини-приложения Telegram
     function initTelegram() {
         if (!tg) {
             console.error("❌ Telegram WebApp не инициализирован!");
@@ -21,7 +21,7 @@ window.AppCore = (() => {
 
     // initData для бэкенда
     function getInitData() {
-        // ✅ СНАЧАЛА ПРОБУЕМ ИСПОЛЬЗОВАТЬ ОФИЦИАЛЬНЫЙ СПОСОБ tg.initData
+        // ✅ ИСПРАВЛЕНО: Проверка на tg && tg.initData (без пробелов)
         if (tg && tg.initData) {
             const userData = JSON.parse(decodeURIComponent(tg.initDataUnsafe.user));
             console.log("📤 Отправляем initData для user_id:", userData.id);
