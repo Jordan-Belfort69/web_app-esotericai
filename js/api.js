@@ -1,10 +1,8 @@
 // ===== API-КЛИЕНТ BACKEND =====
-// Отвечает за запросы к твоему FastAPI/Django и т.п.
-
 window.AppApi = (() => {
   const BASE_URL = "http://127.0.0.1:8000/api";
 
-  async function request(path, params = {}) {
+  async function request(path, params = {}, options = {}) {
     const url = new URL(BASE_URL + path);
     Object.entries(params).forEach(([k, v]) => {
       if (v !== undefined && v !== null) {
@@ -12,20 +10,141 @@ window.AppApi = (() => {
       }
     });
 
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      method: options.method || "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+      body: options.body ? JSON.stringify(options.body) : undefined,
+      ...options,
+    });
+
     if (!res.ok) {
-      throw new Error(`API ${path} ${res.status}`);
+      const error = await res.json().catch(() => ({ status: res.status }));
+      throw new Error(`API ${path} ${res.status}: ${JSON.stringify(error)}`);
     }
+
     return res.json();
   }
 
-  // /api/me
+  // ============ ПРОФИЛЬ ============
   function fetchMe(initData, fallbackUserId) {
     const params = initData ? { initData } : { user_id: fallbackUserId };
     return request("/me", params);
   }
 
+  // ============ ИСТОРИЯ ============
+  function fetchHistoryList(initData, limit = 20, offset = 0) {
+    return request("/history/list", { initData, limit, offset });
+  }
+
+  function fetchHistoryDetail(initData, recordId) {
+    return request(`/history/detail/${recordId}`, { initData });
+  }
+
+  // ============ ЗАДАЧИ ============
+  function fetchTasksList(initData, category) {
+    return request("/tasks/list", { initData, category });
+  }
+
+  function claimTaskReward(initData, taskCode) {
+    return request("/tasks/claim", {}, {
+      method: "POST",
+      body: { task_code: taskCode, initData },
+    });
+  }
+
+  // ============ РЕФЕРАЛКА ============
+  function fetchReferralsInfo(initData) {
+    return request("/referrals/info", { initData });
+  }
+
+  // ============ ПРОМОКОДЫ ============
+  function fetchPromocodesList(initData) {
+    return request("/promocodes/list", { initData });
+  }
+
+  // ============ ПОКУПКИ ============
+  function fetchSubsQuote(initData, messages, method = "sbp", promoCode = null) {
+    return request("/subs/quote", {}, {
+      method: "POST",
+      body: { messages, method, promo_code: promoCode, initData },
+    });
+  }
+
+  function createInvoice(initData, messages, method = "sbp", email = null, promoCode = null, clientConfirmedAmount) {
+    return request("/subs/create-invoice", {}, {
+      method: "POST",
+      body: {
+        messages,
+        method,
+        email,
+        promo_code: promoCode,
+        client_confirmed_amount: clientConfirmedAmount,
+        initData,
+      },
+    });
+  }
+
+  // ============ РИТУАЛЫ ============
+  function fetchDailyTipSettings(initData) {
+    return request("/rituals/daily-tip-settings", { initData });
+  }
+
+  function updateDailyTipSettings(initData, enabled, timeFrom, timeTo, timezone) {
+    return request("/rituals/daily-tip-settings", {}, {
+      method: "POST",
+      body: { enabled, time_from: timeFrom, time_to: timeTo, timezone, initData },
+    });
+  }
+
+  // ============ ГОРОСКОП ============
+  function fetchHoroscope(initData, zodiac, scope = "none") {
+    return request("/horoscope", {}, {
+      method: "POST",
+      body: { zodiac, scope, initData },
+    });
+  }
+
+  // ============ ТАРО ============
+  function fetchTarot(initData, spreadType = "one_card", question = "") {
+    return request("/tarot", {}, {
+      method: "POST",
+      body: { spread_type: spreadType, question, initData },
+    });
+  }
+
   return {
+    // Профиль
     fetchMe,
+
+    // История
+    fetchHistoryList,
+    fetchHistoryDetail,
+
+    // Задачи
+    fetchTasksList,
+    claimTaskReward,
+
+    // Рефералка
+    fetchReferralsInfo,
+
+    // Промокоды
+    fetchPromocodesList,
+
+    // Покупки
+    fetchSubsQuote,
+    createInvoice,
+
+    // Ритуалы
+    fetchDailyTipSettings,
+    updateDailyTipSettings,
+
+    // Гороскоп
+    fetchHoroscope,
+
+    // Таро
+    fetchTarot,
   };
 })();
