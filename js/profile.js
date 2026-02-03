@@ -1,5 +1,4 @@
 // ===== МОДУЛЬ: ПРОФИЛЬ, ИСТОРИЯ, ЗАДАНИЯ =====
-
 window.AppProfile = (() => {
   const FALLBACK_USER_ID = 1040828537;
 
@@ -17,24 +16,16 @@ window.AppProfile = (() => {
         summaryStatusName.textContent = data.status_title || 'Новичок';
       }
 
-      document.getElementById("summary-balance").textContent =
-        (data.credits_balance ?? "—") + "";
-
-      document.getElementById("summary-registered").textContent =
-        (AppCore.formatDate && data.registered_at)
-          ? AppCore.formatDate(data.registered_at)
+      document.getElementById("summary-balance").textContent = (data.credits_balance ?? "—");
+      document.getElementById("summary-registered").textContent = 
+        (AppCore.formatDate && data.registered_at) 
+          ? AppCore.formatDate(data.registered_at) 
           : "—";
 
       // ===== Активность =====
-      document.getElementById("activity-friends").textContent =
-        data.friends_invited ?? "0";
-
-      document.getElementById("activity-tasks").textContent =
-        data.tasks_completed ?? "0";
-
-      document.getElementById("activity-requests").textContent =
-        data.requests_total ?? "0";
-
+      document.getElementById("activity-friends").textContent = data.friends_invited ?? "0";
+      document.getElementById("activity-tasks").textContent = data.tasks_completed ?? "0";
+      document.getElementById("activity-requests").textContent = data.requests_total ?? "0";
     } catch (e) {
       console.error("loadProfile error:", e);
     }

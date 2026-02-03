@@ -1,5 +1,4 @@
 // ===== МОДУЛЬ: СТАТУС И ПРОГРЕСС =====
-
 window.StatusUI = (() => {
   // Лестница уровней (пока жестко на фронте)
   const STATUS_LEVELS = [
@@ -12,7 +11,6 @@ window.StatusUI = (() => {
       color_from: "#4b5563",
       color_to: "#6b7280",
       icon: "img/status/spark.png",
-      // визуальный диапазон шкалы (по умолчанию = min_xp/max_xp)
       bar_min: 0,
       bar_max: 100,
     },
@@ -37,7 +35,6 @@ window.StatusUI = (() => {
       color_from: "#7c3aed",
       color_to: "#8b5cf6",
       icon: "img/status/initiated.png",
-      // здесь как ты хотел: прогресс считаем от 300 до 700
       bar_min: 300,
       bar_max: 700,
     },
@@ -47,8 +44,8 @@ window.StatusUI = (() => {
       name: "Хранительница карт",
       min_xp: 700,
       max_xp: 1199,
-      color_from: "#a855f7",  // более розовый
-      color_to: "#ec4899",    // уходит в малиновый
+      color_from: "#a855f7",
+      color_to: "#ec4899",
       icon: "img/status/keeper.png",
       bar_min: 700,
       bar_max: 1200,
@@ -86,9 +83,8 @@ window.StatusUI = (() => {
       color_from: "#eab308",
       color_to: "#fbbf24",
       icon: "img/status/high_mystery.png",
-      // для последнего можно считать от 3000 до фактического xp
       bar_min: 3000,
-      bar_max: 4000, // просто заглушка, можно потом подправить
+      bar_max: 4000,
     },
   ];
 
