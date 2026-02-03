@@ -1,7 +1,7 @@
 // ===== API-КЛИЕНТ BACKEND =====
 window.AppApi = (() => {
     // ✅ Правильный публичный URL ngrok
-    const BASE_URL = "https://unstrange-karson-unorganisable.ngrok-free.dev/api";
+    const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
 
     async function request(path, params = {}, options = {}) {
         const url = new URL(BASE_URL + path);
