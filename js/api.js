@@ -1,38 +1,38 @@
 // ===== API-КЛИЕНТ BACKEND =====
 window.AppApi = (() => {
-  // ИСПРАВЛЕНО: Использубличный URL ngrok
+  // ✅ Правильный URL ngrok
   const BASE_URL = "https://unstrange-karson-unorganisable.ngrok-free.dev/api";
 
   async function request(path, params = {}, options = {}) {
-    const url = new URL(BASE_URL + path);
-    Object.entries(params).forEach(([k, v]) => {
-      if (v !== undefined && v !== null) {
-        url.searchParams.set(k, v);
+      const url = new URL(BASE_URL + path);
+      Object.entries(params).forEach(([k, v]) => {
+          if (v !== undefined && v !== null) {
+              url.searchParams.set(k, v);
+          }
+      });
+
+      const res = await fetch(url, {
+          method: options.method || "GET",
+          headers: {
+              "Content-Type": "application/json",
+              ...options.headers,
+          },
+          body: options.body ? JSON.stringify(options.body) : undefined,
+          ...options,
+      });
+
+      if (!res.ok) {
+          const error = await res.json().catch(() => ({ status: res.status }));
+          throw new Error(`API ${path} ${res.status}: ${JSON.stringify(error)}`);
       }
-    });
 
-    const res = await fetch(url, {
-      method: options.method || "GET",
-      headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-      body: options.body ? JSON.stringify(options.body) : undefined,
-      ...options,
-    });
-
-    if (!res.ok) {
-      const error = await res.json().catch(() => ({ status: res.status }));
-      throw new Error(`API ${path} ${res.status}: ${JSON.stringify(error)}`);
-    }
-
-    return res.json();
+      return res.json();
   }
 
   // ============ ПРОФИЛЬ ============
   function fetchMe(initData, fallbackUserId) {
-    const params = initData ? { initData } : { user_id: fallbackUserId };
-    return request("/me", params);
+      const params = initData ? { initData } : { user_id: fallbackUserId };
+      return request("/me", params);
   }
 
   // ============ ИСТОРИЯ ============
@@ -117,35 +117,18 @@ window.AppApi = (() => {
   }
 
   return {
-    // Профиль
-    fetchMe,
-
-    // История
-    fetchHistoryList,
-    fetchHistoryDetail,
-
-    // Задачи
-    fetchTasksList,
-    claimTaskReward,
-
-    // Рефералка
-    fetchReferralsInfo,
-
-    // Промокоды
-    fetchPromocodesList,
-
-    // Покупки
-    fetchSubsQuote,
-    createInvoice,
-
-    // Ритуалы
-    fetchDailyTipSettings,
-    updateDailyTipSettings,
-
-    // Гороскоп
-    fetchHoroscope,
-
-    // Таро
-    fetchTarot,
+      fetchMe,
+      fetchHistoryList,
+      fetchHistoryDetail,
+      fetchTasksList,
+      claimTaskReward,
+      fetchReferralsInfo,
+      fetchPromocodesList,
+      fetchSubsQuote,
+      createInvoice,
+      fetchDailyTipSettings,
+      updateDailyTipSettings,
+      fetchHoroscope,
+      fetchTarot,
   };
 })();
