@@ -1,6 +1,6 @@
 // ===== API-КЛИЕНТ BACKEND =====
 window.AppApi = (() => {
-  const BASE_URL = "http://127.0.0.1:8000/api";
+  const BASE_URL = "https://jordan-belfort69.github.io/web_app-esotericai/";
 
   async function request(path, params = {}, options = {}) {
     const url = new URL(BASE_URL + path);
