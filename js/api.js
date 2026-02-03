@@ -1,6 +1,6 @@
 // ===== API-КЛИЕНТ BACKEND =====
 window.AppApi = (() => {
-    // ✅ Правильный публичный URL Railway (без пробелов!)
+    // ✅ Правильный публичный URL Railway
     const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
 
     async function request(path, params = {}, options = {}) {
@@ -17,7 +17,7 @@ window.AppApi = (() => {
             method: options.method || "GET",
             headers: {
                 "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest",  // ← Добавлен для CORS
+                "X-Requested-With": "XMLHttpRequest",
                 ...options.headers,
             },
             body: options.body ? JSON.stringify(options.body) : undefined,
