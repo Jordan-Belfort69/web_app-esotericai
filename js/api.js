@@ -1,6 +1,12 @@
 // ===== API-КЛИЕНТ BACKEND =====
 window.AppApi = (() => {
-  const BASE_URL = "https://jordan-belfort69.github.io/web_app-esotericai/";
+  // Определяем базовый URL в зависимости от окружения
+  const isProduction = window.location.hostname === 'jordan-belfort69.github.io';
+  
+  // ИСПРАВЛЕННЫЙ АДРЕС NGROK (без пробелов и с /api):
+  const BASE_URL = isProduction 
+    ? "https://unstrange-karson-unorganisable.ngrok-free.dev/api"   // ← ПРАВИЛЬНО!
+    : "http://127.0.0.1:8000/api";
 
   async function request(path, params = {}, options = {}) {
     const url = new URL(BASE_URL + path);
