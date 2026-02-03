@@ -1,110 +1,153 @@
-// ===== МОДУЛЬ: ПРОФИЛЬ, ИСТОРИЯ, ЗАДАНИЯ =====
+// ===== ПРОФИЛЬ =====
 window.AppProfile = (() => {
-  const FALLBACK_USER_ID = 1040828537;
+    // Загрузка профиля
+    async function loadProfile() {
+        const initData = AppCore.getInitData();
+        
+        console.log("👤 loadProfile called");
+        console.log("📋 initData:", initData);
+        
+        if (!initData) {
+            console.error("❌ initData is null!");
+            alert("Не удалось загрузить данные пользователя. Попробуйте перезапустить приложение.");
+            return;
+        }
 
-  async function loadProfile() {
-    try {
-      const initData = AppCore.getInitData();
-      const data = await AppApi.fetchMe(initData, FALLBACK_USER_ID);
-
-      // ИСПРАВЛЕНО: Убрали пробелы в названиях элементов
-      document.getElementById("user-name").textContent = data.name || "—";
-      document.getElementById("user-username").textContent = data.username || "@username";
-
-      // ===== Сводка =====
-      const summaryStatusName = document.querySelector('#summary-status .summary-status-name');
-      if (summaryStatusName) {
-        summaryStatusName.textContent = data.status_title || 'Новичок';
-      }
-
-      document.getElementById("summary-balance").textContent = (data.credits_balance ?? "—");
-      document.getElementById("summary-registered").textContent = 
-        (AppCore.formatDate && data.registered_at) 
-          ? AppCore.formatDate(data.registered_at) 
-          : "—";
-
-      // ===== Активность =====
-      document.getElementById("activity-friends").textContent = data.friends_invited ?? "0";
-      document.getElementById("activity-tasks").textContent = data.tasks_completed ?? "0";
-      document.getElementById("activity-requests").textContent = data.requests_total ?? "0";
-    } catch (e) {
-      console.error("loadProfile error:", e);
+        try {
+            const profile = await AppApi.fetchMe(initData);
+            console.log("✅ Profile loaded:", profile);
+            
+            // Обновляем имя
+            if (profile.name) {
+                const nameEl = document.querySelector('.profile-name');
+                if (nameEl) {
+                    nameEl.textContent = profile.name;
+                }
+            }
+            
+            // Обновляем username
+            if (profile.username) {
+                const usernameEl = document.querySelector('.profile-username');
+                if (usernameEl) {
+                    usernameEl.textContent = `@${profile.username}`;
+                }
+            }
+            
+            // Обновляем баланс сообщений
+            if (profile.credits_balance !== undefined) {
+                const creditsEl = document.querySelector('.profile-credits');
+                if (creditsEl) {
+                    creditsEl.textContent = `${profile.credits_balance} сообщений`;
+                }
+            }
+            
+            // Обновляем дату регистрации
+            if (profile.registered_at) {
+                const registeredEl = document.querySelector('.profile-registered');
+                if (registeredEl) {
+                    registeredEl.textContent = `Дата регистрации: ${AppCore.formatDate(profile.registered_at)}`;
+                }
+            }
+            
+            // Обновляем статус
+            if (profile.status_title) {
+                const statusEl = document.querySelector('.profile-status');
+                if (statusEl) {
+                    statusEl.textContent = profile.status_title;
+                }
+            }
+            
+            // Обновляем активность
+            if (profile.friends_invited !== undefined) {
+                const friendsEl = document.querySelector('.profile-friends');
+                if (friendsEl) {
+                    friendsEl.textContent = `Приглашено друзей: ${profile.friends_invited}`;
+                }
+            }
+            
+            if (profile.tasks_completed !== undefined) {
+                const tasksEl = document.querySelector('.profile-tasks-completed');
+                if (tasksEl) {
+                    tasksEl.textContent = `Выполнено заданий: ${profile.tasks_completed}`;
+                }
+            }
+            
+            if (profile.requests_total !== undefined) {
+                const requestsEl = document.querySelector('.profile-requests');
+                if (requestsEl) {
+                    requestsEl.textContent = `Сделано запросов: ${profile.requests_total}`;
+                }
+            }
+            
+            if (profile.xp !== undefined) {
+                const xpEl = document.querySelector('.profile-xp');
+                if (xpEl) {
+                    xpEl.textContent = `Опыт: ${profile.xp} XP`;
+                }
+            }
+            
+        } catch (err) {
+            console.error("❌ Error loading profile:", err);
+            alert("Ошибка загрузки профиля: " + err.message);
+        }
     }
-  }
 
-  function initHistorySection() {
-    const historyLink = document.getElementById('profile-history-link');
-    const historyScreen = document.getElementById('profile-history');
-
-    if (!historyLink || !historyScreen) return;
-
-    // переход в экран "История запросов"
-    historyLink.addEventListener('click', () => {
-      AppRouter.go('history');
-    });
-
-    const readButtons = historyScreen.querySelectorAll('.history-read-btn');
-    readButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        alert('Здесь будет полный текст ответа из базы (заглушка).');
-      });
-    });
-  }
-
-  function initTasksSection() {
-    const tasksLink = document.getElementById('profile-tasks-link');
-    if (!tasksLink) return;
-
-    // Переход в экран "Задания" (шапка + список разделов)
-    tasksLink.addEventListener('click', () => {
-      AppRouter.go('tasks');
-    });
-  }
-
-  function initStatusLink() {
-    const statusLinkCard = document.getElementById('profile-status-link');
-    const summaryStatusBtn = document.getElementById('summary-status');
-
-    function openStatusProgress() {
-      AppRouter.go('status'); // тот же роут, что и для карточки «Прогресс статуса»
+    // Инициализация секции истории
+    function initHistorySection() {
+        const historyBtn = document.querySelector('[data-screen="history"]');
+        if (historyBtn) {
+            historyBtn.addEventListener('click', () => {
+                AppRouter.go("history");
+            });
+        }
     }
 
-    if (statusLinkCard) {
-      statusLinkCard.addEventListener('click', openStatusProgress);
+    // Инициализация секции заданий
+    function initTasksSection() {
+        const tasksBtn = document.querySelector('[data-screen="tasks"]');
+        if (tasksBtn) {
+            tasksBtn.addEventListener('click', () => {
+                AppRouter.go("tasks");
+            });
+        }
     }
-    if (summaryStatusBtn) {
-      summaryStatusBtn.addEventListener('click', openStatusProgress);
+
+    // Инициализация секции реферальной ссылки
+    function initRefLinkSection() {
+        const refBtn = document.querySelector('[data-screen="referral"]');
+        if (refBtn) {
+            refBtn.addEventListener('click', () => {
+                AppRouter.go("referral");
+            });
+        }
     }
-  }
 
-  function initRefLinkSection() {
-    const refLink = document.getElementById('profile-ref-link');
-    const refScreen = document.getElementById('profile-ref');
+    // Инициализация блока реферального бонуса
+    function initRefBonusBlock() {
+        const refBonusBtn = document.querySelector('.ref-bonus-btn');
+        if (refBonusBtn) {
+            refBonusBtn.addEventListener('click', () => {
+                AppRouter.go("referral");
+            });
+        }
+    }
 
-    if (!refLink || !refScreen) return;
+    // Инициализация ссылки на статус
+    function initStatusLink() {
+        const statusBtn = document.querySelector('[data-screen="status"]');
+        if (statusBtn) {
+            statusBtn.addEventListener('click', () => {
+                AppRouter.go("status");
+            });
+        }
+    }
 
-    // переход в экран "Реферальная программа"
-    refLink.addEventListener('click', () => {
-      AppRouter.go('referral');
-    });
-  }
-
-  function initRefBonusBlock() {
-    const bonusCard = document.getElementById('profile-ref-bonus');
-    const refLinkCard = document.getElementById('profile-ref-link');
-    if (!bonusCard || !refLinkCard) return;
-
-    bonusCard.addEventListener('click', () => {
-      refLinkCard.click();
-    });
-  }
-
-  return {
-    loadProfile,
-    initHistorySection,
-    initTasksSection,
-    initRefBonusBlock,
-    initRefLinkSection,
-    initStatusLink,
-  };
+    return {
+        loadProfile,
+        initHistorySection,
+        initTasksSection,
+        initRefLinkSection,
+        initRefBonusBlock,
+        initStatusLink,
+    };
 })();
