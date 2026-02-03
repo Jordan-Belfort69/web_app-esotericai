@@ -7,6 +7,7 @@ window.AppProfile = (() => {
       const initData = AppCore.getInitData();
       const data = await AppApi.fetchMe(initData, FALLBACK_USER_ID);
 
+      // ИСПРАВЛЕНО: Убрали пробелы в названиях элементов
       document.getElementById("user-name").textContent = data.name || "—";
       document.getElementById("user-username").textContent = data.username || "@username";
 
