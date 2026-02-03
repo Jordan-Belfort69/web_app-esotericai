@@ -1,7 +1,7 @@
 // ===== CORE: Telegram WebApp + утилиты =====
 window.AppCore = (() => {
     const tg = window.Telegram?.WebApp;
-    
+
     // Инициализация мини-приложения Telegram
     function initTelegram() {
         if (!tg) {
@@ -21,7 +21,7 @@ window.AppCore = (() => {
 
     // initData для бэкенда
     function getInitData() {
-        // ✅ ПРАВИЛЬНО: НЕ парсим, так как user уже объект
+        // ✅ ПРАВИЛЬНО: Используем готовый initData от Telegram
         if (tg && tg.initData) {
             console.log("📤 Отправляем initData для user_id:", tg.initDataUnsafe.user.id);
             return tg.initData;

@@ -2,7 +2,7 @@
 window.AppApi = (() => {
     // ✅ Правильный публичный URL Railway
     const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
-    
+
     async function request(path, params = {}, options = {}) {
         const url = new URL(BASE_URL + path);
         Object.entries(params).forEach(([k, v]) => {
