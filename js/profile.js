@@ -16,82 +16,58 @@ window.AppProfile = (() => {
             const profile = await AppApi.fetchMe(initData);
             console.log("✅ Profile loaded:", profile);
             
-            // Обновляем имя
-            if (profile.name) {
-                const nameEl = document.querySelector('.profile-name');
-                if (nameEl) {
-                    nameEl.textContent = profile.name;
-                }
-            }
-            
-            // Обновляем username
-            if (profile.username) {
-                const usernameEl = document.querySelector('.profile-username');
-                if (usernameEl) {
-                    usernameEl.textContent = `@${profile.username}`;
-                }
-            }
-            
-            // Обновляем статус
-            if (profile.status_title) {
-                const statusEl = document.querySelector('.profile-status-value');
-                if (statusEl) {
-                    statusEl.textContent = profile.status_title;
-                }
-            }
-            
-            // Обновляем баланс сообщений
-            if (profile.credits_balance !== undefined) {
-                const creditsEl = document.querySelector('.profile-credits-value');
-                if (creditsEl) {
-                    creditsEl.textContent = `${profile.credits_balance} сообщений`;
-                }
-            } 
-            
-            // Обновляем дату регистрации
-            if (profile.registered_at) { 
-                const registeredEl = document.querySelector('.profile-registered-value');
-                if (registeredEl) {
-                    registeredEl.textContent = formatDate(profile.registered_at);
-                }
-            }
-            
-            // Обновляем приглашенных друзей
-            if (profile.friends_invited !== undefined) {
-                const friendsEl = document.querySelector('.profile-friends-value');
-                if (friendsEl) {
-                    friendsEl.textContent = profile.friends_invited;
-                }
-            }
-            
-            // Обновляем выполненные задания
-            if (profile.tasks_completed !== undefined) {
-                const tasksEl = document.querySelector('.profile-tasks-completed-value');
-                if (tasksEl) {
-                    tasksEl.textContent = profile.tasks_completed;
-                }
-            }
-            
-            // Обновляем сделанные запросы
-            if (profile.requests_total !== undefined) {
-                const requestsEl = document.querySelector('.profile-requests-value');
-                if (requestsEl) { 
-                    requestsEl.textContent = profile.requests_total;
-                }
-            }
-            
-            // Обновляем опыт
-            if (profile.xp !== undefined) {
-                const xpEl = document.querySelector('.profile-xp-value');
-                if (xpEl) {
-                    xpEl.textContent = `${profile.xp} XP`;
-                }
-            }
+            // Обновляем все элементы профиля
+            updateProfileFields(profile);
             
         } catch (err) {
             console.error("❌ loading profile:", err);
             alert("Ошибка загрузки профиля: " + err.message);
         }
+    }
+    
+    // Обновление всех полей профиля
+    function updateProfileFields(profile) {
+        // Найти все элементы профиля
+        const profileItems = document.querySelectorAll('.profile-item');
+        
+        profileItems.forEach(item => {
+            const label = item.querySelector('.profile-label');
+            const value = item.querySelector('.profile-value');
+            
+            if (!label || !value) return;
+            
+            const labelText = label.textContent.trim();
+            
+            // Обновление статуса
+            if (labelText === 'Ваш статус' && profile.status_title) {
+                value.textContent = profile.status_title;
+            }
+            
+            // Обновление баланса сообщений
+            if (labelText === 'Баланс сообщений' && profile.credits_balance !== undefined) {
+                value.textContent = `${profile.credits_balance} сообщений`;
+            }
+            
+            // Обновление даты регистрации
+            if (labelText === 'Дата регистрации' && profile.registered_at) {
+                value.textContent = formatDate(profile.registered_at);
+            }
+            
+            // Обновление приглашенных друзей
+            if (labelText === 'Приглашено друзей' && profile.friends_invited !== undefined) {
+                value.textContent = profile.friends_invited;
+            }
+            
+            // Обновление выполненных заданий
+            if (labelText === 'Выполнено заданий' && profile.tasks_completed !== undefined) {
+                value.textContent = profile.tasks_completed;
+            }
+            
+            // Обновление сделанных запросов
+            if (labelText === 'Сделано запросов' && profile.requests_total !== undefined) {
+                value.textContent = profile.requests_total;
+            }
+        });
     }
     
     // Форматирование даты
