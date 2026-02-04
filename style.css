@@ -1657,3 +1657,20 @@ body.theme-light #profile-status-link .card-link-inner {
   color: #f9fafb;
 }
 
+/* Стили для аватарки */
+.avatar-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #8B4513;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    overflow: hidden;
+    position: relative;
+    background-clip: content-box;
+    -webkit-background-clip: content-box;
+}

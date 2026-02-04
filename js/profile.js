@@ -46,8 +46,14 @@ window.AppProfile = (() => {
         const avatarEl = document.querySelector('.avatar-circle');
         if (avatarEl) {
             if (profile.photo_url) {
-                avatarEl.style.backgroundImage = `url(${profile.photo_url})`;
+                // Используем URL напрямую, но добавляем параметр для обхода кеширования
+                const url = profile.photo_url.includes('t.me') 
+                    ? `${profile.photo_url}?${Date.now()}` 
+                    : profile.photo_url;
+                
+                avatarEl.style.backgroundImage = `url(${url})`;
                 avatarEl.style.backgroundSize = 'cover';
+                avatarEl.style.backgroundPosition = 'center';
                 avatarEl.textContent = '';
             } else if (profile.name) {
                 avatarEl.textContent = profile.name.charAt(0).toUpperCase();
