@@ -3,16 +3,15 @@
 // tarot / tarot-inner / rituals / tip / horoscope / more / help / status
 const AppRouter = {
     stack: ["profile"],
-    
     current() {
         return this.stack[this.stack.length - 1];
     },
-    
+
     go(screen) {
         this.stack.push(screen);
         this.apply();
     },
-    
+
     back() {
         const cur = this.current();
         
@@ -43,7 +42,7 @@ const AppRouter = {
 
         this.apply();
     },
-    
+
     apply() {
         const screen = this.current();
         
@@ -191,7 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
         backBtn.onClick(() => AppRouter.back());
         mainBtn.onClick(() => tg.close());
     }
-    
     // стартуем с профиля
     AppRouter.apply();
     AppTheme.initThemeToggle();
@@ -206,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
     AppProfile.initRefLinkSection();
     AppProfile.initRefBonusBlock();
     AppProfile.initStatusLink();
+    AppProfile.initStatusClick();  // Добавлено для кликабельности статуса
     AppMore.initMore();
     AppRitualTip.initRitualTip();
     AppHoroscope.initHoroscope();

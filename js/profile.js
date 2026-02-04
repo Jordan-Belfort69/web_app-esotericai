@@ -175,6 +175,16 @@ window.AppProfile = (() => {
         }
     }
     
+    // Инициализация клика на самом статусе
+    function initStatusClick() {
+        const statusElement = document.querySelector('.summary-status-name');
+        if (statusElement) {
+            statusElement.addEventListener('click', () => {
+                AppRouter.go("status");
+            });
+        }
+    }
+    
     return {
         loadProfile,
         initHistorySection,
@@ -182,5 +192,6 @@ window.AppProfile = (() => {
         initRefLinkSection,
         initRefBonusBlock,
         initStatusLink,
+        initStatusClick  // Добавлено для кликабельности статуса
     };
 })();
