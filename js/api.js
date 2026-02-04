@@ -1,164 +1,159 @@
-// ===== ОБНОВЛЕННЫЙ КОД С ТОЧНЫМИ УСЛОВИЯМИ =====
+// ===== API-КЛИЕНТ BACKEND =====
 window.AppApi = (() => {
-    // ✅ Правильный публичный URL Railway
-    const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
+// ✅ Правильный публичный URL Railway
+const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
 
-    async function request(path, params = {}, options = {}) {
-        const url = new URL(BASE_URL + path);
-        
-        // ✅ ТОЧНО ПО УСЛОВИЯМ: initData передаем как есть (уже закодирован)
-        Object.entries(params).forEach(([k, v]) => {
-            if (v !== undefined && v !== null) {
-                if (k === 'initData') {
-                    // initData уже закодирован от Telegram - просто добавляем
-                    url.search += (url.search ? '&' : '?') + `initData=${encodeURIComponent(v)}`;
-                } else {
-                    url.searchParams.set(k, v);
-                }
-            }
-        });
-        
-        console.log("📡 API Request URL:", url.toString());
-        
-        const res = await fetch(url, {
-            method: options.method || "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-                ...options.headers,
-            },
-            body: options.body ? JSON.stringify(options.body) : undefined,
-            ...options,
-        });
-
-        if (!res.ok) {
-            const error = await res.json().catch(() => ({ status: res.status }));
-            console.error("❌ API Error: ", path, res.status, error);
-            throw new Error(`API ${path} ${res.status}: ${JSON.stringify(error)}`);
+async function request(path, params = {}, options = {}) {
+    const url = new URL(BASE_URL + path);
+    
+    // ✅ ТОЧНО ПО УСЛОВИЮ: УБРАЛИ encodeURIComponent, просто используем searchParams.set()
+    Object.entries(params).forEach(([k, v]) => {
+        if (v !== undefined && v !== null) {
+            url.searchParams.set(k, v);  // ← Просто как есть, без доп. кодирования
         }
+    });
+    
+    console.log("📡 API Request URL:", url.toString());
+    
+    const res = await fetch(url, {
+        method: options.method || "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            ...options.headers,
+        },
+        body: options.body ? JSON.stringify(options.body) : undefined,
+        ...options,
+    });
 
-        const data = await res.json();
-        console.log("✅ API Response: ", path, data);
-        return data;
+    if (!res.ok) {
+        const error = await res.json().catch(() => ({ status: res.status }));
+        console.error("❌ API Error: ", path, res.status, error);
+        throw new Error(`API ${path} ${res.status}: ${JSON.stringify(error)}`);
     }
 
-    // ============ ПРОФИЛЬ ============
-    function fetchMe(initData, fallbackUserId) {
-        console.log("🔍 [FRONTEND] Получен initData:", initData);
-        console.log("🔍 [FRONTEND] Длина:", initData.length);
-        console.log("🔍 [FRONTEND] Содержит 'hash':", initData.includes('hash='));
-        
-        const params = initData ? { initData } : { user_id: fallbackUserId };
-        return request("/me", params);
-    }
+    const data = await res.json();
+    console.log("✅ API Response: ", path, data);
+    return data;
+}
 
-    // ============ ИСТОРИЯ ============
-    function fetchHistoryList(initData, limit = 20, offset = 0) {
-        return request("/history/list", { initData, limit, offset });
-    }
+// ============ ПРОФИЛЬ ============
+function fetchMe(initData, fallbackUserId) {
+    console.log("🔍 [FRONTEND] Получен initData:", initData);
+    console.log("🔍 [FRONTEND] Длина:", initData.length);
+    console.log("🔍 [FRONTEND] Содержит 'hash':", initData.includes('hash='));
+    
+    const params = initData ? { initData } : { user_id: fallbackUserId };
+    return request("/me", params);
+}
 
-    function fetchHistoryDetail(initData, recordId) {
-        return request(`/history/detail/${recordId}`, { initData });
-    }
+// ============ ИСТОРИЯ ============
+function fetchHistoryList(initData, limit = 20, offset = 0) {
+    return request("/history/list", { initData, limit, offset });
+}
 
-    // ============ ЗАДАЧИ ============
-    function fetchTasksList(initData, category) {
-        return request("/tasks/list", { initData, category });
-    }
+function fetchHistoryDetail(initData, recordId) {
+    return request(`/history/detail/${recordId}`, { initData });
+}
 
-    function claimTaskReward(initData, taskCode) {
-        return request("/tasks/claim", { 
-            initData, 
-            task_code: taskCode 
-        });
-    }
+// ============ ЗАДАЧИ ============
+function fetchTasksList(initData, category) {
+    return request("/tasks/list", { initData, category });
+}
 
-    // ============ РЕФЕРАЛКА ============
-    function fetchReferralsInfo(initData) {
-        return request("/referrals/info", { initData });
-    }
+function claimTaskReward(initData, taskCode) {
+    return request("/tasks/claim", { 
+        initData, 
+        task_code: taskCode 
+    });
+}
 
-    // ============ ПРОМОКОДЫ ============
-    function fetchPromocodesList(initData) {
-        return request("/promocodes/list", { initData });
-    }
+// ============ РЕФЕРАЛКА ============
+function fetchReferralsInfo(initData) {
+    return request("/referrals/info", { initData });
+}
 
-    // ============ ПОКУПКИ ============
-    function fetchSubsQuote(initData, messages, method = "sbp", promoCode = null) {
-        return request("/subs/quote", { 
-            initData,
-            messages,
-            method,
-            promo_code: promoCode
-        });
-    }
+// ============ ПРОМОКОДЫ ============
+function fetchPromocodesList(initData) {
+    return request("/promocodes/list", { initData });
+}
 
-    function createInvoice(initData, messages, method = "sbp", email = null, promoCode = null, clientConfirmedAmount) {
-        return request("/subs/create-invoice", { 
-            initData,
-            messages,
-            method,
-            email,
-            promo_code: promoCode,
-            client_confirmed_amount: clientConfirmedAmount
-        });
-    }
+// ============ ПОКУПКИ ============
+function fetchSubsQuote(initData, messages, method = "sbp", promoCode = null) {
+    return request("/subs/quote", { 
+        initData,
+        messages,
+        method,
+        promo_code: promoCode
+    });
+}
 
-    // ============ РИТУАЛЫ ============
-    function fetchDailyTipSettings(initData) {
-        return request("/rituals/daily-tip-settings", { initData });
-    }
+function createInvoice(initData, messages, method = "sbp", email = null, promoCode = null, clientConfirmedAmount) {
+    return request("/subs/create-invoice", { 
+        initData,
+        messages,
+        method,
+        email,
+        promo_code: promoCode,
+        client_confirmed_amount: clientConfirmedAmount
+    });
+}
 
-    function updateDailyTipSettings(initData, enabled, timeFrom, timeTo, timezone) {
-        return request("/rituals/daily-tip-settings", { 
-            initData,
-            enabled,
-            time_from: timeFrom,
-            time_to: timeTo,
-            timezone
-        });
-    }
+// ============ РИТУАЛЫ ============
+function fetchDailyTipSettings(initData) {
+    return request("/rituals/daily-tip-settings", { initData });
+}
 
-    // ============ ГОРОСКОП ============
-    function fetchHoroscope(initData, zodiac, scope = "none") {
-        return request("/horoscope", { 
-            initData,
-            zodiac,
-            scope
-        });
-    }
+function updateDailyTipSettings(initData, enabled, timeFrom, timeTo, timezone) {
+    return request("/rituals/daily-tip-settings", { 
+        initData,
+        enabled,
+        time_from: timeFrom,
+        time_to: timeTo,
+        timezone
+    });
+}
 
-    // ============ ТАРО ============
-    function fetchTarot(initData, spreadType = "one_card", question = "") {
-        return request("/tarot", { 
-            initData,
-            spread_type: spreadType,
-            question
-        });
-    }
+// ============ ГОРОСКОП ============
+function fetchHoroscope(initData, zodiac, scope = "none") {
+    return request("/horoscope", { 
+        initData,
+        zodiac,
+        scope
+    });
+}
 
-    return {
-        // Профиль
-        fetchMe,
-        // История
-        fetchHistoryList,
-        fetchHistoryDetail,
-        // Задачи
-        fetchTasksList,
-        claimTaskReward,
-        // Рефералка
-        fetchReferralsInfo,
-        // Промокоды
-        fetchPromocodesList,
-        // Покупки
-        fetchSubsQuote,
-        createInvoice,
-        // Ритуалы
-        fetchDailyTipSettings,
-        updateDailyTipSettings,
-        // Гороскоп
-        fetchHoroscope,
-        // Таро
-        fetchTarot,
-    };
+// ============ ТАРО ============
+function fetchTarot(initData, spreadType = "one_card", question = "") {
+    return request("/tarot", { 
+        initData,
+        spread_type: spreadType,
+        question
+    });
+}
+
+return {
+    // Профиль
+    fetchMe,
+    // История
+    fetchHistoryList,
+    fetchHistoryDetail,
+    // Задачи
+    fetchTasksList,
+    claimTaskReward,
+    // Рефералка
+    fetchReferralsInfo,
+    // Промокоды
+    fetchPromocodesList,
+    // Покупки
+    fetchSubsQuote,
+    createInvoice,
+    // Ритуалы
+    fetchDailyTipSettings,
+    updateDailyTipSettings,
+    // Гороскоп
+    fetchHoroscope,
+    // Таро
+    fetchTarot,
+};
 })();
