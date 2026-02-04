@@ -19,7 +19,7 @@ window.AppProfile = (() => {
             // Обновляем имя и username
             updateProfileHeader(profile);
             
-            // Обновляем все элементы профиля
+            // Обновляем все поля профиля
             updateProfileFields(profile);
             
         } catch (err) {
@@ -31,13 +31,13 @@ window.AppProfile = (() => {
     // Обновление заголовка профиля (имя и username)
     function updateProfileHeader(profile) {
         // Обновление имени
-        const nameEl = document.querySelector('.profile-name');
+        const nameEl = document.querySelector('#user-name');
         if (nameEl && profile.name) {
             nameEl.textContent = profile.name;
         }
         
         // Обновление username
-        const usernameEl = document.querySelector('.profile-username');
+        const usernameEl = document.querySelector('#user-username');
         if (usernameEl && profile.username) {
             usernameEl.textContent = `@${profile.username}`;
         }
@@ -45,47 +45,35 @@ window.AppProfile = (() => {
     
     // Обновление всех полей профиля
     function updateProfileFields(profile) {
-        // Найти все элементы профиля
-        const profileItems = document.querySelectorAll('.profile-item');
+        // Обновление баланса сообщений
+        const balanceEl = document.querySelector('#summary-balance');
+        if (balanceEl && profile.credits_balance !== undefined) {
+            balanceEl.textContent = `${profile.credits_balance} сообщений`;
+        }
         
-        profileItems.forEach(item => {
-            const label = item.querySelector('.profile-label');
-            const value = item.querySelector('.profile-value');
-            
-            if (!label || !value) return;
-            
-            const labelText = label.textContent.trim();
-            
-            // Обновление статуса
-            if (labelText === 'Ваш статус' && profile.status_title) {
-                value.textContent = profile.status_title;
-            }
-            
-            // Обновление баланса сообщений
-            if (labelText === 'Баланс сообщений' && profile.credits_balance !== undefined) {
-                value.textContent = `${profile.credits_balance} сообщений`;
-            }
-            
-            // Обновление даты регистрации
-            if (labelText === 'Дата регистрации' && profile.registered_at) {
-                value.textContent = formatDate(profile.registered_at);
-            }
-            
-            // Обновление приглашенных друзей
-            if (labelText === 'Приглашено друзей' && profile.friends_invited !== undefined) {
-                value.textContent = profile.friends_invited;
-            }
-            
-            // Обновление выполненных заданий
-            if (labelText === 'Выполнено заданий' && profile.tasks_completed !== undefined) {
-                value.textContent = profile.tasks_completed;
-            }
-            
-            // Обновление сделанных запросов
-            if (labelText === 'Сделано запросов' && profile.requests_total !== undefined) {
-                value.textContent = profile.requests_total;
-            }
-        });
+        // Обновление даты регистрации
+        const registeredEl = document.querySelector('#summary-registered');
+        if (registeredEl && profile.registered_at) {
+            registeredEl.textContent = formatDate(profile.registered_at);
+        }
+        
+        // Обновление приглашенных друзей
+        const friendsEl = document.querySelector('#activity-friends');
+        if (friendsEl && profile.friends_invited !== undefined) {
+            friendsEl.textContent = profile.friends_invited;
+        }
+        
+        // Обновление выполненных заданий
+        const tasksEl = document.querySelector('#activity-tasks');
+        if (tasksEl && profile.tasks_completed !== undefined) {
+            tasksEl.textContent = profile.tasks_completed;
+        }
+        
+        // Обновление сделанных запросов
+        const requestsEl = document.querySelector('#activity-requests');
+        if (requestsEl && profile.requests_total !== undefined) {
+            requestsEl.textContent = profile.requests_total;
+        }
     }
     
     // Форматирование даты
