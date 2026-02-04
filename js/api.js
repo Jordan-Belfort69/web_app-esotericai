@@ -5,9 +5,16 @@ const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
 
 async function request(path, params = {}, options = {}) {
     const url = new URL(BASE_URL + path);
-    Object.entries(params).forEach(([k, v]) => {  // ✅ Без пробелов
-        if (v !== undefined && v !== null) {  // ✅ Без пробелов
-            url.searchParams.set(k, v);
+    
+    // ✅ ПРОВЕРЯЕМ: если это initData - НЕ КОДИРОВАТЬ!
+    Object.entries(params).forEach(([k, v]) => {
+        if (v !== undefined && v !== null) {
+            if (k === 'initData') {
+                // initData уже закодирован от Telegram - просто добавляем
+                url.searchParams.append(k, v);
+            } else {
+                url.searchParams.set(k, v);
+            }
         }
     });
 
