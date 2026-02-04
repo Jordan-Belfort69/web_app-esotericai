@@ -47,10 +47,13 @@ window.AppProfile = (() => {
         const avatarImg = document.querySelector('.avatar-img');
         if (avatarImg) {
             if (profile.photo_url) {
+                // Удаляем лишние пробелы из URL
+                const cleanPhotoUrl = profile.photo_url.trim();
+                
                 // Используем URL напрямую, но добавляем параметр для обхода кеширования
-                const url = profile.photo_url.includes('t.me') 
-                    ? `${profile.photo_url}?${Date.now()}` 
-                    : profile.photo_url;
+                const url = cleanPhotoUrl.includes('t.me') 
+                    ? `${cleanPhotoUrl}?${Date.now()}` 
+                    : cleanPhotoUrl;
                 
                 avatarImg.src = url;
                 avatarImg.style.display = 'block';
