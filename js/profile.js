@@ -28,7 +28,7 @@ window.AppProfile = (() => {
         }
     }
     
-    // Обновление заголовка профиля (имя и username)
+    // Обновление заголовка профиля (имя, username, аватарка)
     function updateProfileHeader(profile) {
         // Обновление имени
         const nameEl = document.querySelector('#user-name');
@@ -41,14 +41,27 @@ window.AppProfile = (() => {
         if (usernameEl && profile.username) {
             usernameEl.textContent = `@${profile.username}`;
         }
+        
+        // Обновление аватарки
+        const avatarEl = document.querySelector('.avatar-circle');
+        if (avatarEl) {
+            if (profile.photo_url) {
+                avatarEl.style.backgroundImage = `url(${profile.photo_url})`;
+                avatarEl.style.backgroundSize = 'cover';
+                avatarEl.textContent = '';
+            } else if (profile.name) {
+                avatarEl.textContent = profile.name.charAt(0);
+                avatarEl.style.backgroundImage = '';
+            }
+        }
     }
     
     // Обновление всех полей профиля
     function updateProfileFields(profile) {
-        // Обновление баланса сообщений
+        // Обновление баланса сообщений (только число)
         const balanceEl = document.querySelector('#summary-balance');
         if (balanceEl && profile.credits_balance !== undefined) {
-            balanceEl.textContent = `${profile.credits_balance} сообщений`;
+            balanceEl.textContent = profile.credits_balance;
         }
         
         // Обновление даты регистрации
