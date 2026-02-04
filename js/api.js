@@ -10,7 +10,7 @@ async function request(path, params = {}, options = {}) {
     Object.entries(params).forEach(([k, v]) => {
         if (v !== undefined && v !== null) {
             if (k === 'initData') {
-                // initData уже закодирован от Telegram
+                // initData уже закодирован от Telegram - просто добавляем
                 url.search += (url.search ? '&' : '?') + `${k}=${v}`;
             } else {
                 url.searchParams.set(k, v);
