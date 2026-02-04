@@ -6,25 +6,25 @@ const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
 async function request(path, params = {}, options = {}) {
     const url = new URL(BASE_URL + path);
     
-    // ✅ ПРОВЕРЯЕМ: если это initData - НЕ КОДИРОВАТЬ!
+    // ✅ ПРОВЕРЯЕМ: если это initData - НЕ КОДИРОВАТЬ ПОВТОРНО!
     Object.entries(params).forEach(([k, v]) => {
         if (v !== undefined && v !== null) {
             if (k === 'initData') {
-                // initData уже закодирован от Telegram - просто добавляем
-                url.searchParams.append(k, v);
+                // initData уже закодирован от Telegram
+                url.search += (url.search ? '&' : '?') + `${k}=${v}`;
             } else {
                 url.searchParams.set(k, v);
             }
         }
     });
-
-    console.log("📡 API Request: ", path, params);
+    
+    console.log("📡 API Request URL:", url.toString());
     
     const res = await fetch(url, {
-        method: options.method || "GET",  // ✅ Без пробела
+        method: options.method || "GET",
         headers: {
-            "Content-Type": "application/json",  // ✅ Без пробела
-            "X-Requested-With": "XMLHttpRequest",  // ✅ Без пробела
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
             ...options.headers,
         },
         body: options.body ? JSON.stringify(options.body) : undefined,
@@ -44,8 +44,13 @@ async function request(path, params = {}, options = {}) {
 
 // ============ ПРОФИЛЬ ============
 function fetchMe(initData, fallbackUserId) {
-    const params = initData ? { initData } : { user_id: fallbackUserId };  // ✅ Без пробела
-    return request("/me", params);  // ✅ Без пробела
+    console.log("🔍 [FRONTEND] Получен initData:", initData);
+    console.log("🔍 [FRONTEND] Длина:", initData.length);
+    console.log("🔍 [FRONTEND] Содержит 'hash':", initData.includes('hash='));
+    console.log("🔍 [FRONTEND] Содержит 'signature':", initData.includes('signature='));
+    
+    const params = initData ? { initData } : { user_id: fallbackUserId };
+    return request("/me", params);
 }
 
 // ============ ИСТОРИЯ ============
