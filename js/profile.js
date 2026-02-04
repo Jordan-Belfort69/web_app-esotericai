@@ -27,7 +27,7 @@ window.AppProfile = (() => {
             alert("Ошибка загрузки профиля: " + err.message);
         }
     }
-    
+
     // Обновление заголовка профиля (имя, username, аватарка)
     function updateProfileHeader(profile) {
         // Обновление имени
@@ -66,7 +66,7 @@ window.AppProfile = (() => {
             }
         }
     }
-    
+
     // Обновление всех полей профиля
     function updateProfileFields(profile) {
         // Обновление баланса сообщений (только число)
@@ -117,7 +117,7 @@ window.AppProfile = (() => {
             statusIconEl.src = iconMap[profile.status_code] || iconMap['spark'];
         }
     }
-    
+
     // Форматирование даты
     function formatDate(dateString) {
         try {
@@ -132,7 +132,7 @@ window.AppProfile = (() => {
             return dateString;
         }
     }
-    
+
     // Инициализация секции истории
     function initHistorySection() {
         const historyBtn = document.querySelector('#profile-history-link');
@@ -142,7 +142,7 @@ window.AppProfile = (() => {
             });
         }
     }
-    
+
     // Инициализация секции заданий
     function initTasksSection() {
         const tasksBtn = document.querySelector('#profile-tasks-link');
@@ -152,7 +152,7 @@ window.AppProfile = (() => {
             });
         }
     }
-    
+
     // Инициализация секции реферальной ссылки
     function initRefLinkSection() {
         const refBtn = document.querySelector('#profile-ref-link');
@@ -162,7 +162,7 @@ window.AppProfile = (() => {
             });
         }
     }
-    
+
     // Инициализация блока реферального бонуса
     function initRefBonusBlock() {
         const refBonusBtn = document.querySelector('.ref-bonus-btn');
@@ -172,7 +172,7 @@ window.AppProfile = (() => {
             });
         }
     }
-    
+
     // Инициализация ссылки на статус
     function initStatusLink() {
         const statusBtn = document.querySelector('#profile-status-link');
@@ -182,7 +182,7 @@ window.AppProfile = (() => {
             });
         }
     }
-    
+
     // Инициализация клика на самом статусе
     function initStatusClick() {
         const statusElement = document.querySelector('.summary-status-name');
@@ -192,7 +192,7 @@ window.AppProfile = (() => {
             });
         }
     }
-    
+
     return {
         loadProfile,
         initHistorySection,
@@ -200,6 +200,6 @@ window.AppProfile = (() => {
         initRefLinkSection,
         initRefBonusBlock,
         initStatusLink,
-        initStatusClick  // Добавлено для кликабельности статуса
+        initStatusClick
     };
 })();
