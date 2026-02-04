@@ -16,7 +16,7 @@ window.AppProfile = (() => {
             const profile = await AppApi.fetchMe(initData);
             console.log("✅ Profile loaded:", profile);
             
-            // Обновляем имя и username
+            // Обновляем имя, username и аватарку
             updateProfileHeader(profile);
             
             // Обновляем все поля профиля
@@ -50,8 +50,11 @@ window.AppProfile = (() => {
                 avatarEl.style.backgroundSize = 'cover';
                 avatarEl.textContent = '';
             } else if (profile.name) {
-                avatarEl.textContent = profile.name.charAt(0);
+                avatarEl.textContent = profile.name.charAt(0).toUpperCase();
                 avatarEl.style.backgroundImage = '';
+                avatarEl.style.backgroundColor = '#8B4513';
+                avatarEl.style.color = 'white';
+                avatarEl.style.fontWeight = 'bold';
             }
         }
     }
@@ -87,6 +90,24 @@ window.AppProfile = (() => {
         if (requestsEl && profile.requests_total !== undefined) {
             requestsEl.textContent = profile.requests_total;
         }
+        
+        // Обновление статуса
+        const statusNameEl = document.querySelector('.summary-status-name');
+        if (statusNameEl && profile.status_title) {
+            statusNameEl.textContent = profile.status_title;
+        }
+        
+        // Обновление иконки статуса (опционально)
+        const statusIconEl = document.querySelector('.summary-status-icon');
+        if (statusIconEl && profile.status_code) {
+            const iconMap = {
+                'spark': 'img/status/spark.png',
+                'seeker': 'img/status/seeker.png',
+                'adept': 'img/status/adept.png',
+                'master': 'img/status/master.png'
+            };
+            statusIconEl.src = iconMap[profile.status_code] || iconMap['spark'];
+        }
     }
     
     // Форматирование даты
@@ -106,7 +127,7 @@ window.AppProfile = (() => {
     
     // Инициализация секции истории
     function initHistorySection() {
-        const historyBtn = document.querySelector('[data-screen="history"]');
+        const historyBtn = document.querySelector('#profile-history-link');
         if (historyBtn) {
             historyBtn.addEventListener('click', () => {
                 AppRouter.go("history");
@@ -116,7 +137,7 @@ window.AppProfile = (() => {
     
     // Инициализация секции заданий
     function initTasksSection() {
-        const tasksBtn = document.querySelector('[data-screen="tasks"]');
+        const tasksBtn = document.querySelector('#profile-tasks-link');
         if (tasksBtn) {
             tasksBtn.addEventListener('click', () => {
                 AppRouter.go("tasks");
@@ -126,7 +147,7 @@ window.AppProfile = (() => {
     
     // Инициализация секции реферальной ссылки
     function initRefLinkSection() {
-        const refBtn = document.querySelector('[data-screen="referral"]');
+        const refBtn = document.querySelector('#profile-ref-link');
         if (refBtn) {
             refBtn.addEventListener('click', () => {
                 AppRouter.go("referral");
@@ -146,7 +167,7 @@ window.AppProfile = (() => {
     
     // Инициализация ссылки на статус
     function initStatusLink() {
-        const statusBtn = document.querySelector('[data-screen="status"]');
+        const statusBtn = document.querySelector('#profile-status-link');
         if (statusBtn) {
             statusBtn.addEventListener('click', () => {
                 AppRouter.go("status");
