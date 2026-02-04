@@ -16,12 +16,30 @@ window.AppProfile = (() => {
             const profile = await AppApi.fetchMe(initData);
             console.log("✅ Profile loaded:", profile);
             
+            // Обновляем имя и username (ЭТО БЫЛО УДАЛЕНО В ПРЕДЫДУЩЕЙ ВЕРСИИ!)
+            updateProfileHeader(profile);
+            
             // Обновляем все элементы профиля
             updateProfileFields(profile);
             
         } catch (err) {
             console.error("❌ loading profile:", err);
             alert("Ошибка загрузки профиля: " + err.message);
+        }
+    }
+    
+    // Обновление заголовка профиля (имя и username)
+    function updateProfileHeader(profile) {
+        // Обновление имени
+        const nameEl = document.querySelector('.profile-name');
+        if (nameEl && profile.name) {
+            nameEl.textContent = profile.name;
+        }
+        
+        // Обновление username
+        const usernameEl = document.querySelector('.profile-username');
+        if (usernameEl && profile.username) {
+            usernameEl.textContent = `@${profile.username}`;
         }
     }
     
