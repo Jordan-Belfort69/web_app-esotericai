@@ -16,7 +16,7 @@ window.AppProfile = (() => {
             const profile = await AppApi.fetchMe(initData);
             console.log("✅ Profile loaded:", profile);
             
-            // Обновляем имя и username (ЭТО БЫЛО УДАЛЕНО В ПРЕДЫДУЩЕЙ ВЕРСИИ!)
+            // Обновляем имя и username
             updateProfileHeader(profile);
             
             // Обновляем все элементы профиля
