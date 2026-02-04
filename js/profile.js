@@ -44,20 +44,19 @@ window.AppProfile = (() => {
         
         // Обновление аватарки
         const avatarEl = document.querySelector('.avatar-circle');
-        if (avatarEl) {
+        const avatarImg = document.querySelector('.avatar-img');
+        if (avatarImg) {
             if (profile.photo_url) {
                 // Используем URL напрямую, но добавляем параметр для обхода кеширования
                 const url = profile.photo_url.includes('t.me') 
                     ? `${profile.photo_url}?${Date.now()}` 
                     : profile.photo_url;
                 
-                avatarEl.style.backgroundImage = `url(${url})`;
-                avatarEl.style.backgroundSize = 'cover';
-                avatarEl.style.backgroundPosition = 'center';
-                avatarEl.textContent = '';
+                avatarImg.src = url;
+                avatarImg.style.display = 'block';
             } else if (profile.name) {
+                avatarImg.style.display = 'none';
                 avatarEl.textContent = profile.name.charAt(0).toUpperCase();
-                avatarEl.style.backgroundImage = '';
                 avatarEl.style.backgroundColor = '#8B4513';
                 avatarEl.style.color = 'white';
                 avatarEl.style.fontWeight = 'bold';

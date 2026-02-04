@@ -1662,15 +1662,20 @@ body.theme-light #profile-status-link .card-link-inner {
     width: 48px;
     height: 48px;
     border-radius: 50%;
+    overflow: hidden;
+    position: relative;
     background-color: #8B4513;
-    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     font-size: 18px;
-    overflow: hidden;
-    position: relative;
-    background-clip: content-box;
-    -webkit-background-clip: content-box;
+    color: white;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
 }
