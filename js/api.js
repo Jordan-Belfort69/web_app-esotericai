@@ -71,10 +71,10 @@ window.AppApi = (() => {
   function claimTaskReward(initData, taskCode) {
     return request(
       "/tasks/claim",
-      {},
+      { initData },              // initData в query, как у остальных ручек
       {
         method: "POST",
-        body: { task_code: taskCode, initData },
+        body: { task_code: taskCode },  // в JSON только код задачи
       },
     );
   }
