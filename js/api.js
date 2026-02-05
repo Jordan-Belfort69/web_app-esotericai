@@ -68,17 +68,6 @@ window.AppApi = (() => {
     return request("/tasks/list", { initData, category });
   }
 
-  function claimTaskReward(initData, taskCode) {
-    return request(
-      "/tasks/claim",
-      { initData },              // initData в query, как у остальных ручек
-      {
-        method: "POST",
-        body: { task_code: taskCode },  // в JSON только код задачи
-      },
-    );
-  }
-
   // ============ РЕФЕРАЛКА ============
   function fetchReferralsInfo(initData) {
     return request("/referrals/info", { initData });
@@ -160,7 +149,6 @@ window.AppApi = (() => {
     fetchHistoryList,
     fetchHistoryDetail,
     fetchTasksList,
-    claimTaskReward,
     fetchReferralsInfo,
     fetchPromocodesList,
     fetchSubsQuote,

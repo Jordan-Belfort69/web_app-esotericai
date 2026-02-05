@@ -61,8 +61,8 @@ window.AppTasks = (() => {
           ? Math.min(100, Math.round((progressCurrent / progressTarget) * 100))
           : 0;
 
-        const status = task.status || "pending"; // pending / in_progress / ready_to_claim / completed
-        const rewardClaimed = !!task.reward_claimed; // флаг с бэка
+        const status = task.status || "pending"; // pending / in_progress / completed
+        const isCompleted = status === "completed" || task.reward_claimed;
 
         item.innerHTML = `
           <div class="tasks-header-row">
@@ -97,55 +97,34 @@ window.AppTasks = (() => {
                 : ""
             }
             <div class="tasks-note">
-              Награда будет начислена автоматически после выполнения условий.
+              Награда начисляется автоматически после выполнения условий.
             </div>
             <div class="tasks-status-row">
-              <button class="tasks-status-btn tasks-status-done">
-                ✅ Награда получена
-              </button>
-              <button class="tasks-status-btn tasks-status-pending">
-                ⏳ Не выполнено
-              </button>
+              <span class="tasks-status-label ${
+                isCompleted
+                  ? "tasks-status-label-done"
+                  : status === "in_progress"
+                  ? "tasks-status-label-progress"
+                  : "tasks-status-label-pending"
+              }">
+                ${
+                  isCompleted
+                    ? "✅ Награда получена"
+                    : status === "in_progress"
+                    ? "⏳ В процессе"
+                    : "⏳ Не выполнено"
+                }
+              </span>
             </div>
           </div>
         `;
 
         const headerRow = item.querySelector(".tasks-header-row");
         const details = item.querySelector(".tasks-details");
-        const doneBtn = item.querySelector(".tasks-status-done");
-        const pendingBtn = item.querySelector(".tasks-status-pending");
-
-        // подсветка статуса
-        if (rewardClaimed || status === "completed") {
-          doneBtn.classList.add("tasks-status-active");
-          doneBtn.disabled = true;
-          pendingBtn.classList.remove("tasks-status-active");
-        } else if (status === "ready_to_claim") {
-          doneBtn.classList.add("tasks-status-active");
-          pendingBtn.classList.remove("tasks-status-active");
-        } else {
-          pendingBtn.classList.add("tasks-status-active");
-          doneBtn.classList.remove("tasks-status-active");
-        }
 
         headerRow.addEventListener("click", () => {
           const isHidden = details.style.display === "none";
           details.style.display = isHidden ? "block" : "none";
-        });
-
-        // клик по "Награда получена"
-        doneBtn.addEventListener("click", async (ev) => {
-          ev.stopPropagation();
-          if (rewardClaimed || status === "completed") return;
-
-          try {
-            const initData2 = AppAuth.getInitData();
-            await AppApi.claimTaskReward(initData2, task.code);
-            await renderTasksList(category); // обновляем список
-          } catch (e) {
-            console.error("Ошибка при получении награды", e);
-            alert("Не удалось получить награду. Попробуйте позже.");
-          }
         });
 
         container.appendChild(item);
