@@ -109,11 +109,12 @@ button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #262b35;
+  background: #8B4513; /* вместо #262b35 */
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
+  color: white;         /* чтобы буква была белой */
 }
 
 .profile-name {
@@ -1658,21 +1659,6 @@ body.theme-light #profile-status-link .card-link-inner {
 }
 
 /* Стили для аватарки */
-.avatar-circle {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
-    background-color: #8B4513;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 18px;
-    color: white;
-}
-
 .avatar-img {
     width: 100%;
     height: 100%;
