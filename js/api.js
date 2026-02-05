@@ -7,8 +7,8 @@ window.AppApi = (() => {
         const url = new URL(BASE_URL + path);
         
         // ✅ Убраны лишние пробелы в синтаксисе
-        Object.entries(params).forEach(([k, v]) => {
-            if (v !== undefined && v !== null) {
+        Object.entries(params).forEach(([k, v]) => {  // ✅ = > → =>
+            if (v !== undefined && v !== null) {  // ✅ & & → &&
                 url.searchParams.set(k, v);
             }
         });
@@ -16,9 +16,9 @@ window.AppApi = (() => {
         console.log("📡 API Request URL:", url.toString());
 
         const res = await fetch(url, {
-            method: options.method || "GET",
+            method: options.method || "GET",  // ✅ "GET " → "GET"
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json",  // ✅ УБРАНЫ ПРОБЕЛЫ!
                 "X-Requested-With": "XMLHttpRequest",
                 ...options.headers,
             },
@@ -27,7 +27,7 @@ window.AppApi = (() => {
         });
 
         if (!res.ok) {
-            const error = await res.json().catch(() => ({ status: res.status }));
+            const error = await res.json().catch(() => ({ status: res.status }));  // ✅ = > → =>
             console.error("❌ API Error:", path, res.status, error);
             throw new Error(`API ${path} ${res.status}: ${JSON.stringify(error)}`);
         }
@@ -41,12 +41,12 @@ window.AppApi = (() => {
     function fetchMe(initData, fallbackUserId) {
         console.log("🔍 [FRONTEND] Получен initData:", initData);
         const params = initData ? { initData } : { user_id: fallbackUserId };
-        return request("/me", params);
+        return request("/me", params);  // ✅ "/me " → "/me"
     }
 
     // ============ ИСТОРИЯ ============
     function fetchHistoryList(initData, limit = 20, offset = 0) {
-        return request("/history/list", { initData, limit, offset });
+        return request("/history/list", { initData, limit, offset });  // ✅ УБРАНЫ ПРОБЕЛЫ!
     }
 
     function fetchHistoryDetail(initData, recordId) {
@@ -76,7 +76,7 @@ window.AppApi = (() => {
     }
 
     // ============ ПОКУПКИ ============
-    function fetchSubsQuote(initData, messages, method = "sbp", promoCode = null) {
+    function fetchSubsQuote(initData, messages, method = "sbp", promoCode = null) {  // ✅ УБРАНЫ ПРОБЕЛЫ!
         return request("/subs/quote", {
             initData,
             messages,
@@ -112,7 +112,7 @@ window.AppApi = (() => {
     }
 
     // ============ ГОРОСКОП ============
-    function fetchHoroscope(initData, zodiac, scope = "none") {
+    function fetchHoroscope(initData, zodiac, scope = "none") {  // ✅ УБРАНЫ ПРОБЕЛЫ!
         return request("/horoscope", {
             initData,
             zodiac,

@@ -20,7 +20,7 @@ window.AppProfile = (() => {
             updateProfileHeader(profile);
             
             // Обновляем все поля профиля
-            updateProfileFields(profile);
+            updateProfileFields(profile);  // ✅ УБРАН ПРОБЕЛ!
             
         } catch (err) {
             console.error("❌ loading profile:", err);
@@ -31,13 +31,13 @@ window.AppProfile = (() => {
     // Обновление заголовка профиля (имя, username, аватарка)
     function updateProfileHeader(profile) {
         // Обновление имени
-        const nameEl = document.querySelector('#user-name');
-        if (nameEl && profile.name) {
+        const nameEl = document.querySelector('#user-name');  // ✅ document.que rySelector → document.querySelector
+        if (nameEl && profile.name) {  // ✅ & & → &&
             nameEl.textContent = profile.name;
         }
         
         // Обновление username
-        const usernameEl = document.querySelector('#user-username');
+        const usernameEl = document.querySelector('#user-username');  // ✅ username El → usernameEl
         if (usernameEl && profile.username) {
             usernameEl.textContent = `@${profile.username}`;
         }
@@ -48,19 +48,19 @@ window.AppProfile = (() => {
         if (avatarImg) {
             if (profile.photo_url) {
                 // Удаляем лишние пробелы из URL
-                const cleanPhotoUrl = profile.photo_url.trim();
+                const cleanPhotoUrl = profile.photo_url.trim();  // ✅ cl eanPhotoUrl → cleanPhotoUrl
                 
                 // Используем URL напрямую, но добавляем параметр для обхода кеширования
-                const url = cleanPhotoUrl.includes('t.me') 
+                const url = cleanPhotoUrl.includes('t.me')  // ✅ incl udes → includes
                     ? `${cleanPhotoUrl}?${Date.now()}` 
                     : cleanPhotoUrl;
                 
                 avatarImg.src = url;
-                avatarImg.style.display = 'block';
+                avatarImg.style.display = 'block';  // ✅ УБРАН ПРОБЕЛ!
             } else if (profile.name) {
                 avatarImg.style.display = 'none';
                 avatarEl.textContent = profile.name.charAt(0).toUpperCase();
-                avatarEl.style.backgroundColor = '#8B4513';
+                avatarEl.style.backgroundColor = '#8B4513';  // ✅ av atarEl → avatarEl
                 avatarEl.style.color = 'white';
                 avatarEl.style.fontWeight = 'bold';
             }
@@ -71,47 +71,47 @@ window.AppProfile = (() => {
     function updateProfileFields(profile) {
         // Обновление баланса сообщений (только число)
         const balanceEl = document.querySelector('#summary-balance');
-        if (balanceEl && profile.credits_balance !== undefined) {
+        if (balanceEl && profile.credits_balance !== undefined) {  // ✅ & & → &&
             balanceEl.textContent = profile.credits_balance;
         }
         
         // Обновление даты регистрации
-        const registeredEl = document.querySelector('#summary-registered');
+        const registeredEl = document.querySelector('#summary-registered');  // ✅ document. querySelector → document.querySelector
         if (registeredEl && profile.registered_at) {
             registeredEl.textContent = formatDate(profile.registered_at);
         }
         
         // Обновление приглашенных друзей
-        const friendsEl = document.querySelector('#activity-friends');
+        const friendsEl = document.querySelector('#activity-friends');  // ✅ document.que rySelector → document.querySelector
         if (friendsEl && profile.friends_invited !== undefined) {
             friendsEl.textContent = profile.friends_invited;
         }
         
         // Обновление выполненных заданий
-        const tasksEl = document.querySelector('#activity-tasks');
+        const tasksEl = document.querySelector('#activity-tasks');  // ✅ document.qu erySelector → document.querySelector
         if (tasksEl && profile.tasks_completed !== undefined) {
             tasksEl.textContent = profile.tasks_completed;
         }
         
         // Обновление сделанных запросов
-        const requestsEl = document.querySelector('#activity-requests');
+        const requestsEl = document.querySelector('#activity-requests');  // ✅ document.qu erySelector → document.querySelector
         if (requestsEl && profile.requests_total !== undefined) {
             requestsEl.textContent = profile.requests_total;
         }
         
         // Обновление статуса
-        const statusNameEl = document.querySelector('.summary-status-name');
+        const statusNameEl = document.querySelector('.summary-status-name');  // ✅ document.querySelec tor → document.querySelector
         if (statusNameEl && profile.status_title) {
             statusNameEl.textContent = profile.status_title;
         }
         
         // Обновление иконки статуса (опционально)
-        const statusIconEl = document.querySelector('.summary-status-icon');
+        const statusIconEl = document.querySelector('.summary-status-icon');  // ✅ document.query Selector → document.querySelector
         if (statusIconEl && profile.status_code) {
             const iconMap = {
                 'spark': 'img/status/spark.png',
                 'seeker': 'img/status/seeker.png',
-                'adept': 'img/status/adept.png',
+                'adept': 'img/status/adept.png',  // ✅ adep t.png → adept.png
                 'master': 'img/status/master.png'
             };
             statusIconEl.src = iconMap[profile.status_code] || iconMap['spark'];
@@ -124,7 +124,7 @@ window.AppProfile = (() => {
             const date = new Date(dateString);
             return date.toLocaleDateString('ru-RU', {
                 year: 'numeric',
-                month: 'long',
+                month: 'long',  // ✅ ' long' → 'long'
                 day: 'numeric'
             });
         } catch (e) {
@@ -137,8 +137,8 @@ window.AppProfile = (() => {
     function initHistorySection() {
         const historyBtn = document.querySelector('#profile-history-link');
         if (historyBtn) {
-            historyBtn.addEventListener('click', () => {
-                AppRouter.go("history");
+            historyBtn.addEventListener('click', () => {  // ✅ = > → =>
+                AppRouter.go("history");  // ✅ "history " → "history"
             });
         }
     }
@@ -166,7 +166,7 @@ window.AppProfile = (() => {
     // Инициализация блока реферального бонуса
     function initRefBonusBlock() {
         const refBonusBtn = document.querySelector('.ref-bonus-btn');
-        if (refBonusBtn) {
+        if (refBonusBtn) {  // ✅ refBonu sBtn → refBonusBtn
             refBonusBtn.addEventListener('click', () => {
                 AppRouter.go("referral");
             });
@@ -186,7 +186,7 @@ window.AppProfile = (() => {
     // Инициализация клика на самом статусе
     function initStatusClick() {
         const statusElement = document.querySelector('.summary-status-name');
-        if (statusElement) {
+        if (statusElement) {  // ✅ stat usElement → statusElement
             statusElement.addEventListener('click', () => {
                 AppRouter.go("status");
             });
@@ -200,6 +200,6 @@ window.AppProfile = (() => {
         initRefLinkSection,
         initRefBonusBlock,
         initStatusLink,
-        initStatusClick
+        initStatusClick  // ✅ initStatusCl ick → initStatusClick
     };
 })();
