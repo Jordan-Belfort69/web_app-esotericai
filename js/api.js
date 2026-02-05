@@ -1,15 +1,14 @@
-// ===== API-КЛИЕНТ BACKEND (ИСПРАВЛЕННЫЙ) =====
+// ===== API-КЛИЕНТ BACKEND =====
 window.AppApi = (() => {
-    // ✅ Правильный публичный URL Railway
     const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
 
     async function request(path, params = {}, options = {}) {
         const url = new URL(BASE_URL + path);
 
-        // ✅ Специальная обработка initData: передаём строку БЕЗ повторного encode
         Object.entries(params).forEach(([k, v]) => {
             if (v !== undefined && v !== null) {
                 if (k === "initData") {
+                    // initData отправляем как есть, без повторного encode
                     url.searchParams.set("initData", v);
                 } else {
                     url.searchParams.set(k, v);
@@ -145,27 +144,18 @@ window.AppApi = (() => {
     }
 
     return {
-        // Профиль
         fetchMe,
-        // История
         fetchHistoryList,
         fetchHistoryDetail,
-        // Задачи
         fetchTasksList,
         claimTaskReward,
-        // Рефералка
         fetchReferralsInfo,
-        // Промокоды
         fetchPromocodesList,
-        // Покупки
         fetchSubsQuote,
         createInvoice,
-        // Ритуалы
         fetchDailyTipSettings,
         updateDailyTipSettings,
-        // Гороскоп
         fetchHoroscope,
-        // Таро
         fetchTarot,
     };
 })();
