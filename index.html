@@ -197,13 +197,19 @@
     <!-- ===== СЕКЦИЯ: ЭКРАН ИСТОРИИ ЗАПРОСОВ ===== -->
     <section class="card history-hero" id="profile-history" style="display:none;">
       <div class="history-emoji">
-        <img src="img/history.png" alt="История запросов" class="section-icon section-hero-icon-glow" id="history-hero-icon">
+        <img src="img/history.png" alt="История запросов"
+            class="section-icon section-hero-icon-glow" id="history-hero-icon">
       </div>
-      <div class="history-title-main section-hero-title-glow" id="history-hero-title">История последних запросов</div>
+      <div class="history-title-main section-hero-title-glow" id="history-hero-title">
+        История последних запросов
+      </div>
       <div class="section-intro">
         Здесь будут сохраняться недавние ритуалы, расклады и гороскопы,
         чтобы ты могла вернуться к ним в любой момент.
       </div>
+
+      <!-- ✅ новый контейнер, сюда JS будет рендерить список -->
+      <div class="history-list"></div>
     </section>
 
     <!-- Карточка истории 1 -->
