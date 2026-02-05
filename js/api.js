@@ -6,12 +6,11 @@ window.AppApi = (() => {
     async function request(path, params = {}, options = {}) {
         const url = new URL(BASE_URL + path);
 
-        // ✅ КРИТИЧНО: Специальная обработка initData!
+        // ✅ Специальная обработка initData: целиком кодируем строку
         Object.entries(params).forEach(([k, v]) => {
             if (v !== undefined && v !== null) {
                 if (k === "initData") {
-                    // initData уже закодирован Telegram — добавляем БЕЗ повторного encoding
-                    url.search += (url.search ? "&" : "?") + `initData=${v}`;
+                    url.searchParams.set("initData", encodeURIComponent(v));
                 } else {
                     url.searchParams.set(k, v);
                 }

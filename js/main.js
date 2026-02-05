@@ -7,6 +7,7 @@ const AppAuth = {
     },
 };
 
+
 // ===== РОУТЕР ЭКРАНОВ =====
 // profile / buy / buy-confirm / history / tasks / task1 / task2 / referral /
 // tarot / tarot-inner / rituals / tip / horoscope / more / help / status
@@ -202,7 +203,9 @@ const AppRouter = {
     },
 };
 
+
 // ==== ПРОФИЛЬ: ИСТОРИЯ ====
+
 
 window.AppProfile = window.AppProfile || {};
 
@@ -277,6 +280,7 @@ AppProfile.initHistorySection = function () {
         });
     }
 };
+
 
 // ===== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ =====
 document.addEventListener("DOMContentLoaded", () => {
