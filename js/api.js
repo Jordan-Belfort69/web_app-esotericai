@@ -8,8 +8,8 @@ window.AppApi = (() => {
         Object.entries(params).forEach(([k, v]) => {
             if (v !== undefined && v !== null) {
                 if (k === "initData") {
-                    // initData кодируем целиком, как рекомендует Telegram
-                    url.searchParams.set("initData", encodeURIComponent(v));
+                    // initData отправляем как есть, без дополнительного encode
+                    url.searchParams.set("initData", v);
                 } else {
                     url.searchParams.set(k, v);
                 }
