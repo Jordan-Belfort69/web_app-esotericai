@@ -15,7 +15,7 @@ window.AppTasks = (() => {
     });
   }
 
-  function renderTasksList(category) {
+  async function renderTasksList(category) {
     const listTitle = document.getElementById('tasks-list-title');
     const container = document.getElementById('tasks-list-container');
     if (!listTitle || !container) return;
@@ -30,91 +30,126 @@ window.AppTasks = (() => {
     };
 
     listTitle.textContent = titlesMap[category] || 'Задания';
-    const tasks = (window.AppTasksConfig && window.AppTasksConfig[category]) || [];
-    container.innerHTML = '';
+    container.innerHTML = 'Загрузка заданий...';
 
-    tasks.forEach((task) => {
-      const item = document.createElement('div');
-      item.className = 'history-item tasks-item';
+    try {
+      const initData = AppAuth.getInitData();
+      const resp = await AppApi.fetchTasksList(initData, category); // запрос к бэку
+      const tasks = Array.isArray(resp.tasks) ? resp.tasks : [];
 
-      item.innerHTML = `
-        <div class="tasks-header-row">
-          <div class="history-question">${task.title}</div>
-          <div class="tasks-reward">
-            +${task.xp} XP${task.sms ? ' · ' + task.sms + ' SMS' : ''}${task.promo ? ' · ' + task.promo : ''}
-          </div>
-        </div>
-        <div class="tasks-details" style="display:none;">
-          <div class="history-answer-preview">
-            ${task.desc}
-          </div>
-          <div class="tasks-reward-block">
-            <div class="tasks-reward-title">Награда за выполнение:</div>
-            <ul class="tasks-reward-list">
-              <li>💠 ${task.xp} XP</li>
-              ${task.sms ? `<li>💬 ${task.sms} смс‑сообщений</li>` : ''}
-              ${task.promo ? `<li>🎁 Промокод на скидку ${task.promo}</li>` : ''}
-            </ul>
-          </div>
-          ${
-            typeof task.progress_target === 'number' && task.progress_target > 1
-              ? `
-                <div class="tasks-progress">
-                  <div class="tasks-progress-header">
-                    <span class="tasks-progress-label">Прогресс</span>
-                    <span class="tasks-progress-value">
-                      ${task.progress_current || 0} / ${task.progress_target}
-                    </span>
-                  </div>
-                  <div class="tasks-progress-bar">
-                    <div class="tasks-progress-bar-fill" 
-                      style="width: ${
-                        Math.min(
-                          100,
-                          Math.round(((task.progress_current || 0) / task.progress_target) * 100)
-                        )
-                      }%;">
-                    </div>
-                  </div>
-                </div>
-              `
-              : ''
-          }
-          <div class="tasks-note">
-            Награда будет начислена автоматически после выполнения условий.
-          </div>
-          <div class="tasks-status-row">
-            <button class="tasks-status-btn tasks-status-done">
-              ✅ Награда получена
-            </button>
-            <button class="tasks-status-btn tasks-status-pending">
-              ⏳ Не выполнено
-            </button>
-          </div>
-        </div>
-      `;
-
-      const doneBtn = item.querySelector('.tasks-status-done');
-      const pendingBtn = item.querySelector('.tasks-status-pending');
-
-      // пока берём мок-статус из task.status: 'done' | 'pending'
-      const status = task.status || 'pending';
-
-      if (status === 'done') {
-        doneBtn.classList.add('tasks-status-active');
-      } else {
-        pendingBtn.classList.add('tasks-status-active');
+      if (!tasks.length) {
+        container.innerHTML = '<p class="history-empty">Заданий в этой категории пока нет</p>';
+        return;
       }
 
-      const headerRow = item.querySelector('.tasks-header-row');
-      const details = item.querySelector('.tasks-details');
-      headerRow.addEventListener('click', () => {
-        const isHidden = details.style.display === 'none';
-        details.style.display = isHidden ? 'block' : 'none';
-      });
+      container.innerHTML = '';
 
-      container.appendChild(item);
-    });
+      tasks.forEach((task) => {
+        const item = document.createElement('div');
+        item.className = 'history-item tasks-item';
+
+        const xp = task.xp || 0;
+        const sms = task.sms || 0;
+        const promo = task.promo || null;
+
+        const progressCurrent = task.progress_current || 0;
+        const progressTarget = task.progress_target || 0;
+        const hasProgress = typeof progressTarget === 'number' && progressTarget > 1;
+        const progressPercent = hasProgress
+          ? Math.min(100, Math.round((progressCurrent / progressTarget) * 100))
+          : 0;
+
+        const status = task.status || 'pending';          // pending / in_progress / ready_to_claim / completed
+        const rewardClaimed = !!task.reward_claimed;      // флаг с бэка
+
+        item.innerHTML = `
+          <div class="tasks-header-row">
+            <div class="history-question">${task.title || task.code}</div>
+            <div class="tasks-reward">
+              +${xp} XP${sms ? ' · ' + sms + ' SMS' : ''}${promo ? ' · ' + promo : ''}
+            </div>
+          </div>
+          <div class="tasks-details" style="display:none;">
+            <div class="history-answer-preview">
+              ${task.desc || ''}
+            </div>
+            ${
+              hasProgress
+                ? `
+                  <div class="tasks-progress">
+                    <div class="tasks-progress-header">
+                      <span class="tasks-progress-label">Прогресс</span>
+                      <span class="tasks-progress-value">
+                        ${progressCurrent} / ${progressTarget}
+                      </span>
+                    </div>
+                    <div class="tasks-progress-bar">
+                      <div class="tasks-progress-bar-fill"
+                           style="width: ${progressPercent}%;">
+                      </div>
+                    </div>
+                  </div>
+                `
+                : ''
+            }
+            <div class="tasks-note">
+              Награда будет начислена автоматически после выполнения условий.
+            </div>
+            <div class="tasks-status-row">
+              <button class="tasks-status-btn tasks-status-done">
+                ✅ Награда получена
+              </button>
+              <button class="tasks-status-btn tasks-status-pending">
+                ⏳ Не выполнено
+              </button>
+            </div>
+          </div>
+        `;
+
+        const headerRow = item.querySelector('.tasks-header-row');
+        const details = item.querySelector('.tasks-details');
+        const doneBtn = item.querySelector('.tasks-status-done');
+        const pendingBtn = item.querySelector('.tasks-status-pending');
+
+        // подсветка статуса
+        if (rewardClaimed || status === 'completed') {
+          doneBtn.classList.add('tasks-status-active');
+          doneBtn.disabled = true;
+          pendingBtn.classList.remove('tasks-status-active');
+        } else if (status === 'ready_to_claim') {
+          doneBtn.classList.add('tasks-status-active');
+          pendingBtn.classList.remove('tasks-status-active');
+        } else {
+          pendingBtn.classList.add('tasks-status-active');
+          doneBtn.classList.remove('tasks-status-active');
+        }
+
+        headerRow.addEventListener('click', () => {
+          const isHidden = details.style.display === 'none';
+          details.style.display = isHidden ? 'block' : 'none';
+        });
+
+        // клик по "Награда получена"
+        doneBtn.addEventListener('click', async (ev) => {
+          ev.stopPropagation();
+          if (rewardClaimed || status === 'completed') return;
+
+          try {
+            const initData2 = AppAuth.getInitData();
+            await AppApi.claimTaskReward(initData2, task.code);
+            await renderTasksList(category); // обновляем список
+          } catch (e) {
+            console.error('Ошибка при получении награды', e);
+            alert('Не удалось получить награду. Попробуйте позже.');
+          }
+        });
+
+        container.appendChild(item);
+      });
+    } catch (e) {
+      console.error('Ошибка загрузки задач', e);
+      container.innerHTML = '<p class="history-error">Не удалось загрузить задания</p>';
+    }
   }
 
   return {

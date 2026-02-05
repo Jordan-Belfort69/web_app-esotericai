@@ -66,10 +66,10 @@ window.AppApi = (() => {
     }
 
     function claimTaskReward(initData, taskCode) {
-        return request("/tasks/claim", {
-            initData,
-            task_code: taskCode,
-        });
+    return request("/tasks/claim", {}, {
+        method: "POST",
+        body: { task_code: taskCode, initData },
+    });
     }
 
     // ============ РЕФЕРАЛКА ============
