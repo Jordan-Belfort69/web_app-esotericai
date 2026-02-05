@@ -1,3 +1,12 @@
+// Хелпер для получения initData из Telegram WebApp
+const AppAuth = {
+    getInitData() {
+        const tg = AppCore.tg;
+        if (!tg) return null;
+        return tg.initData || null;
+    },
+};
+
 // ===== РОУТЕР ЭКРАНОВ =====
 // profile / buy / buy-confirm / history / tasks / task1 / task2 / referral /
 // tarot / tarot-inner / rituals / tip / horoscope / more / help / status
@@ -14,7 +23,7 @@ const AppRouter = {
 
     back() {
         const cur = this.current();
-        
+
         // Внутренний экран Таро → назад в корневой Таро
         if (cur === "tarot-inner") {
             this.stack = ["tarot"];
@@ -45,19 +54,31 @@ const AppRouter = {
 
     apply() {
         const screen = this.current();
-        
+
         // 0) шапка профиля: видна только на главном профиле
-        const profileHeader = document.querySelector('.profile-header');
+        const profileHeader = document.querySelector(".profile-header");
         if (profileHeader) {
             if (screen === "profile") {
-                profileHeader.style.display = 'flex';
+                profileHeader.style.display = "flex";
             } else {
-                profileHeader.style.display = 'none';
+                profileHeader.style.display = "none";
             }
         }
 
         // 1) переключаем основной таб
-        if (["profile", "buy", "buy-confirm", "history", "tasks", "tasks-list", "referral", "status", "promocodes"].includes(screen)) {
+        if (
+            [
+                "profile",
+                "buy",
+                "buy-confirm",
+                "history",
+                "tasks",
+                "tasks-list",
+                "referral",
+                "status",
+                "promocodes",
+            ].includes(screen)
+        ) {
             AppNavigation.switchTab("profile", screen === "profile" ? "main" : "subscreen");
         } else if (screen === "tarot" || screen === "tarot-inner") {
             // для внутренних экранов Таро всё равно держим вкладку "Таро" активной
@@ -79,7 +100,7 @@ const AppRouter = {
             "profile-help-contact",
             "promocodes-section",
         ];
-        
+
         profileInnerIds.forEach(id => {
             const el = document.getElementById(id);
             if (el) el.style.display = "none";
@@ -88,7 +109,7 @@ const AppRouter = {
         const subsSection = document.getElementById("subs-section");
         const subsConfirmSection = document.getElementById("subs-confirm-section");
         const statusSection = document.getElementById("status-section");
-        
+
         if (subsSection) subsSection.style.display = "none";
         if (subsConfirmSection) subsConfirmSection.style.display = "none";
         if (statusSection) statusSection.style.display = "none";
@@ -102,9 +123,10 @@ const AppRouter = {
         } else if (screen === "history") {
             const h = document.getElementById("profile-history");
             if (h) h.style.display = "block";
-            document.querySelectorAll(".history-item-card").forEach(card => {
-                card.style.display = "block";
-            });
+            // при каждом входе в экран истории подгружаем актуальный список
+            if (window.AppProfile && typeof AppProfile.loadHistory === "function") {
+                AppProfile.loadHistory();
+            }
         } else if (screen === "tasks") {
             const t = document.getElementById("profile-tasks");
             const cats = document.getElementById("tasks-categories");
@@ -124,7 +146,7 @@ const AppRouter = {
             if (r) r.style.display = "block";
         } else if (screen === "promocodes") {
             const p = document.getElementById("promocodes-section");
-            if (p) p.style.display = "block";  
+            if (p) p.style.display = "block";
         } else if (screen === "help") {
             const h = document.getElementById("profile-help");
             const c = document.getElementById("profile-help-contact");
@@ -177,6 +199,82 @@ const AppRouter = {
             mainBtn.hide();
             backBtn.show();
         }
+    },
+};
+
+// ==== ПРОФИЛЬ: ИСТОРИЯ ====
+
+window.AppProfile = window.AppProfile || {};
+
+AppProfile._historyLoaded = false;
+
+AppProfile.loadHistory = async function () {
+    const container = document.querySelector("#profile-history .history-list");
+    if (!container) return;
+
+    container.innerHTML = "Загрузка истории...";
+
+    try {
+        const initData = AppAuth.getInitData();
+        const resp = await AppApi.fetchHistoryList(initData, 20, 0);
+        const items = resp.items || [];
+
+        if (!items.length) {
+            container.innerHTML = '<p class="history-empty">История пока пустая</p>';
+            return;
+        }
+
+        container.innerHTML = "";
+        items.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "history-item-card";
+            card.dataset.recordId = item.id;
+
+            card.innerHTML = `
+                <div class="history-item-header">
+                    <div class="history-item-title">${item.title || "Запрос"}</div>
+                    <div class="history-item-date">${item.created_at || ""}</div>
+                </div>
+                <div class="history-item-preview">
+                    ${item.preview || ""}
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+
+        AppProfile.bindHistoryItemClicks();
+    } catch (e) {
+        console.error("Ошибка загрузки истории", e);
+        container.innerHTML = '<p class="history-error">Не удалось загрузить историю</p>';
+    }
+};
+
+AppProfile.bindHistoryItemClicks = function () {
+    document.querySelectorAll(".history-item-card").forEach(card => {
+        card.addEventListener("click", async () => {
+            const recordId = card.dataset.recordId;
+            if (!recordId) return;
+
+            try {
+                const initData = AppAuth.getInitData();
+                const detail = await AppApi.fetchHistoryDetail(initData, recordId);
+
+                // Временный простой вывод — потом заменим на нормальное модальное окно/экран
+                alert(detail.full_text || JSON.stringify(detail, null, 2));
+            } catch (e) {
+                console.error("Ошибка загрузки детали истории", e);
+            }
+        });
+    });
+};
+
+AppProfile.initHistorySection = function () {
+    const historyLink = document.querySelector('[data-nav="history"]');
+    if (historyLink) {
+        historyLink.addEventListener("click", () => {
+            AppRouter.go("history");
+        });
     }
 };
 
@@ -204,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
     AppProfile.initRefLinkSection();
     AppProfile.initRefBonusBlock();
     AppProfile.initStatusLink();
-    AppProfile.initStatusClick();  // Добавлено для кликабельности статуса
+    AppProfile.initStatusClick(); // Добавлено для кликабельности статуса
     AppMore.initMore();
     AppRitualTip.initRitualTip();
     AppHoroscope.initHoroscope();

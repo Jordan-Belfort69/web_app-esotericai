@@ -2,16 +2,16 @@
 window.AppApi = (() => {
     // ✅ Правильный публичный URL Railway
     const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
-    
+
     async function request(path, params = {}, options = {}) {
         const url = new URL(BASE_URL + path);
-        
+
         // ✅ КРИТИЧНО: Специальная обработка initData!
         Object.entries(params).forEach(([k, v]) => {
             if (v !== undefined && v !== null) {
-                if (k === 'initData') {
+                if (k === "initData") {
                     // initData уже закодирован Telegram — добавляем БЕЗ повторного encoding
-                    url.search += (url.search ? '&' : '?') + `initData=${encodeURIComponent(v)}`;
+                    url.search += (url.search ? "&" : "?") + `initData=${v}`;
                 } else {
                     url.searchParams.set(k, v);
                 }
@@ -44,8 +44,11 @@ window.AppApi = (() => {
 
     // ============ ПРОФИЛЬ ============
     function fetchMe(initData, fallbackUserId) {
-        console.log("🔍 [FRONTEND] Получен initData:", initData ? initData.substring(0, 100) + '...' : 'null');
-        console.log("🔍 [FRONTEND] Содержит hash:", initData ? initData.includes('hash=') : false);
+        console.log(
+            "🔍 [FRONTEND] Получен initData:",
+            initData ? initData.substring(0, 100) + "..." : "null",
+        );
+        console.log("🔍 [FRONTEND] Содержит hash:", initData ? initData.includes("hash=") : false);
         const params = initData ? { initData } : { user_id: fallbackUserId };
         return request("/me", params);
     }
@@ -67,7 +70,7 @@ window.AppApi = (() => {
     function claimTaskReward(initData, taskCode) {
         return request("/tasks/claim", {
             initData,
-            task_code: taskCode
+            task_code: taskCode,
         });
     }
 
@@ -87,18 +90,25 @@ window.AppApi = (() => {
             initData,
             messages,
             method,
-            promo_code: promoCode
+            promo_code: promoCode,
         });
     }
 
-    function createInvoice(initData, messages, method = "sbp", email = null, promoCode = null, clientConfirmedAmount) {
+    function createInvoice(
+        initData,
+        messages,
+        method = "sbp",
+        email = null,
+        promoCode = null,
+        clientConfirmedAmount,
+    ) {
         return request("/subs/create-invoice", {
             initData,
             messages,
             method,
             email,
             promo_code: promoCode,
-            client_confirmed_amount: clientConfirmedAmount
+            client_confirmed_amount: clientConfirmedAmount,
         });
     }
 
@@ -113,7 +123,7 @@ window.AppApi = (() => {
             enabled,
             time_from: timeFrom,
             time_to: timeTo,
-            timezone
+            timezone,
         });
     }
 
@@ -122,7 +132,7 @@ window.AppApi = (() => {
         return request("/horoscope", {
             initData,
             zodiac,
-            scope
+            scope,
         });
     }
 
@@ -131,7 +141,7 @@ window.AppApi = (() => {
         return request("/tarot", {
             initData,
             spread_type: spreadType,
-            question
+            question,
         });
     }
 
