@@ -64,9 +64,6 @@ window.AppTasks = (() => {
         const status = task.status || "pending"; // pending / in_progress / completed
         const rewardClaimed = !!task.reward_claimed;
 
-        const isCompleted = rewardClaimed || status === "completed";
-        const isInProgress = !isCompleted && progressCurrent > 0;
-
         item.innerHTML = `
           <div class="tasks-header-row">
             <div class="history-question">${task.title || task.code}</div>
@@ -103,21 +100,11 @@ window.AppTasks = (() => {
               Награда начисляется автоматически после выполнения условий.
             </div>
             <div class="tasks-status-row">
-              <button class="tasks-status-btn tasks-status-done ${
-                isCompleted ? "tasks-status-active" : ""
-              }" disabled>
+              <button class="tasks-status-btn tasks-status-done">
                 ✅ Награда получена
               </button>
-              <button class="tasks-status-btn tasks-status-pending ${
-                !isCompleted ? "tasks-status-active" : ""
-              }" disabled>
-                ${
-                  isInProgress
-                    ? "⏳ В процессе"
-                    : isCompleted
-                    ? "✅ Выполнено"
-                    : "⏳ Не выполнено"
-                }
+              <button class="tasks-status-btn tasks-status-pending">
+                ⏳ Не выполнено
               </button>
             </div>
           </div>
@@ -125,10 +112,31 @@ window.AppTasks = (() => {
 
         const headerRow = item.querySelector(".tasks-header-row");
         const details = item.querySelector(".tasks-details");
+        const doneBtn = item.querySelector(".tasks-status-done");
+        const pendingBtn = item.querySelector(".tasks-status-pending");
+
+        // подсветка статуса (как раньше, но без ready_to_claim)
+        if (rewardClaimed || status === "completed") {
+          doneBtn.classList.add("tasks-status-active");
+          doneBtn.disabled = true;
+          pendingBtn.classList.remove("tasks-status-active");
+        } else if (status === "in_progress") {
+          pendingBtn.classList.add("tasks-status-active");
+          doneBtn.classList.remove("tasks-status-active");
+        } else {
+          pendingBtn.classList.add("tasks-status-active");
+          doneBtn.classList.remove("tasks-status-active");
+        }
 
         headerRow.addEventListener("click", () => {
           const isHidden = details.style.display === "none";
           details.style.display = isHidden ? "block" : "none";
+        });
+
+        // клик по "Награда получена" теперь ничего не отправляет, только защищаем от случайных нажатий
+        doneBtn.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          // Награда выдаётся автоматически на бэке, поэтому здесь просто игнорируем клик
         });
 
         container.appendChild(item);
