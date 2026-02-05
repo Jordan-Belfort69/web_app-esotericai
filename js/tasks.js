@@ -62,7 +62,10 @@ window.AppTasks = (() => {
           : 0;
 
         const status = task.status || "pending"; // pending / in_progress / completed
-        const isCompleted = status === "completed" || task.reward_claimed;
+        const rewardClaimed = !!task.reward_claimed;
+
+        const isCompleted = rewardClaimed || status === "completed";
+        const isInProgress = !isCompleted && progressCurrent > 0;
 
         item.innerHTML = `
           <div class="tasks-header-row">
@@ -100,21 +103,22 @@ window.AppTasks = (() => {
               Награда начисляется автоматически после выполнения условий.
             </div>
             <div class="tasks-status-row">
-              <span class="tasks-status-label ${
-                isCompleted
-                  ? "tasks-status-label-done"
-                  : status === "in_progress"
-                  ? "tasks-status-label-progress"
-                  : "tasks-status-label-pending"
-              }">
+              <button class="tasks-status-btn tasks-status-done ${
+                isCompleted ? "tasks-status-active" : ""
+              }" disabled>
+                ✅ Награда получена
+              </button>
+              <button class="tasks-status-btn tasks-status-pending ${
+                !isCompleted ? "tasks-status-active" : ""
+              }" disabled>
                 ${
-                  isCompleted
-                    ? "✅ Награда получена"
-                    : status === "in_progress"
+                  isInProgress
                     ? "⏳ В процессе"
+                    : isCompleted
+                    ? "✅ Выполнено"
                     : "⏳ Не выполнено"
                 }
-              </span>
+              </button>
             </div>
           </div>
         `;
