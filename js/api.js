@@ -6,11 +6,11 @@ window.AppApi = (() => {
     async function request(path, params = {}, options = {}) {
         const url = new URL(BASE_URL + path);
 
-        // ✅ Специальная обработка initData: целиком кодируем строку
+        // ✅ Специальная обработка initData: передаём строку БЕЗ повторного encode
         Object.entries(params).forEach(([k, v]) => {
             if (v !== undefined && v !== null) {
                 if (k === "initData") {
-                    url.searchParams.set("initData", encodeURIComponent(v));
+                    url.searchParams.set("initData", v);
                 } else {
                     url.searchParams.set(k, v);
                 }
