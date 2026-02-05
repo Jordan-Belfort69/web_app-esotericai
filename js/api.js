@@ -1,4 +1,4 @@
-// ===== API-КЛИЕНТ BACKEND =====
+// ===== API-КЛИЕНТ BACKEND (ИСПРАВЛЕННЫЙ) =====
 window.AppApi = (() => {
     // ✅ Правильный публичный URL Railway
     const BASE_URL = "https://web-production-4d81b.up.railway.app/api";
@@ -6,19 +6,24 @@ window.AppApi = (() => {
     async function request(path, params = {}, options = {}) {
         const url = new URL(BASE_URL + path);
         
-        // ✅ Убраны лишние пробелы в синтаксисе
-        Object.entries(params).forEach(([k, v]) => {  // ✅ = > → =>
-            if (v !== undefined && v !== null) {  // ✅ & & → &&
-                url.searchParams.set(k, v);
+        // ✅ КРИТИЧНО: Специальная обработка initData!
+        Object.entries(params).forEach(([k, v]) => {
+            if (v !== undefined && v !== null) {
+                if (k === 'initData') {
+                    // initData уже закодирован Telegram — добавляем БЕЗ повторного encoding
+                    url.search += (url.search ? '&' : '?') + `initData=${encodeURIComponent(v)}`;
+                } else {
+                    url.searchParams.set(k, v);
+                }
             }
         });
 
         console.log("📡 API Request URL:", url.toString());
 
         const res = await fetch(url, {
-            method: options.method || "GET",  // ✅ "GET " → "GET"
+            method: options.method || "GET",
             headers: {
-                "Content-Type": "application/json",  // ✅ УБРАНЫ ПРОБЕЛЫ!
+                "Content-Type": "application/json",
                 "X-Requested-With": "XMLHttpRequest",
                 ...options.headers,
             },
@@ -27,7 +32,7 @@ window.AppApi = (() => {
         });
 
         if (!res.ok) {
-            const error = await res.json().catch(() => ({ status: res.status }));  // ✅ = > → =>
+            const error = await res.json().catch(() => ({ status: res.status }));
             console.error("❌ API Error:", path, res.status, error);
             throw new Error(`API ${path} ${res.status}: ${JSON.stringify(error)}`);
         }
@@ -39,14 +44,15 @@ window.AppApi = (() => {
 
     // ============ ПРОФИЛЬ ============
     function fetchMe(initData, fallbackUserId) {
-        console.log("🔍 [FRONTEND] Получен initData:", initData);
+        console.log("🔍 [FRONTEND] Получен initData:", initData ? initData.substring(0, 100) + '...' : 'null');
+        console.log("🔍 [FRONTEND] Содержит hash:", initData ? initData.includes('hash=') : false);
         const params = initData ? { initData } : { user_id: fallbackUserId };
-        return request("/me", params);  // ✅ "/me " → "/me"
+        return request("/me", params);
     }
 
     // ============ ИСТОРИЯ ============
     function fetchHistoryList(initData, limit = 20, offset = 0) {
-        return request("/history/list", { initData, limit, offset });  // ✅ УБРАНЫ ПРОБЕЛЫ!
+        return request("/history/list", { initData, limit, offset });
     }
 
     function fetchHistoryDetail(initData, recordId) {
@@ -76,7 +82,7 @@ window.AppApi = (() => {
     }
 
     // ============ ПОКУПКИ ============
-    function fetchSubsQuote(initData, messages, method = "sbp", promoCode = null) {  // ✅ УБРАНЫ ПРОБЕЛЫ!
+    function fetchSubsQuote(initData, messages, method = "sbp", promoCode = null) {
         return request("/subs/quote", {
             initData,
             messages,
@@ -112,7 +118,7 @@ window.AppApi = (() => {
     }
 
     // ============ ГОРОСКОП ============
-    function fetchHoroscope(initData, zodiac, scope = "none") {  // ✅ УБРАНЫ ПРОБЕЛЫ!
+    function fetchHoroscope(initData, zodiac, scope = "none") {
         return request("/horoscope", {
             initData,
             zodiac,
