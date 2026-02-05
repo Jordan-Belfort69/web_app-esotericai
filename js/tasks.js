@@ -68,14 +68,22 @@ window.AppTasks = (() => {
           <div class="tasks-header-row">
             <div class="history-question">${task.title || task.code}</div>
             <div class="tasks-reward">
-              +${xp} XP${
-          sms ? " · " + sms + " SMS" : ""
-        }${promo ? " · " + promo : ""}
+              +${xp} XP${sms ? " · " + sms + " SMS" : ""}${
+          promo ? " · " + promo : ""
+        }
             </div>
           </div>
           <div class="tasks-details" style="display:none;">
             <div class="history-answer-preview">
               ${task.desc || ""}
+            </div>
+            <div class="tasks-reward-block">
+              <div class="tasks-reward-title">Награда за выполнение:</div>
+              <ul class="tasks-reward-list">
+                <li>💠 ${xp} XP</li>
+                ${sms ? `<li>💬 ${sms} смс‑сообщений</li>` : ""}
+                ${promo ? `<li>🎁 Промокод на скидку ${promo}</li>` : ""}
+              </ul>
             </div>
             ${
               hasProgress
@@ -97,7 +105,7 @@ window.AppTasks = (() => {
                 : ""
             }
             <div class="tasks-note">
-              Награда начисляется автоматически после выполнения условий.
+              Награда будет начислена автоматически после выполнения условий.
             </div>
             <div class="tasks-status-row">
               <button class="tasks-status-btn tasks-status-done">
@@ -110,15 +118,12 @@ window.AppTasks = (() => {
           </div>
         `;
 
-        const headerRow = item.querySelector(".tasks-header-row");
-        const details = item.querySelector(".tasks-details");
         const doneBtn = item.querySelector(".tasks-status-done");
         const pendingBtn = item.querySelector(".tasks-status-pending");
 
-        // подсветка статуса (как раньше, но без ready_to_claim)
+        // логика подсветки статуса, адаптированная под данные с бэка
         if (rewardClaimed || status === "completed") {
           doneBtn.classList.add("tasks-status-active");
-          doneBtn.disabled = true;
           pendingBtn.classList.remove("tasks-status-active");
         } else if (status === "in_progress") {
           pendingBtn.classList.add("tasks-status-active");
@@ -128,15 +133,17 @@ window.AppTasks = (() => {
           doneBtn.classList.remove("tasks-status-active");
         }
 
+        const headerRow = item.querySelector(".tasks-header-row");
+        const details = item.querySelector(".tasks-details");
         headerRow.addEventListener("click", () => {
           const isHidden = details.style.display === "none";
           details.style.display = isHidden ? "block" : "none";
         });
 
-        // клик по "Награда получена" теперь ничего не отправляет, только защищаем от случайных нажатий
+        // клик по "Награда получена" оставляем визуально, но без запросов на бэкенд
         doneBtn.addEventListener("click", (ev) => {
           ev.stopPropagation();
-          // Награда выдаётся автоматически на бэке, поэтому здесь просто игнорируем клик
+          // награда выдаётся автоматически на сервере
         });
 
         container.appendChild(item);
