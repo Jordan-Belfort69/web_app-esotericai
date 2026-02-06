@@ -1,17 +1,7 @@
 // ===== МОДУЛЬ: ПОКУПКИ СООБЩЕНИЙ =====
 
 window.AppSubs = (() => {
-  // тестовые промокоды (потом заменишь на реальные с бэкенда)
-  const PROMO_CODES = {
-    'MAGIC10': {
-      discount: '10%',
-      text: 'Промокод MAGIC10 даёт скидку 10% на выбранный пакет.',
-    },
-    'FRIEND20': {
-      discount: '20%',
-      text: 'Промокод FRIEND20 — подарок за приглашение подруги: скидка 20%.',
-    },
-  };
+  let lastQuote = null; // запоминаем последний расчёт от бэка
 
   function initSubsControls() {
     // выбор количества сообщений
@@ -41,91 +31,110 @@ window.AppSubs = (() => {
     const buyBtn = document.getElementById('subs-buy-btn');
     const emailInput = document.getElementById('subs-email-input');
 
-    // промокод
+    // промокод (теперь только информируем, проверка — на бэке)
     const promoInput = document.getElementById('subs-promo-input');
     const promoMessage = document.getElementById('subs-promo-message');
 
     if (promoInput && promoMessage) {
       promoInput.addEventListener('input', () => {
-        const code = promoInput.value.trim().toUpperCase();
-
+        const code = promoInput.value.trim();
         if (!code) {
           promoMessage.textContent = '';
           promoMessage.className = 'subs-promo-message';
           return;
         }
-
-        const promo = PROMO_CODES[code];
-        if (promo) {
-          promoMessage.textContent = promo.text;
-          promoMessage.className = 'subs-promo-message subs-promo-success';
-        } else {
-          promoMessage.textContent = 'Такого промокода нет или он больше не действует.';
-          promoMessage.className = 'subs-promo-message subs-promo-error';
-        }
+        // Точный текст можно будет обновить, когда решишь, какие сообщения показывать
+        promoMessage.textContent = 'Промокод будет проверен при расчёте.';
+        promoMessage.className = 'subs-promo-message';
       });
     }
 
-    // обработка кнопки "Купить" → переход на экран подтверждения
+    // обработка кнопки "Купить" → запрос /subs/quote и переход на экран подтверждения
     if (buyBtn) {
-      buyBtn.addEventListener('click', () => {
+      buyBtn.addEventListener('click', async () => {
         const activeOption = document.querySelector('.subs-option-row-active');
         const activePay = document.querySelector('.subs-pay-row-active');
 
-        const messages = activeOption ? activeOption.getAttribute('data-messages') : null;
+        const messagesStr = activeOption ? activeOption.getAttribute('data-messages') : null;
         const method = activePay ? activePay.getAttribute('data-method') : null;
         const email = emailInput ? emailInput.value.trim() : '';
-        const promoCode = promoInput ? promoInput.value.trim().toUpperCase() : '';
+        const promoCode = promoInput ? promoInput.value.trim() : '';
 
-        // цены пакетов (как в интерфейсе)
-        const PRICE_MAP = {
-          '100': 290,
-          '200': 570,
-          '300': 810,
-          '500': 1275,
-          '1000': 2400,
-        };
+        const messages = messagesStr ? parseInt(messagesStr, 10) : null;
 
-        let amount = messages && PRICE_MAP[messages] ? PRICE_MAP[messages] : 0;
-
-        // простое применение скидки по тестовым промокодам
-        const promo = promoCode ? PROMO_CODES[promoCode] : null;
-        if (promo && promo.discount === '10%') {
-          amount = Math.round(amount * 0.9);
-        } else if (promo && promo.discount === '20%') {
-          amount = Math.round(amount * 0.8);
+        if (!messages || !method) {
+          alert('Выбери пакет сообщений и способ оплаты');
+          return;
         }
 
-        // заполняем экран подтверждения
-        const msgEl   = document.getElementById('subs-confirm-messages');
-        const mthEl   = document.getElementById('subs-confirm-method');
-        const amtEl   = document.getElementById('subs-confirm-amount');
-        const emailEl = document.getElementById('subs-confirm-email');
-        const promoEl = document.getElementById('subs-confirm-promo');
+        try {
+          const initData = window.Telegram?.WebApp?.initData || null;
+          // запрос расчёта на бэкенд
+          const quote = await AppApi.fetchSubsQuote(
+            initData,
+            messages,
+            method,
+            promoCode || null
+          );
+          console.log('Subs quote:', quote);
+          lastQuote = { quote, email, promoCode, method };
 
-        if (msgEl)   msgEl.textContent = messages ? `${messages} сообщений` : '—';
-        if (mthEl) {
-          mthEl.textContent =
-            method === 'sbp'   ? 'СБП' :
-            method === 'card'  ? 'Банковская карта' :
-            method === 'stars' ? 'Telegram Stars' :
-            '—';
+          const msgEl   = document.getElementById('subs-confirm-messages');
+          const mthEl   = document.getElementById('subs-confirm-method');
+          const amtEl   = document.getElementById('subs-confirm-amount');
+          const emailEl = document.getElementById('subs-confirm-email');
+          const promoEl = document.getElementById('subs-confirm-promo');
+
+          if (msgEl)   msgEl.textContent = `${quote.messages} сообщений`;
+          if (mthEl) {
+            mthEl.textContent =
+              method === 'sbp'   ? 'СБП' :
+              method === 'card'  ? 'Банковская карта' :
+              method === 'stars' ? 'Telegram Stars' :
+              '—';
+          }
+          if (amtEl)   amtEl.textContent = `${quote.final_amount / 100} ₽`;
+          if (emailEl) emailEl.textContent = email || '—';
+          if (promoEl) promoEl.textContent =
+            quote.promo_code_applied && promoCode ? promoCode : 'Не применён';
+
+          AppRouter.go('buy-confirm');
+        } catch (e) {
+          console.error('Ошибка расчёта покупки', e);
+          alert('Не удалось рассчитать покупку. Попробуй позже.');
         }
-        if (amtEl)   amtEl.textContent = amount ? `${amount} ₽` : '—';
-        if (emailEl) emailEl.textContent = email || '—';
-        if (promoEl) promoEl.textContent = promoCode || 'Не применён';
-
-        // переход на экран подтверждения
-        AppRouter.go('buy-confirm');
       });
     }
 
-    // кнопка "Оплатить" на экране подтверждения
+    // кнопка "Оплатить" на экране подтверждения → /subs/create-invoice
     const confirmPayBtn = document.getElementById('subs-confirm-pay-btn');
     if (confirmPayBtn) {
-      confirmPayBtn.addEventListener('click', () => {
+      confirmPayBtn.addEventListener('click', async () => {
         console.log('CONFIRM PAY CLICK');
-        // здесь позже добавишь реальный вызов оплаты / tg.sendData(...)
+        if (!lastQuote) {
+          alert('Сначала выбери пакет и пересчитай стоимость.');
+          return;
+        }
+
+        const { quote, email, promoCode, method } = lastQuote;
+        try {
+          const initData = window.Telegram?.WebApp?.initData || null;
+          const invoice = await AppApi.createInvoice(
+            initData,
+            quote.messages,
+            method,
+            email || null,
+            promoCode || null,
+            quote.final_amount
+          );
+          console.log('Invoice created:', invoice);
+          // пока просто показываем, что всё ок
+          alert('Счёт создан. Оплата пока заглушка (stub).');
+          // здесь позже можно будет вызвать реальный tg.sendData / оплату
+        } catch (e) {
+          console.error('Ошибка создания счёта', e);
+          alert('Не удалось создать счёт. Попробуй позже.');
+        }
       });
     }
 
@@ -147,7 +156,6 @@ window.AppSubs = (() => {
     if (!buySubCard) return;
 
     buySubCard.addEventListener('click', () => {
-      // переход в экран "Купить сообщения"
       AppRouter.go('buy');
     });
   }
