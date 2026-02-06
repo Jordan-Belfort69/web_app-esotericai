@@ -7,7 +7,10 @@ window.AppReferrals = (() => {
 
     try {
       const initData = window.Telegram?.WebApp?.initData || null;
+      console.log('initData for referrals:', initData);
+
       const data = await AppApi.fetchReferralsInfo(initData);
+      console.log('Referrals data:', data);
 
       // Ссылка
       if (refLinkInput && data.referral_link) {
