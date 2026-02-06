@@ -1,19 +1,25 @@
 // ===== МОДУЛЬ: МОИ ПРОМОКОДЫ =====
 
 window.PromoUI = (() => {
-  // Пока делаем мок-список. Потом будешь подставлять реальные данные из бота.
-  let userPromocodes = [
-    {
-      code: 'WELCOME5',
-      discount: 5,
-      expires_at: null,
-    },
-    {
-      code: 'TAROT10',
-      discount: 10,
-      expires_at: '31.03.2026',
-    },
-  ];
+  let userPromocodes = [];
+
+  async function loadPromocodes() {
+    const list = document.getElementById('promocodes-list');
+    if (!list) return;
+
+    list.innerHTML = 'Загрузка промокодов...';
+
+    try {
+      const initData = window.Telegram?.WebApp?.initData || null;
+      const data = await AppApi.fetchPromocodesList(initData);
+      // ожидаемый ответ бэка: { promocodes: [ { code, discount, expires_at }, ... ] }
+      userPromocodes = Array.isArray(data.promocodes) ? data.promocodes : [];
+      renderPromocodes();
+    } catch (e) {
+      console.error('Не удалось загрузить промокоды', e);
+      list.innerHTML = '<div class="history-answer-preview">Ошибка загрузки промокодов</div>';
+    }
+  }
 
   function renderPromocodes() {
     const list = document.getElementById('promocodes-list');
@@ -33,6 +39,12 @@ window.PromoUI = (() => {
       const item = document.createElement('div');
       item.className = 'history-item';
 
+      const expiresText = promo.expires_at
+        ? `<div class="promocode-expire">
+             <span class="promocode-expire-full">Действует до ${promo.expires_at}</span>
+           </div>`
+        : '';
+
       item.innerHTML = `
         <div class="history-question">
           🎁 Скидка ${promo.discount}% на покупку сообщений
@@ -43,19 +55,12 @@ window.PromoUI = (() => {
             Копировать
           </button>
         </div>
-        ${
-          promo.expires_at
-            ? `<div class="promocode-expire">
-                <span class="promocode-expire-full">Действует до ${promo.expires_at}</span>
-              </div>`
-          : ''
-        }
+        ${expiresText}
       `;
 
       list.appendChild(item);
     });
 
-    // навешиваем обработчики копирования
     const buttons = list.querySelectorAll('.promocode-copy-btn');
     buttons.forEach((btn) => {
       btn.addEventListener('click', async () => {
@@ -74,19 +79,15 @@ window.PromoUI = (() => {
   }
 
   function initPromoScreen() {
-    // клик по кнопке "Мои промокоды" в профиле
     const link = document.getElementById('profile-promocodes-link');
     if (link) {
       link.addEventListener('click', () => {
         AppRouter.go('promocodes');
+        loadPromocodes(); // 🔹 загрузка при открытии экрана
       });
     }
-
-    // рендер при открытии
-    renderPromocodes();
   }
 
-  // даём наружу инициализацию + возможность обновить список из main.js
   function setPromocodes(list) {
     userPromocodes = list || [];
     renderPromocodes();
