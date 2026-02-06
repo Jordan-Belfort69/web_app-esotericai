@@ -85,11 +85,13 @@ window.AppApi = (() => {
     method = "sbp",
     promoCode = null,
   ) {
-    return request("/subs/quote", {
-      initData,
-      messages,
-      method,
-      promo_code: promoCode,
+    return request("/subs/quote", { initData }, {
+      method: "POST",
+      body: {
+        messages,
+        method,
+        promo_code: promoCode,
+      },
     });
   }
 
@@ -101,13 +103,15 @@ window.AppApi = (() => {
     promoCode = null,
     clientConfirmedAmount,
   ) {
-    return request("/subs/create-invoice", {
-      initData,
-      messages,
-      method,
-      email,
-      promo_code: promoCode,
-      client_confirmed_amount: clientConfirmedAmount,
+    return request("/subs/create-invoice", { initData }, {
+      method: "POST",
+      body: {
+        messages,
+        method,
+        email,
+        promo_code: promoCode,
+        client_confirmed_amount: clientConfirmedAmount,
+      },
     });
   }
 
