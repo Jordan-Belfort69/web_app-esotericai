@@ -25,8 +25,8 @@ window.AppApi = (() => {
         "X-Requested-With": "XMLHttpRequest",
         ...(options.headers || {}),
       },
-      body: options.body ? JSON.stringify(options.body) : undefined,
-      ...options,
+      ...options, // сначала разворачиваем options
+      body: options.body ? JSON.stringify(options.body) : undefined, // потом поверх задаём body
     });
 
     if (!res.ok) {
