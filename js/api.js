@@ -121,13 +121,19 @@ window.AppApi = (() => {
   }
 
   function updateDailyTipSettings(initData, enabled, timeFrom, timeTo, timezone) {
-    return request("/rituals/daily-tip-settings", {
-      initData,
-      enabled,
-      time_from: timeFrom,
-      time_to: timeTo,
-      timezone,
-    });
+    return request(
+      "/rituals/daily-tip-settings",
+      { initData },
+      {
+        method: "POST",
+        body: {
+          enabled,
+          time_from: timeFrom ?? null,
+          time_to: timeTo ?? null,
+          timezone: timezone ?? "Europe/Moscow",
+        },
+      }
+    );
   }
 
   // ============ ГОРОСКОП ============

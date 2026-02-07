@@ -1,4 +1,5 @@
 // ===== МОДУЛЬ: РИТУАЛЫ — СОВЕТ ДНЯ =====
+// Связь с бэкендом: при открытии экрана — загрузка настроек (GET), при сохранении — отправка (POST).
 
 window.AppRitualTip = (() => {
   let ritualTipState = {
@@ -20,7 +21,7 @@ window.AppRitualTip = (() => {
     const timeScreen = document.getElementById('ritual-tip-time-screen');
     const timeOptions = document.querySelectorAll('.ritual-time-option');
 
-    // восстановление из localStorage
+    // восстановление из localStorage (fallback при отсутствии сети/initData)
     try {
       const saved = localStorage.getItem('ritualTipState');
       if (saved) {
@@ -36,11 +37,20 @@ window.AppRitualTip = (() => {
     if (!tipLink || !tipSettings) return;
 
     function updateMainTimeLabel() {
-      if (ritualTipState.enabled && ritualTipState.time) {
-        tipTimeLabel.textContent = ritualTipState.time;
-      } else {
-        tipTimeLabel.textContent = '›';
+      if (tipTimeLabel) {
+        if (ritualTipState.enabled && ritualTipState.time) {
+          tipTimeLabel.textContent = ritualTipState.time;
+        } else {
+          tipTimeLabel.textContent = '›';
+        }
       }
+    }
+
+    function applyStateToUI() {
+      if (tipEnabledCheckbox) tipEnabledCheckbox.checked = ritualTipState.enabled;
+      if (tipExtra) tipExtra.style.display = ritualTipState.enabled ? 'block' : 'none';
+      if (tipTzLabel) tipTzLabel.textContent = ritualTipState.timezone;
+      if (tipTimeBtn) tipTimeBtn.textContent = ritualTipState.time || 'Выбрать';
     }
 
     function openTipSettings() {
@@ -49,27 +59,29 @@ window.AppRitualTip = (() => {
       if (ritualsSection) ritualsSection.style.display = 'none';
       if (timeScreen) timeScreen.style.display = 'none';
 
-      if (tipEnabledCheckbox) {
-        tipEnabledCheckbox.checked = ritualTipState.enabled;
-      }
-      if (tipExtra) {
-        tipExtra.style.display = ritualTipState.enabled ? 'block' : 'none';
-      }
-      if (tipTzLabel) {
-        tipTzLabel.textContent = ritualTipState.timezone;
-      }
-      if (tipTimeBtn) {
-        tipTimeBtn.textContent = ritualTipState.time || 'Выбрать';
-      }
-
+      applyStateToUI();
       if (tipSettings) tipSettings.style.display = 'block';
     }
 
     updateMainTimeLabel();
 
-    // открыть настройки из «Ритуалов»
-    tipLink.addEventListener('click', () => {
-      AppRouter.go('tip'); // экран "Совет дня"
+    // открыть настройки из «Ритуалов» и подгрузить настройки с бэкенда
+    tipLink.addEventListener('click', async () => {
+      AppRouter.go('tip');
+      const initData = (window.AppCore && window.AppCore.getInitData && window.AppCore.getInitData()) || (window.AppAuth && window.AppAuth.getInitData && window.AppAuth.getInitData()) || null;
+      if (initData && window.AppApi && window.AppApi.fetchDailyTipSettings) {
+        try {
+          const res = await window.AppApi.fetchDailyTipSettings(initData);
+          ritualTipState.enabled = !!res.enabled;
+          ritualTipState.timezone = res.timezone || 'Europe/Moscow';
+          ritualTipState.time = (res.time_from && res.time_to) ? `${res.time_from}–${res.time_to}` : (res.time_from || null);
+          try {
+            localStorage.setItem('ritualTipState', JSON.stringify(ritualTipState));
+          } catch (e) {}
+        } catch (err) {
+          console.warn('Не удалось загрузить настройки совета дня:', err);
+        }
+      }
       openTipSettings();
     });
 
@@ -123,19 +135,35 @@ window.AppRitualTip = (() => {
       });
     });
 
-    // кнопка «Готово»
+    // кнопка «Готово» — сохранить на бэкенд и выйти
     if (tipSaveBtn) {
-      tipSaveBtn.addEventListener('click', () => {
-        const payload = {
-          type: 'daily_tip_settings',
-          enabled: ritualTipState.enabled,
-          time: ritualTipState.time,
-          timezone: ritualTipState.timezone,
-        };
+      tipSaveBtn.addEventListener('click', async () => {
+        let timeFrom = null;
+        let timeTo = null;
+        if (ritualTipState.time) {
+          const parts = String(ritualTipState.time).split(/[–\-]/).map(s => s.trim());
+          timeFrom = parts[0] || null;
+          timeTo = parts[1] || null;
+        }
 
-        console.log('SAVE DAILY TIP:', payload);
+        const initData = (window.AppCore && window.AppCore.getInitData && window.AppCore.getInitData()) || (window.AppAuth && window.AppAuth.getInitData && window.AppAuth.getInitData()) || null;
 
-        // локальное сохранение
+        if (initData && window.AppApi && window.AppApi.updateDailyTipSettings) {
+          try {
+            await window.AppApi.updateDailyTipSettings(
+              initData,
+              ritualTipState.enabled,
+              timeFrom,
+              timeTo,
+              ritualTipState.timezone
+            );
+          } catch (err) {
+            console.error('Ошибка сохранения настроек совета дня:', err);
+            alert('Не удалось сохранить настройки. Проверьте интернет и попробуйте снова.');
+            return;
+          }
+        }
+
         try {
           localStorage.setItem('ritualTipState', JSON.stringify(ritualTipState));
         } catch (e) {
@@ -144,7 +172,6 @@ window.AppRitualTip = (() => {
 
         updateMainTimeLabel();
 
-        // назад в экран "Ритуалы" (нижняя вкладка)
         AppRouter.stack = ['rituals'];
         AppRouter.apply();
       });
