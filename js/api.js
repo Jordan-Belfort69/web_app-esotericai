@@ -132,11 +132,17 @@ window.AppApi = (() => {
 
   // ============ ГОРОСКОП ============
   function fetchHoroscope(initData, zodiac, scope = "none") {
-    return request("/horoscope", {
-      initData,
-      zodiac,
-      scope,
-    });
+    return request(
+      "/horoscope",
+      { initData },                // в query только initData
+      {
+        method: "POST",
+        body: {
+          zodiac,
+          scope,
+        },
+      },
+    );
   }
 
   // ============ ТАРО ============
