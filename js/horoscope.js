@@ -1,6 +1,9 @@
 // ===== МОДУЛЬ: РИТУАЛЫ — ГОРОСКОП =====
-// Связь с бэкендом: по кнопке «Прочитать гороскоп» данные уходят в чат через tg.sendData;
-// бот получает web_app_data, показывает загрузку 3–5 сек и присылает гороскоп.
+// Как у Таро: по кнопке «Прочитать гороскоп» открывается ссылка t.me/БОТ?start=horoscope_знак_сфера,
+// пользователь попадает в чат бота, бот по /start сразу присылает гороскоп.
+
+// Username бота без @ (например EsotericAI_bot). Задайте в конфиге фронта или здесь.
+const BOT_USERNAME = window.AppCore?.botUsername || "EsotericAI_bot";
 
 window.AppHoroscope = (() => {
   let horoscopeState = {
@@ -9,7 +12,7 @@ window.AppHoroscope = (() => {
   };
 
   function initHoroscope() {
-    const tg = AppCore.tg;
+    const tg = AppCore?.tg || window.Telegram?.WebApp;
 
     const link = document.getElementById('ritual-horoscope-link');
     const screen = document.getElementById('ritual-horoscope-settings');
@@ -74,22 +77,23 @@ window.AppHoroscope = (() => {
         return;
       }
 
-      const payload = {
-        type: 'horoscope',
-        zodiac: horoscopeState.zodiac,
-        scope: horoscopeState.scope || 'none',
-      };
+      const zodiac = String(horoscopeState.zodiac).trim();
+      const scope = String(horoscopeState.scope || 'none').trim();
 
-      console.log('READ HOROSCOPE (BOT):', payload);
+      // Как у Таро: переход по ссылке в бота с параметром start=horoscope_знак_сфера
+      const startParam = `horoscope_${zodiac}_${scope}`;
+      const botLink = `https://t.me/test_projectesicbot?start=${encodeURIComponent(startParam)}`;
 
-      if (tg) {
-        // Краткая подсказка перед переходом в чат
-        const label = readBtn.textContent;
-        readBtn.textContent = 'Отправляю в чат…';
+      console.log('READ HOROSCOPE (BOT link):', botLink);
+
+      if (tg && tg.openTelegramLink) {
+        readBtn.textContent = 'Открываю чат…';
         readBtn.disabled = true;
-
-        tg.sendData(JSON.stringify(payload));
+        tg.openTelegramLink(botLink);
         tg.close();
+      } else {
+        // fallback: открыть в новой вкладке
+        window.open(botLink, '_blank');
       }
     });
   }
