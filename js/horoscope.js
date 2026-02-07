@@ -66,23 +66,27 @@ window.AppHoroscope = (() => {
       });
     });
 
-    readBtn.addEventListener('click', () => {
+    readBtn.addEventListener('click', async () => {
       if (!horoscopeState.zodiac) {
         alert('Сначала выберите знак зодиака.');
         return;
       }
 
-      const payload = {
-        type: 'horoscope',
-        zodiac: horoscopeState.zodiac,
-        scope: horoscopeState.scope || 'none',
-      };
+      const zodiac = horoscopeState.zodiac;
+      const scope = horoscopeState.scope || 'none';
 
-      console.log('READ HOROSCOPE:', payload);
+      console.log('READ HOROSCOPE (API):', { zodiac, scope });
 
-      if (tg) {
-        tg.sendData(JSON.stringify(payload));
-        tg.close();
+      const tg = AppCore.tg;
+      const initData = tg ? tg.initData : null;
+
+      try {
+        const resp = await AppApi.fetchHoroscope(initData, zodiac, scope);
+        // ВРЕМЕННО: простой вывод. Потом можно сделать красивый экран результата.
+        alert(resp.text);
+      } catch (e) {
+        console.error('Horoscope error', e);
+        alert('Не удалось получить гороскоп, попробуйте позже.');
       }
     });
   }
