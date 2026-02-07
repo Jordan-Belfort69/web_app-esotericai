@@ -92,7 +92,7 @@ window.AppTarot = (() => {
       });
     });
 
-    // текстовый вопрос
+    // текстовый вопрос — открываем бота с start=tarot_text
     const askBtn = document.getElementById('tarot-ask-btn');
     if (askBtn) {
       askBtn.addEventListener('click', () => {
@@ -101,20 +101,14 @@ window.AppTarot = (() => {
           return;
         }
 
-        const payload = {
-          type: 'tarot_text',
-          ts: Date.now(),
-          cards: tarotState.cards,
-          deck: tarotState.deck,
-        };
-
-        console.log('SEND DATA:', payload);
-        tg.sendData(JSON.stringify(payload));
+        const deeplink = 'https://t.me/test_projectesicbot?start=tarot_text';
+        console.log('OPEN LINK:', deeplink);
+        tg.openTelegramLink(deeplink);
         tg.close();
       });
     }
 
-    // голосовой вопрос
+    // голосовой вопрос — открываем бота с start=tarot_voice
     const voiceAskBtn = document.getElementById('tarot-voice-ask-btn');
     if (voiceAskBtn) {
       voiceAskBtn.addEventListener('click', () => {
@@ -123,18 +117,14 @@ window.AppTarot = (() => {
           return;
         }
 
-        const payload = {
-          type: 'tarot_voice',
-          ts: Date.now(),
-        };
-
-        console.log('SEND DATA:', payload);
-        tg.sendData(JSON.stringify(payload));
+        const deeplink = 'https://t.me/test_projectesicbot?start=tarot_voice';
+        console.log('OPEN LINK:', deeplink);
+        tg.openTelegramLink(deeplink);
         tg.close();
       });
     }
 
-    // отправка фото расклада (свои карты)
+    // отправка фото расклада (свои карты) — start=tarot_own_photo
     const ownPhotoBtn = document.getElementById('tarot-own-send-photo-btn');
     if (ownPhotoBtn) {
       ownPhotoBtn.addEventListener('click', () => {
@@ -143,13 +133,9 @@ window.AppTarot = (() => {
           return;
         }
 
-        const payload = {
-          type: 'tarot_own_photo',
-          ts: Date.now(),
-        };
-
-        console.log('SEND DATA:', payload);
-        tg.sendData(JSON.stringify(payload));
+        const deeplink = 'https://t.me/test_projectesicbot?start=tarot_own_photo';
+        console.log('OPEN LINK:', deeplink);
+        tg.openTelegramLink(deeplink);
         tg.close();
       });
     }
