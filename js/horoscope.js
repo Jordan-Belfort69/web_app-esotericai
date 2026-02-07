@@ -1,4 +1,6 @@
 // ===== МОДУЛЬ: РИТУАЛЫ — ГОРОСКОП =====
+// Связь с бэкендом: по кнопке «Прочитать гороскоп» данные уходят в чат через tg.sendData;
+// бот получает web_app_data, показывает загрузку 3–5 сек и присылает гороскоп.
 
 window.AppHoroscope = (() => {
   let horoscopeState = {
@@ -42,7 +44,7 @@ window.AppHoroscope = (() => {
     }
 
     link.addEventListener('click', () => {
-      AppRouter.go('horoscope');   // экран "Гороскоп"
+      AppRouter.go('horoscope');
       openHoroscopeScreen();
     });
 
@@ -81,8 +83,13 @@ window.AppHoroscope = (() => {
       console.log('READ HOROSCOPE (BOT):', payload);
 
       if (tg) {
+        // Краткая подсказка перед переходом в чат
+        const label = readBtn.textContent;
+        readBtn.textContent = 'Отправляю в чат…';
+        readBtn.disabled = true;
+
         tg.sendData(JSON.stringify(payload));
-        tg.close(); // закрываем веб‑апп, пользователь попадает в чат бота
+        tg.close();
       }
     });
   }
